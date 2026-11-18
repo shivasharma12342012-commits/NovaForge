@@ -120,15 +120,17 @@ button, input, select, textarea {
   color: var(--bg);
 }
 
-/* Header */
+/* Header (collapsible) */
 .site-header {
   position: sticky;
   top: 0;
   z-index: 60;
   background: rgba(250, 247, 241, 0.88);
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--line);
-  transition: box-shadow 0.3s ease, background 0.3s ease;
+  transition: transform 0.4s var(--ease-spring), box-shadow 0.3s ease, background 0.3s ease;
+  will-change: transform;
 }
 
 .site-header.scrolled {
@@ -136,11 +138,78 @@ button, input, select, textarea {
   box-shadow: var(--shadow-sm);
 }
 
+.site-header.collapsed {
+  transform: translateY(-100%);
+  box-shadow: none;
+}
+
 .header-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
   height: 70px;
+  transition: height 0.3s var(--ease-spring);
+}
+
+.site-header.compact .header-inner {
+  height: 58px;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.collapse-btn {
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.25s var(--ease-spring);
+}
+
+.collapse-btn:hover {
+  background: var(--ink);
+  color: var(--bg);
+  transform: translateY(-1px);
+}
+
+/* Tab that brings a collapsed header back */
+.bar-handle {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  z-index: 70;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px 7px;
+  border: 1px solid var(--line-strong);
+  border-top: none;
+  border-radius: 0 0 12px 12px;
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transform: translate(-50%, -110%);
+  transition: transform 0.35s var(--ease-spring), background 0.2s ease;
+}
+
+.bar-handle.show {
+  transform: translate(-50%, 0);
+}
+
+.bar-handle:hover {
+  background: var(--surface-alt);
 }
 
 .brand {
@@ -414,6 +483,14 @@ button, input, select, textarea {
   align-items: center;
 }
 
+/* grid children must be allowed to shrink, or the terminal overflows on phones */
+.hero-grid > *,
+.product-grid > *,
+.workflow-grid > *,
+.contact-box > * {
+  min-width: 0;
+}
+
 .eyebrow {
   display: inline-flex;
   align-items: center;
@@ -454,7 +531,9 @@ button, input, select, textarea {
 .headline-mask {
   display: block;
   overflow: hidden;
-  padding-bottom: 3px;
+  /* room for descenders so letters like y, g, p are never clipped */
+  padding-bottom: 0.14em;
+  margin-bottom: -0.08em;
 }
 
 .headline-line {
@@ -529,18 +608,11 @@ button, input, select, textarea {
   overflow: hidden;
   box-shadow: var(--shadow-lg);
   border: 1px solid #3D3832;
-  animation: floatGentle 6.5s ease-in-out infinite;
   transition: transform 0.35s var(--ease-spring), box-shadow 0.35s ease;
 }
 
 .mac-window:hover {
-  animation-play-state: paused;
-  transform: translateY(-4px);
-}
-
-@keyframes floatGentle {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-7px); }
+  box-shadow: 0 30px 68px rgba(28, 27, 24, 0.17);
 }
 
 .mac-titlebar {
@@ -631,24 +703,39 @@ button, input, select, textarea {
   border-color: #4D463F;
 }
 
+/* Fixed height: the window never grows or jumps while text is typed */
 .mac-body {
+  height: 290px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   padding: 18px 18px 20px;
-  min-height: 256px;
   font-family: var(--font-mono);
   font-size: 13px;
-  line-height: 1.65;
+  line-height: 1.7;
   white-space: pre-wrap;
-  word-break: break-word;
+  overflow-wrap: anywhere;
+  scrollbar-width: thin;
+  scrollbar-color: #4D463F transparent;
+}
+
+.mac-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.mac-body::-webkit-scrollbar-thumb {
+  background: #4D463F;
+  border-radius: 3px;
 }
 
 .term-line {
-  margin-bottom: 4px;
-  animation: lineFade 0.22s ease;
+  min-height: 1.7em;
+  margin-bottom: 2px;
+  animation: lineFade 0.25s ease;
 }
 
 @keyframes lineFade {
-  from { opacity: 0; transform: translateY(3px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .term-prompt {
@@ -674,8 +761,8 @@ button, input, select, textarea {
 
 .term-cursor {
   display: inline-block;
-  width: 8px;
-  height: 15px;
+  width: 0.6em;
+  height: 1.15em;
   background: #E5B55C;
   vertical-align: middle;
   margin-left: 2px;
@@ -753,7 +840,6 @@ button, input, select, textarea {
 .marquee-track {
   display: flex;
   align-items: center;
-  gap: 26px;
   width: max-content;
   font-size: 14px;
   font-weight: 700;
@@ -764,6 +850,16 @@ button, input, select, textarea {
 
 .marquee-band:hover .marquee-track {
   animation-play-state: paused;
+}
+
+/* Two identical groups, each with trailing padding equal to the gap,
+   so translating by -50% loops seamlessly with no jump */
+.marquee-group {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  padding-right: 26px;
+  flex-shrink: 0;
 }
 
 .marquee-track .dot {
@@ -820,13 +916,13 @@ button, input, select, textarea {
 }
 
 /* SVG Stroke Draw Animation */
-.draw-path {
-  stroke-dasharray: 260;
-  stroke-dashoffset: 260;
-  transition: stroke-dashoffset 1.4s var(--ease-spring);
+.js .draw-path {
+  stroke-dasharray: var(--len, 400);
+  stroke-dashoffset: var(--len, 400);
+  transition: stroke-dashoffset 1.4s var(--ease-spring) 0.15s;
 }
 
-.visible .draw-path {
+.js .visible .draw-path {
   stroke-dashoffset: 0;
 }
 
@@ -1625,17 +1721,29 @@ button, input, select, textarea {
   to { opacity: 1; transform: translate(-50%, 0); }
 }
 
-/* Scroll Reveal */
-.reveal {
+/* Scroll Reveal
+   Uses a one-shot keyframe animation (not a transition) so that, once
+   revealed, the element carries no leftover transform or delay. This keeps
+   card hover lifts working instantly. Hidden state only applies when JS runs. */
+.js .reveal {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.72s var(--ease-spring), transform 0.72s var(--ease-spring);
-  transition-delay: var(--delay, 0ms);
 }
 
-.reveal.visible {
+.js .reveal.visible {
   opacity: 1;
-  transform: translateY(0);
+  animation: revealUp 0.75s var(--ease-spring) backwards;
+  animation-delay: var(--delay, 0ms);
+}
+
+@keyframes revealUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Anchored sections clear the sticky header */
+section[id],
+main[id] {
+  scroll-margin-top: 84px;
 }
 
 /* Responsive */
@@ -1651,6 +1759,14 @@ button, input, select, textarea {
     grid-template-columns: 1fr;
   }
 
+  .hero {
+    padding: 48px 0 64px;
+  }
+
+  .hero-grid {
+    gap: 40px;
+  }
+
   .nav-links {
     display: none;
   }
@@ -1659,8 +1775,29 @@ button, input, select, textarea {
     display: flex;
   }
 
+  .drafting-ring {
+    width: 300px;
+    height: 300px;
+    top: auto;
+    bottom: -60px;
+    right: -80px;
+    opacity: 0.6;
+  }
+
   .contact-box {
     padding: 28px;
+  }
+
+  .product-card,
+  .founder-card,
+  .pillar-card {
+    padding: 24px;
+  }
+}
+
+@media (min-width: 921px) {
+  .mobile-nav {
+    display: none !important;
   }
 }
 
@@ -1669,27 +1806,65 @@ button, input, select, textarea {
     flex-direction: column;
     align-items: stretch;
   }
+
   .hero-metrics {
     grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .mac-body {
+    height: 300px;
+    font-size: 11.5px;
+    padding: 14px;
+  }
+
+  .mac-title span,
+  .status-right {
+    display: none;
+  }
+
+  .product-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .brand-sub {
+    display: none;
+  }
+
+  .faq-q {
+    font-size: 17px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   .mac-window,
   .paper-wash,
   .drafting-ring,
-  .marquee-track {
+  .marquee-track,
+  .pulse-dot {
     animation: none;
   }
-  .reveal,
+
+  .js .reveal,
+  .js .reveal.visible,
   .headline-line,
   .hero-stagger {
     opacity: 1;
     transform: none;
     animation: none;
+  }
+
+  .draw-path {
+    stroke-dashoffset: 0 !important;
     transition: none;
   }
-  .draw-path {
-    stroke-dashoffset: 0;
+
+  .site-header {
+    transition: none;
   }
 }
