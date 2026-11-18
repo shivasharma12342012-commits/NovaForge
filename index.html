@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NovaForge — Practical AI Products for Companies</title>
+  <meta name="description" content="NovaForge builds local-first AI products for companies: Float AI Agent and Float for Finance. Contact info.novaforge.2026@gmail.com for pricing." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+  <header class="site-header" id="siteHeader">
+    <div class="container header-inner">
+      <a href="#top" class="brand">
+        <span class="brand-mark" aria-hidden="true">NF</span>
+        <span class="brand-name">NovaForge</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#philosophy">Philosophy</a>
+        <a href="#products">Products</a>
+        <a href="#terminal-demo">Live Demo</a>
+        <a href="#founders">Founders</a>
+        <a href="#contact" class="nav-cta">Contact</a>
+      </nav>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-nav" id="mobileNav" hidden>
+      <a href="#philosophy">Philosophy</a>
+      <a href="#products">Products</a>
+      <a href="#terminal-demo">Live Demo</a>
+      <a href="#founders">Founders</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy reveal">
+          <div class="eyebrow">NovaForge · Enterprise AI Software</div>
+          <h1>AI software built for real companies, not science fiction.</h1>
+          <p class="hero-desc">
+            NovaForge designs and builds dependable, local-first AI products for businesses.
+            Your data stays on your own machines, your team stays in control, and every workflow
+            is crafted for daily operations.
+          </p>
+          <div class="hero-actions">
+            <a href="#contact" class="btn btn-primary">Contact Us for Pricing</a>
+            <a href="#products" class="btn btn-secondary">Explore Our Products</a>
+          </div>
+          <div class="hero-metrics">
+            <div class="metric">
+              <strong class="counter" data-target="0">0</strong>
+              <span>External runtime dependencies</span>
+            </div>
+            <div class="metric">
+              <strong class="counter" data-target="100">0</strong>
+              <span>% local data ownership</span>
+            </div>
+            <div class="metric">
+              <strong class="counter" data-target="2">0</strong>
+              <span>Flagship business products</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cute Animated Mac Terminal -->
+        <div class="hero-visual reveal" style="--delay: 140ms" id="terminal-demo">
+          <div class="mac-terminal" role="region" aria-label="Animated Mac Terminal">
+            <div class="mac-titlebar">
+              <div class="traffic-lights" aria-hidden="true">
+                <span class="tl tl-red"></span>
+                <span class="tl tl-yellow"></span>
+                <span class="tl tl-green"></span>
+              </div>
+              <div class="mac-title">novaforge — zsh — 80×24</div>
+              <button class="term-replay" id="termReplay" type="button" title="Replay terminal animation">
+                Replay
+              </button>
+            </div>
+            <div class="mac-body" id="terminalBody" aria-live="polite"></div>
+          </div>
+          <p class="terminal-caption">
+            Runs quietly on Mac, Windows, or your office server — no cloud lock-in.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Philosophy (Uses Times New Roman for explaining as requested) -->
+    <section class="philosophy" id="philosophy">
+      <div class="container narrow reveal">
+        <div class="section-label">Our Philosophy</div>
+        <h2>Software should feel like a well-made tool.</h2>
+        <div class="times-explanation">
+          <p>
+            Most modern AI tools ask companies to hand over their private documents, pay endless
+            per-seat fees, and trust black-box answers. At NovaForge, we build the opposite.
+          </p>
+          <p>
+            Every product we ship runs directly on your company workstation or private office network.
+            You bring your own AI key, keep every ledger and file inside your own walls, and let
+            your team work faster without changing how they think.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Products -->
+    <section class="products" id="products">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-label">Our Products</div>
+          <h2>Two focused products. Built from the ground up.</h2>
+          <p class="section-sub">
+            Whether your team needs a daily AI workspace or a dedicated financial and fleet
+            operations suite, NovaForge delivers ready-to-deploy software.
+          </p>
+        </div>
+
+        <div class="product-grid">
+          <!-- Float AI Agent -->
+          <article class="product-card reveal" style="--delay: 60ms">
+            <div class="product-badge">Workspace &amp; Spreadsheets</div>
+            <h3>Float AI Agent</h3>
+            <p class="product-desc">
+              A complete, local-first AI workspace for teams. Float combines an intelligent
+              assistant with Float Sheets — a built-in 1,000 × 1,000 cell spreadsheet studio
+              that exports cleanly to Excel (.xlsx) and PDF.
+            </p>
+            <ul class="feature-list">
+              <li>Runs on Mac &amp; Windows with zero external runtime dependencies</li>
+              <li>Encrypted local API key storage &amp; sealed transport</li>
+              <li>Built-in 1,000 × 1,000 spreadsheet engine with formulas &amp; charts</li>
+              <li>Bring Your Own Key (OpenAI, Anthropic, Google, OpenRouter, or local)</li>
+              <li>Admin controls, team allowances, and daily automatic backups</li>
+            </ul>
+            <div class="product-footer">
+              <div class="price-note">
+                <span class="price-label">Pricing</span>
+                <strong>Contact us for company licensing</strong>
+              </div>
+              <a href="#contact" class="btn btn-outline" data-product="Float AI Agent">Request Quote</a>
+            </div>
+          </article>
+
+          <!-- Float for Finance -->
+          <article class="product-card featured reveal" style="--delay: 140ms">
+            <div class="product-badge badge-sage">Fleet &amp; Finance Suite</div>
+            <h3>Float for Finance</h3>
+            <p class="product-desc">
+              Purpose-built for car rental, fleet operators, and finance teams. Manage GST
+              invoicing, driver payroll, vehicle compliance, and audit trails in one secure
+              system with human-in-the-loop approvals.
+            </p>
+            <ul class="feature-list">
+              <li>Immutable GST invoices &amp; credit notes with Decimal precision</li>
+              <li>Driver payroll with PF, ESI, PT, TDS &amp; deposit adjustments</li>
+              <li>3-tier risk policy with owner approval floors &amp; activity logs</li>
+              <li>DPDP consent gates &amp; automatic GPS/EXIF photo scrubbing</li>
+              <li>30/60/90-day expiry alerts for insurance, PUC, fitness &amp; permits</li>
+            </ul>
+            <div class="product-footer">
+              <div class="price-note">
+                <span class="price-label">Pricing</span>
+                <strong>Contact us for company licensing</strong>
+              </div>
+              <a href="#contact" class="btn btn-primary" data-product="Float for Finance">Request Quote</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why NovaForge -->
+    <section class="pillars">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-label">Why NovaForge</div>
+          <h2>Designed for trust, speed, and longevity.</h2>
+        </div>
+        <div class="pillars-grid">
+          <div class="pillar-card reveal" style="--delay: 40ms">
+            <div class="pillar-num">01</div>
+            <h4>Private by Architecture</h4>
+            <p>
+              Databases, files, and keys live on your own machine. No third-party cloud
+              holds your company records hostage.
+            </p>
+          </div>
+          <div class="pillar-card reveal" style="--delay: 100ms">
+            <div class="pillar-num">02</div>
+            <h4>Human-in-the-Loop</h4>
+            <p>
+              AI drafts and organizes, while your managers approve every sensitive financial,
+              payroll, or compliance action.
+            </p>
+          </div>
+          <div class="pillar-card reveal" style="--delay: 160ms">
+            <div class="pillar-num">03</div>
+            <h4>Fast &amp; Self-Contained</h4>
+            <p>
+              Zero bloated frameworks. Instant startup, lightweight memory footprint, and
+              automated local backups built right in.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Founders -->
+    <section class="founders" id="founders">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-label">The Team</div>
+          <h2>Built and run by three founders.</h2>
+          <p class="section-sub">
+            NovaForge is an independent software company led by its three co-founders,
+            working directly with every client from setup to support.
+          </p>
+        </div>
+
+        <div class="founders-grid">
+          <div class="founder-card reveal" style="--delay: 60ms">
+            <div class="founder-avatar">P</div>
+            <h3>Prabhjot</h3>
+            <div class="founder-role">Co-Founder &amp; Chief Executive Officer (CEO)</div>
+            <p>
+              Leads company strategy, client partnerships, and business operations — ensuring
+              every deployment delivers measurable value.
+            </p>
+          </div>
+
+          <div class="founder-card reveal" style="--delay: 120ms">
+            <div class="founder-avatar">S</div>
+            <h3>Shiva</h3>
+            <div class="founder-role">Co-Founder &amp; Lead Developer</div>
+            <p>
+              Architects NovaForge's core systems, local-first security, database engines,
+              and AI agent infrastructure.
+            </p>
+          </div>
+
+          <div class="founder-card reveal" style="--delay: 180ms">
+            <div class="founder-avatar">Y</div>
+            <h3>Yatharth</h3>
+            <div class="founder-role">Co-Founder &amp; Head of Product &amp; Design</div>
+            <p>
+              Shapes product direction and human-centered interfaces so complex workflows
+              feel calm, clear, and effortless.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact & Pricing -->
+    <section class="contact" id="contact">
+      <div class="container">
+        <div class="contact-box reveal">
+          <div class="contact-info">
+            <div class="section-label">Pricing &amp; Inquiries</div>
+            <h2>Ready to bring NovaForge to your company?</h2>
+            <p>
+              For licensing costs, custom deployments, or a live walkthrough of Float AI Agent
+              and Float for Finance, reach out to us directly.
+            </p>
+            <div class="email-card">
+              <span class="email-label">Direct Contact Email</span>
+              <a href="mailto:info.novaforge.2026@gmail.com" class="email-link">
+                info.novaforge.2026@gmail.com
+              </a>
+              <button type="button" class="btn btn-secondary btn-sm" id="copyEmailBtn">
+                Copy Email
+              </button>
+            </div>
+          </div>
+
+          <form class="contact-form" id="contactForm">
+            <div class="form-row">
+              <label for="companyName">Company / Your Name</label>
+              <input type="text" id="companyName" name="companyName" placeholder="e.g. Apex Fleet Pvt Ltd" required />
+            </div>
+            <div class="form-row">
+              <label for="productSelect">Product of Interest</label>
+              <select id="productSelect" name="productSelect">
+                <option value="Float AI Agent">Float AI Agent</option>
+                <option value="Float for Finance">Float for Finance</option>
+                <option value="Both Float & Float for Finance">Both Float &amp; Float for Finance</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label for="messageInput">Tell us about your team</label>
+              <textarea id="messageInput" name="messageInput" rows="3" placeholder="Team size, workflow, or questions about licensing..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-full">
+              Open Email to info.novaforge.2026@gmail.com
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <strong>NovaForge</strong>
+        <span>Practical AI products for companies.</span>
+      </div>
+      <div class="footer-links">
+        <a href="mailto:info.novaforge.2026@gmail.com">info.novaforge.2026@gmail.com</a>
+        <span>·</span>
+        <span>Founded by Prabhjot, Shiva &amp; Yatharth</span>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
