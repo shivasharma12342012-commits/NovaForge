@@ -2,6 +2,18 @@
   "use strict";
 
   const EMAIL = "info.novaforge.2026@gmail.com";
+
+  /* ── Terminal AI Easter Egg Configuration ──────────────────────────────
+     Paste your API key below to power live AI answers inside the Mac terminal.
+     Supported providers: "openai" | "openrouter" | "anthropic" | "gemini"
+     Leave apiKey blank ("") to use the built-in NovaForge assistant, or type
+     `setkey <your-api-key>` directly inside the terminal to test a key live. */
+  const TERMINAL_AI = {
+    provider: "openai",
+    model: "gpt-4o-mini",
+    apiKey: "", // <-- PASTE YOUR API KEY HERE
+  };
+
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const $ = (id) => document.getElementById(id);
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -219,8 +231,22 @@
 
   const PROMPT = "novaforge@mac ~ % ";
   const SPIN = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"];
+  const SESSION_KEY_STORAGE = "novaforge.term.key";
+  const SESSION_PROV_STORAGE = "novaforge.term.provider";
   let currentScene = "float";
   let runId = 0;
+  let busy = false;
+  const cmdHistory = [];
+  let histIdx = -1;
+
+  const SYSTEM_PROMPT =
+    "You are the NovaForge Mac Terminal AI assistant. NovaForge builds local-first AI software " +
+    "for companies with zero external runtime dependencies. Products: (1) Float AI Agent — private AI workspace " +
+    "with a 1,000x1,000 spreadsheet studio (Float Sheets), .xlsx/.pdf export, BYO API key, AES-256-GCM transport; " +
+    "(2) Float for Finance — fleet & car rental finance suite with immutable GST invoices, driver payroll (PF/ESI/PT/TDS), " +
+    "3-tier owner approval policy, DPDP consent & GPS/EXIF photo scrubbing, and 30/60/90-day expiry alerts. " +
+    "Founders: Prabhjot (Co-Founder & CEO), Shiva (Co-Founder & Lead Developer), Yatharth (Co-Founder & Head of Product & Design). " +
+    "For pricing/licensing, direct users to info.novaforge.2026@gmail.com. Answer concisely in 2-4 crisp plain-text sentences suitable for a terminal.";
 
   function el(tag, cls, text) {
     const node = document.createElement(tag);
@@ -246,6 +272,295 @@
     return line;
   }
 
+  function getActiveAI() {
+    let sessKey = "";
+    let sessProv = "";
+    try {
+      sessKey = sessionStorage.getItem(SESSION_KEY_STORAGE) || "";
+      sessProv = sessionStorage.getItem(SESSION_PROV_STORAGE) || "";
+    } catch { /* ignore */ }
+    const apiKey = (TERMINAL_AI.apiKey || sessKey || "").trim();
+    const provider = (sessProv || TERMINAL_AI.provider || "openai").toLowerCase();
+    return { apiKey, provider, model: TERMINAL_AI.model || "gpt-4o-mini" };
+  }
+
+  async function typeText(text, cls, alive, speed = 12) {
+    const lines = String(text || "").split("\n");
+    for (const part of lines) {
+      if (!alive()) return;
+      const span = el("span", cls);
+      appendLine([span]);
+      if (reduceMotion) {
+        span.textContent = part;
+      } else {
+        for (const ch of part) {
+          if (!alive()) return;
+          span.textContent += ch;
+          scrollTerminal();
+          await sleep(ch === " " ? speed + 6 : speed + Math.random() * 10);
+        }
+      }
+      await sleep(60);
+    }
+  }
+
+  function mountPrompt(focusInput = false) {
+    if (!terminalBody) return;
+    const old = terminalBody.querySelector(".term-input-line");
+    if (old) old.remove();
+
+    const row = el("div", "term-input-line");
+    const promptSpan = el("span", "term-prompt term-prompt-fixed", PROMPT);
+    const input = document.createElement("input");
+    input.type = "text";
+    input.className = "term-input";
+    input.id = "termInput";
+    input.autocomplete = "off";
+    input.spellcheck = false;
+    input.setAttribute("aria-label", "Type a question or command in the NovaForge terminal");
+    input.placeholder = "Ask anything or type 'help'…";
+
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        const val = input.value;
+        handleTerminalCommand(val);
+      } else if (e.key === "ArrowUp") {
+        if (!cmdHistory.length) return;
+        e.preventDefault();
+        histIdx = histIdx < 0 ? cmdHistory.length - 1 : Math.max(0, histIdx - 1);
+        input.value = cmdHistory[histIdx] || "";
+      } else if (e.key === "ArrowDown") {
+        if (histIdx < 0) return;
+        e.preventDefault();
+        histIdx += 1;
+        if (histIdx >= cmdHistory.length) {
+          histIdx = -1;
+          input.value = "";
+        } else {
+          input.value = cmdHistory[histIdx] || "";
+        }
+      }
+    });
+
+    row.append(promptSpan, input);
+    terminalBody.append(row);
+    scrollTerminal();
+    if (focusInput) input.focus({ preventScroll: true });
+  }
+
+  async function callProviderAI(question, cfg) {
+    const { apiKey, provider, model } = cfg;
+    if (provider === "anthropic") {
+      const res = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": apiKey,
+          "anthropic-version": "2023-06-01",
+          "anthropic-dangerous-direct-browser-access": "true",
+        },
+        body: JSON.stringify({
+          model: model.includes("claude") ? model : "claude-3-5-haiku-latest",
+          max_tokens: 220,
+          system: SYSTEM_PROMPT,
+          messages: [{ role: "user", content: question }],
+        }),
+      });
+      if (!res.ok) throw new Error("API " + res.status);
+      const data = await res.json();
+      return (data.content && data.content[0] && data.content[0].text) || "";
+    }
+
+    if (provider === "gemini") {
+      const gModel = model.includes("gemini") ? model : "gemini-2.0-flash";
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(gModel)}:generateContent?key=${encodeURIComponent(apiKey)}`;
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
+          contents: [{ role: "user", parts: [{ text: question }] }],
+        }),
+      });
+      if (!res.ok) throw new Error("API " + res.status);
+      const data = await res.json();
+      return data.candidates?.[0]?.content?.parts?.[0]?.text || "";
+    }
+
+    const endpoint =
+      provider === "openrouter"
+        ? "https://openrouter.ai/api/v1/chat/completions"
+        : "https://api.openai.com/v1/chat/completions";
+    const res = await fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        model,
+        max_tokens: 220,
+        messages: [
+          { role: "system", content: SYSTEM_PROMPT },
+          { role: "user", content: question },
+        ],
+      }),
+    });
+    if (!res.ok) throw new Error("API " + res.status);
+    const data = await res.json();
+    return data.choices?.[0]?.message?.content || "";
+  }
+
+  function offlineNovaForgeAI(q) {
+    const s = q.toLowerCase();
+    if (/^(hi|hello|hey|namaste)\b/.test(s)) {
+      return "Hello from NovaForge! Ask me about Float AI Agent, Float for Finance, our founders, security, or pricing.";
+    }
+    if (/(founder|founded|team|who made|who built|who runs|owner|ceo|developer|designer|shiva|prabhjot|yatharth)/.test(s)) {
+      return "NovaForge is founded and run by Prabhjot (Co-Founder & CEO), Shiva (Co-Founder & Lead Developer), and Yatharth (Co-Founder & Head of Product & Design).";
+    }
+    if (/(price|cost|buy|license|quote|how much|subscription)/.test(s)) {
+      return `We offer tailored company licensing and full buyout packages. Please email ${EMAIL} with your team size and workflow for a quote.`;
+    }
+    if (/(contact|email|reach|demo|pilot|talk)/.test(s)) {
+      return `Reach our founders directly at ${EMAIL}, or use the inquiry form at the bottom of this page.`;
+    }
+    if (/(finance|gst|payroll|fleet|driver|dpdp|exif|approval|tier)/.test(s)) {
+      return "Float for Finance is built for car rental & fleet teams: immutable GST invoices, PF/ESI/PT/TDS driver payroll, 3-tier owner approvals, DPDP consent & EXIF scrubbing, and 30/60/90-day expiry alerts.";
+    }
+    if (/(float|sheet|excel|xlsx|pdf|workspace|agent)/.test(s)) {
+      return "Float AI Agent is a local-first AI workspace with Float Sheets (a 1,000 × 1,000 spreadsheet grid with formulas, charts, .xlsx and .pdf export) and zero external runtime dependencies.";
+    }
+    if (/(privacy|security|key|encrypt|cloud|offline|local|mac|windows)/.test(s)) {
+      return "Everything runs natively on Mac or Windows with your own API key encrypted via AES-256-GCM and a local SQLite WAL database — your files never live on third-party clouds.";
+    }
+    return `NovaForge builds local-first AI software (Float AI Agent & Float for Finance) with zero external dependencies. Type 'help' for commands or email ${EMAIL} to speak with our founders.`;
+  }
+
+  async function handleTerminalCommand(raw) {
+    const text = raw.trim();
+    if (!text || busy) return;
+
+    cmdHistory.push(text);
+    histIdx = -1;
+    busy = true;
+
+    const id = ++runId;
+    const alive = () => id === runId;
+
+    const inputRow = terminalBody.querySelector(".term-input-line");
+    if (inputRow) inputRow.remove();
+    appendLine([el("span", "term-prompt", PROMPT), el("span", "term-cmd", text)]);
+
+    const lower = text.toLowerCase();
+
+    if (lower === "clear") {
+      terminalBody.innerHTML = "";
+      busy = false;
+      mountPrompt(true);
+      return;
+    }
+
+    if (lower === "replay") {
+      busy = false;
+      runTerminal(currentScene);
+      return;
+    }
+
+    if (lower === "help" || lower === "?") {
+      await typeText(
+        "Commands: products · float · finance · founders · pricing · contact · replay · clear\n" +
+        "Tip: Ask any question in plain English, or run `setkey <api-key>` to use your live AI key.",
+        "term-info",
+        alive,
+        8
+      );
+      busy = false;
+      mountPrompt(true);
+      return;
+    }
+
+    if (lower.startsWith("setkey ")) {
+      const parts = text.slice(7).trim().split(/\s+/);
+      let prov = TERMINAL_AI.provider;
+      let key = parts[0] || "";
+      if (parts.length >= 2 && ["openai", "openrouter", "anthropic", "gemini"].includes(parts[0].toLowerCase())) {
+        prov = parts[0].toLowerCase();
+        key = parts[1];
+      }
+      try {
+        sessionStorage.setItem(SESSION_KEY_STORAGE, key);
+        sessionStorage.setItem(SESSION_PROV_STORAGE, prov);
+      } catch { /* ignore */ }
+      await typeText(`✓ Session API key saved for ${prov}. Ask any question now!`, "term-ok", alive, 10);
+      busy = false;
+      mountPrompt(true);
+      return;
+    }
+
+    if (lower === "clearkey") {
+      try {
+        sessionStorage.removeItem(SESSION_KEY_STORAGE);
+        sessionStorage.removeItem(SESSION_PROV_STORAGE);
+      } catch { /* ignore */ }
+      await typeText("✓ Cleared session API key (using built-in NovaForge assistant).", "term-ok", alive, 10);
+      busy = false;
+      mountPrompt(true);
+      return;
+    }
+
+    if (lower === "whoami") {
+      await typeText("guest@novaforge — welcome! Ask anything about our products.", "term-info", alive, 10);
+      busy = false;
+      mountPrompt(true);
+      return;
+    }
+
+    if (lower === "ls") {
+      await typeText("float-ai-agent/   float-for-finance/   founders.txt   pricing.txt", "term-info", alive, 10);
+      busy = false;
+      mountPrompt(true);
+      return;
+    }
+
+    // AI Response (uses live API key if configured, otherwise NovaForge assistant)
+    setStatus("Thinking…", false);
+    const spinSpan = el("span", "term-spin", `${SPIN[0]} Thinking…`);
+    const spinLine = appendLine([spinSpan]);
+    let spinIdx = 0;
+    const spinTimer = setInterval(() => {
+      spinIdx = (spinIdx + 1) % SPIN.length;
+      spinSpan.textContent = `${SPIN[spinIdx]} Thinking…`;
+    }, 80);
+
+    let answer = "";
+    const cfg = getActiveAI();
+    try {
+      if (cfg.apiKey) {
+        answer = await callProviderAI(text, cfg);
+      } else {
+        await sleep(320);
+        answer = offlineNovaForgeAI(text);
+      }
+    } catch {
+      answer = offlineNovaForgeAI(text);
+    } finally {
+      clearInterval(spinTimer);
+      spinLine.remove();
+    }
+
+    if (!alive()) {
+      busy = false;
+      return;
+    }
+
+    await typeText(answer.trim() || offlineNovaForgeAI(text), "term-ai", alive, 11);
+    setStatus("Interactive · type a question below", true);
+    busy = false;
+    mountPrompt(true);
+  }
+
   // Render everything at once (reduced motion, or a finished state).
   function renderStatic(script) {
     terminalBody.innerHTML = "";
@@ -258,13 +573,15 @@
         appendLine([el("span", step.type === "ok" ? "term-ok" : "term-info", step.text)]);
       }
     });
-    appendLine([el("span", "term-prompt", PROMPT), el("span", "term-cursor")]);
-    setStatus("Finished on this Mac", true);
+    appendLine([el("span", "term-hint", "Easter egg unlocked: type a question or 'help' below.")]);
+    setStatus("Interactive · type a question below", true);
+    mountPrompt(false);
   }
 
   async function runTerminal(sceneKey) {
     if (!terminalBody) return;
     currentScene = sceneKey || currentScene;
+    busy = false;
     const id = ++runId;
     const alive = () => id === runId;
     const script = SCENES[currentScene] || SCENES.float;
@@ -314,8 +631,16 @@
     }
 
     if (!alive()) return;
-    appendLine([el("span", "term-prompt", PROMPT), el("span", "term-cursor")]);
-    setStatus("Finished on this Mac", true);
+    appendLine([el("span", "term-hint", "Easter egg unlocked: type any question or 'help' below.")]);
+    setStatus("Interactive · type a question below", true);
+    mountPrompt(false);
+  }
+
+  if (terminalBody) {
+    terminalBody.addEventListener("click", () => {
+      const inp = $("termInput");
+      if (inp) inp.focus();
+    });
   }
 
   function selectScene(tab) {

@@ -759,6 +759,51 @@ button, input, select, textarea {
   color: #C7BFB3;
 }
 
+.term-ai {
+  color: #EAE3D7;
+}
+
+.term-hint {
+  color: #8C8479;
+  font-size: 12px;
+}
+
+.term-input-line {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 0;
+  margin-top: 4px;
+}
+
+.term-prompt-fixed {
+  flex-shrink: 0;
+  white-space: pre;
+}
+
+.term-input {
+  flex: 1;
+  min-width: 60px;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: inherit;
+  line-height: inherit;
+  color: #FAF7F1;
+  caret-color: #E5B55C;
+}
+
+.term-input::placeholder {
+  color: #7D756B;
+}
+
+.mac-body {
+  cursor: text;
+}
+
 .term-cursor {
   display: inline-block;
   width: 0.6em;
