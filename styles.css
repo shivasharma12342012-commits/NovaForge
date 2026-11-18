@@ -1110,6 +1110,20 @@ button, input, select, textarea {
   color: var(--sage);
 }
 
+.product-icon.product-icon-logo {
+  background: transparent;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.float-product-logo {
+  width: 44px;
+  height: 44px;
+  display: block;
+  object-fit: contain;
+}
+
 .product-badge {
   padding: 5px 12px;
   border-radius: 999px;
