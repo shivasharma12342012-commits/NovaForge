@@ -1235,6 +1235,185 @@ button, input, select, textarea {
   color: var(--ink);
 }
 
+/* Float Plans & Editions */
+.plans {
+  padding: 84px 0;
+  border-top: 1px solid var(--line);
+}
+
+.plans-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  align-items: stretch;
+}
+
+.plans-grid-enterprise {
+  grid-template-columns: repeat(2, 1fr);
+  margin-top: 22px;
+}
+
+.plan-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s var(--ease-spring), box-shadow 0.3s ease, border-color 0.25s ease;
+}
+
+.plan-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.plan-card.featured {
+  border-color: rgba(39, 83, 70, 0.42);
+  background: linear-gradient(180deg, #FFFFFF 0%, #F7FAF8 100%);
+}
+
+.plan-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.plan-tier {
+  padding: 4px 11px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.plan-tier.tier-sage {
+  background: var(--sage-soft);
+  color: var(--sage);
+}
+
+.plan-capacity {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--walnut);
+}
+
+.plan-card h3 {
+  font-family: "Times New Roman", Times, Georgia, serif;
+  font-size: 27px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--ink);
+}
+
+.plan-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding-bottom: 14px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.plan-price {
+  font-family: "Times New Roman", Times, Georgia, serif;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--accent);
+  letter-spacing: -0.01em;
+}
+
+.plan-card.featured .plan-price {
+  color: var(--sage);
+}
+
+.plan-price-note {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.plan-tagline {
+  font-size: 15px;
+  line-height: 1.48;
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+
+.plan-desc {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--walnut);
+  margin-bottom: 16px;
+}
+
+.plan-block-title {
+  font-size: 13.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+
+.plan-features {
+  margin-bottom: 18px;
+}
+
+.plan-features li {
+  font-size: 14.5px;
+  line-height: 1.48;
+  margin-bottom: 8px;
+}
+
+.plan-features code {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 12.5px;
+  background: var(--surface-alt);
+  padding: 1px 5px;
+  border-radius: 4px;
+  color: var(--ink);
+}
+
+.plan-suit {
+  background: var(--surface-alt);
+  border-left: 3px solid var(--accent);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-bottom: 20px;
+}
+
+.plan-card.featured .plan-suit {
+  border-left-color: var(--sage);
+}
+
+.plan-suit strong {
+  display: block;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+
+.plan-suit p {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--walnut);
+  margin: 0;
+}
+
+.plan-footer {
+  margin-top: auto;
+}
+
 /* Interactive Workflow Walkthrough */
 .workflow {
   padding: 84px 0;
@@ -1806,10 +1985,18 @@ main[id] {
 }
 
 /* Responsive */
+@media (max-width: 1120px) {
+  .plans-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 920px) {
   .hero-grid,
   .philosophy-layout,
   .product-grid,
+  .plans-grid,
+  .plans-grid-enterprise,
   .workflow-grid,
   .pillars-grid,
   .founders-grid,
