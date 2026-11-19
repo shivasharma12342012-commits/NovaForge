@@ -21,14 +21,6 @@
     </svg>
   </button>
 
-  <!-- Appears when the top bar is collapsed -->
-  <button class="bar-handle" id="barHandle" type="button" aria-label="Show top bar" tabindex="-1">
-    <svg viewBox="0 0 16 16" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <path d="M4 6l4 4 4-4"/>
-    </svg>
-    <span>Menu</span>
-  </button>
-
   <header class="site-header" id="siteHeader">
     <div class="container header-inner">
       <a href="#top" class="brand">
@@ -39,40 +31,35 @@
         </span>
       </a>
       <nav class="nav-links" aria-label="Primary">
-        <a href="#philosophy">Philosophy</a>
-        <a href="#products">Products</a>
-        <a href="#plans">Plans</a>
-        <a href="#workflow">How It Works</a>
-        <a href="#founders">Founders</a>
-        <a href="#faq">FAQ</a>
-        <a href="#contact" class="nav-cta">Request Pricing</a>
+        <a href="#philosophy" data-section="philosophy">Philosophy</a>
+        <a href="#products" data-section="products">Products</a>
+        <a href="#plans" data-section="plans">Plans</a>
+        <a href="#workflow" data-section="workflow">How It Works</a>
+        <a href="#founders" data-section="founders">Founders</a>
+        <a href="#faq" data-section="faq">FAQ</a>
+        <a href="#contact" class="nav-cta" data-section="contact">Request Pricing</a>
       </nav>
       <div class="header-actions">
-        <button class="collapse-btn" id="collapseBar" type="button" aria-label="Collapse top bar" title="Collapse top bar">
-          <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M4 10l4-4 4 4"/>
-          </svg>
-        </button>
+        <a href="#plans" class="mobile-quick-cta">Plans</a>
         <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
           <span></span><span></span><span></span>
         </button>
       </div>
     </div>
-    <div class="mobile-nav" id="mobileNav" hidden>
-      <a href="#philosophy">Philosophy</a>
-      <a href="#products">Products</a>
-      <a href="#plans">Plans</a>
-      <a href="#workflow">How It Works</a>
-      <a href="#founders">Founders</a>
-      <a href="#faq">FAQ</a>
-      <a href="#contact">Request Pricing</a>
-    </div>
+    <nav class="mobile-nav" id="mobileNav" aria-label="Mobile Navigation" hidden>
+      <a href="#philosophy" data-section="philosophy">Philosophy</a>
+      <a href="#products" data-section="products">Products</a>
+      <a href="#plans" data-section="plans">Plans &amp; Pricing</a>
+      <a href="#workflow" data-section="workflow">How It Works</a>
+      <a href="#founders" data-section="founders">Founders</a>
+      <a href="#faq" data-section="faq">FAQ</a>
+      <a href="#contact" class="mobile-nav-cta" data-section="contact">Request Pricing</a>
+    </nav>
   </header>
 
   <main id="top">
     <!-- Hero -->
     <section class="hero">
-      <!-- Warm organic background accents (no neon / futuristic colors) -->
       <div class="hero-backdrop" aria-hidden="true">
         <div class="paper-wash wash-warm"></div>
         <div class="paper-wash wash-sage"></div>
@@ -97,14 +84,13 @@
           </h1>
 
           <p class="hero-desc hero-stagger" style="--stagger: 360ms">
-            NovaForge creates thoughtful, local-first AI products for organizations that value
-            accuracy, privacy, and craftsmanship. Your spreadsheets, invoices, and files remain
-            inside your own company walls — never locked inside someone else's cloud.
+            NovaForge builds private, local-first AI software for businesses that care about accuracy and full data ownership.
+            Your spreadsheets, invoices, and files stay safely inside your own office — never locked inside a third-party cloud.
           </p>
 
           <div class="hero-actions hero-stagger" style="--stagger: 440ms">
-            <a href="#contact" class="btn btn-primary">
-              <span>Contact Us for Pricing</span>
+            <a href="#plans" class="btn btn-primary">
+              <span>View Plans &amp; Pricing</span>
               <svg viewBox="0 0 18 18" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M3.5 9h11M10.5 5l4 4-4 4"/>
               </svg>
@@ -115,7 +101,7 @@
           <div class="hero-metrics hero-stagger" style="--stagger: 520ms">
             <div class="metric">
               <strong class="counter" data-target="0" data-suffix="">0</strong>
-              <span>External dependencies</span>
+              <span>Extra software required</span>
             </div>
             <div class="metric">
               <strong class="counter" data-target="100" data-suffix="%">0%</strong>
@@ -168,14 +154,14 @@
               <div class="mac-statusbar">
                 <span class="status-indicator" id="termStatusDot"></span>
                 <span id="termStatusText">Ready on Mac &amp; Windows</span>
-                <span class="status-right">AES-256-GCM · SQLite WAL</span>
+                <span class="status-right">Encrypted · Local Storage</span>
               </div>
             </div>
 
             <!-- Floating Craft Card under Terminal -->
             <div class="floating-note">
               <span class="note-badge">Local-First</span>
-              <span>Runs natively on Mac or Windows — zero cloud lock-in.</span>
+              <span>Runs directly on Mac or Windows — zero cloud lock-in.</span>
             </div>
           </div>
         </div>
@@ -186,31 +172,31 @@
     <div class="marquee-band" aria-hidden="true">
       <div class="marquee-track">
         <div class="marquee-group">
-          <span>Zero External Runtime Dependencies</span>
+          <span>Zero Extra Software Required</span>
           <span class="dot">&#9670;</span>
-          <span>Encrypted Local Key Storage</span>
+          <span>Advanced Data Encryption</span>
           <span class="dot">&#9670;</span>
           <span>1,000 &times; 1,000 Spreadsheet Studio</span>
           <span class="dot">&#9670;</span>
-          <span>Immutable GST Invoices &amp; Credit Notes</span>
+          <span>Issued Invoices Cannot Be Silently Altered</span>
           <span class="dot">&#9670;</span>
-          <span>DPDP Consent &amp; Photo Scrubbing</span>
+          <span>Automatic Photo Location Removal</span>
           <span class="dot">&#9670;</span>
-          <span>Automated Daily Backups</span>
+          <span>Automated Daily Local Backups</span>
           <span class="dot">&#9670;</span>
         </div>
         <div class="marquee-group">
-          <span>Zero External Runtime Dependencies</span>
+          <span>Zero Extra Software Required</span>
           <span class="dot">&#9670;</span>
-          <span>Encrypted Local Key Storage</span>
+          <span>Advanced Data Encryption</span>
           <span class="dot">&#9670;</span>
           <span>1,000 &times; 1,000 Spreadsheet Studio</span>
           <span class="dot">&#9670;</span>
-          <span>Immutable GST Invoices &amp; Credit Notes</span>
+          <span>Issued Invoices Cannot Be Silently Altered</span>
           <span class="dot">&#9670;</span>
-          <span>DPDP Consent &amp; Photo Scrubbing</span>
+          <span>Automatic Photo Location Removal</span>
           <span class="dot">&#9670;</span>
-          <span>Automated Daily Backups</span>
+          <span>Automated Daily Local Backups</span>
           <span class="dot">&#9670;</span>
         </div>
       </div>
@@ -236,19 +222,22 @@
 
           <div class="times-explanation reveal" style="--delay: 120ms">
             <p class="lead-times">
-              Most business software today treats companies like renters: forcing private ledgers onto external servers, multiplying monthly fees for every employee, and hiding critical calculations inside opaque systems.
+              Most business software today treats companies like renters — placing private ledgers on external servers and multiplying monthly fees for every new employee.
             </p>
             <p>
-              At NovaForge, we craft AI tools meant to feel like permanent instruments inside your office. Everything runs quietly on your own Mac, Windows workstation, or local server. Your company keeps full custody of every spreadsheet, invoice, and employee record, while bringing your own AI key so you never overpay a middleman.
+              At NovaForge, we build AI tools designed to act like permanent instruments inside your office. Everything runs quietly on your own Mac, Windows workstation, or office network.
+            </p>
+            <p>
+              Your company keeps complete custody of every spreadsheet, invoice, and staff record — while connecting your own AI key so you never overpay a middleman.
             </p>
             <div class="philosophy-compare">
               <div class="compare-item">
                 <span class="compare-tag tag-muted">Conventional AI SaaS</span>
-                <p>Data stored on third-party clouds, recurring per-seat markups, unpredictable model wrappers.</p>
+                <p>Data stored on third-party clouds, recurring per-seat monthly bills, and hidden formulas.</p>
               </div>
               <div class="compare-item compare-ours">
                 <span class="compare-tag tag-sage">The NovaForge Standard</span>
-                <p>Local encrypted database, company-wide licensing, auditable math, and human approval before execution.</p>
+                <p>Reliable local data storage, one-time company licensing, auditable math, and owner approval before final action.</p>
               </div>
             </div>
           </div>
@@ -263,95 +252,132 @@
           <div class="section-label">Our Flagship Products</div>
           <h2>Two focused tools. Built cleanly for daily work.</h2>
           <p class="section-sub">
-            Every NovaForge product ships completely self-contained, tested to engineering rigor,
-            and tailored around real human workflows.
+            Each NovaForge product serves a distinct business need, ships completely self-contained, and stays easy for non-technical staff to use every day.
           </p>
         </div>
 
         <div class="product-grid">
-          <!-- Float AI Agent -->
-          <article class="product-card sheen-card reveal" style="--delay: 60ms">
+          <!-- Float AI Agent (Warm Terracotta Theme) -->
+          <article class="product-card product-agent sheen-card reveal" style="--delay: 60ms">
             <div class="card-top">
               <div class="product-icon product-icon-logo">
                 <img src="assets/float-logo.png" alt="Float AI Agent logo" class="float-product-logo" width="44" height="44" />
               </div>
-              <span class="product-badge">AI Workspace &amp; Sheets</span>
+              <span class="product-badge badge-agent">AI Workspace &amp; Sheets</span>
             </div>
 
             <h3>Float AI Agent</h3>
+
+            <div class="best-for best-for-agent">
+              <span class="best-for-label">Best for</span>
+              <p>General business teams, managers &amp; analysts who want a private AI workspace and spreadsheet studio on their own computers.</p>
+            </div>
+
             <p class="product-desc">
-              A complete, private AI workspace and spreadsheet studio for your team. Draft reports,
-              organize data, analyze attachments, and build full 1,000 × 1,000 workbooks with live
-              formulas and charts in Float Sheets.
+              A private AI assistant and full spreadsheet studio built right into one calm desktop app. Draft reports, analyze documents, and build 1,000 × 1,000 workbooks with live formulas and charts.
             </p>
 
             <!-- Interactive Highlight Switcher -->
-            <div class="pill-switcher" data-card="agent">
+            <div class="pill-switcher switcher-agent" data-card="agent">
               <button type="button" class="pill-btn active" data-detail="agent-sheets">Float Sheets</button>
               <button type="button" class="pill-btn" data-detail="agent-security">Privacy &amp; Keys</button>
               <button type="button" class="pill-btn" data-detail="agent-admin">Team Admin</button>
             </div>
-            <div class="pill-detail" id="detail-agent">
-              Built-in 1,000 × 1,000 spreadsheet grid supporting Excel (.xlsx) import/export, PDF generation, live charts, and formula evaluation without leaving the app.
+            <div class="pill-detail detail-agent" id="detail-agent">
+              Built-in 1,000 × 1,000 spreadsheet grid supporting Excel (.xlsx) import and export, PDF reports, live charts, and formulas without leaving the app.
             </div>
 
-            <ul class="feature-list">
-              <li>Zero external runtime dependencies — runs natively on Mac &amp; Windows</li>
-              <li>Bring Your Own Key: OpenAI, Anthropic, Google Gemini, OpenRouter, or local</li>
-              <li>AES-256-GCM sealed key transport &amp; device-bound key storage</li>
-              <li>Attachment support with safe conversation history &amp; file library</li>
-              <li>Role-based team allowances, spend caps &amp; daily automated backups</li>
+            <ul class="feature-list feature-list-agent">
+              <li>
+                <strong>Runs directly on Mac &amp; Windows with zero extra software</strong>
+                <span class="tech-spec">Self-contained local runtime — no external packages or cloud server setup</span>
+              </li>
+              <li>
+                <strong>Use your own AI provider with zero middleman markups</strong>
+                <span class="tech-spec">Supports OpenAI, Anthropic, Google Gemini, OpenRouter, or offline local models</span>
+              </li>
+              <li>
+                <strong>Advanced data encryption for your company AI keys</strong>
+                <span class="tech-spec">Technical: AES-256-GCM sealed key transport &amp; device-bound local key storage</span>
+              </li>
+              <li>
+                <strong>Safe file library &amp; document attachments</strong>
+                <span class="tech-spec">Attach PDFs, spreadsheets, and notes with searchable local conversation history</span>
+              </li>
+              <li>
+                <strong>Role-based employee permissions &amp; monthly spend limits</strong>
+                <span class="tech-spec">Technical: RBAC team controls, per-member AI caps &amp; automated daily backups</span>
+              </li>
             </ul>
 
             <div class="product-footer">
               <div class="price-note">
-                <span class="price-label">Company Pricing</span>
-                <strong>Contact us for licensing &amp; buyout options</strong>
+                <span class="price-label">Company Editions</span>
+                <strong>One-time licensing &amp; buyout options</strong>
               </div>
-              <a href="#contact" class="btn btn-outline" data-product="Float AI Agent">Request Quote</a>
+              <a href="#contact" class="btn btn-agent" data-product="Both Float AI Agent & Float for Finance">Request Quote</a>
             </div>
           </article>
 
-          <!-- Float for Finance -->
-          <article class="product-card featured sheen-card reveal" style="--delay: 140ms">
+          <!-- Float for Finance (Deep Forest Sage Theme) -->
+          <article class="product-card product-finance sheen-card reveal" style="--delay: 140ms">
             <div class="card-top">
               <div class="product-icon product-icon-logo">
                 <img src="assets/float-logo.png" alt="Float for Finance logo" class="float-product-logo" width="44" height="44" />
               </div>
-              <span class="product-badge badge-sage">Fleet, Tax &amp; Payroll Suite</span>
+              <span class="product-badge badge-finance">Fleet, GST &amp; Payroll Suite</span>
             </div>
 
             <h3>Float for Finance</h3>
+
+            <div class="best-for best-for-finance">
+              <span class="best-for-label">Best for</span>
+              <p>Car rental agencies, multi-branch fleet operators &amp; finance teams needing strict GST billing, driver payroll, and owner approvals.</p>
+            </div>
+
             <p class="product-desc">
-              Engineered specifically for car rental operators, fleet businesses, and finance teams.
-              Combines Float's spreadsheet engine with immutable GST invoicing, driver payroll,
-              DPDP privacy controls, and 3-tier human approvals.
+              Built specifically for vehicle rental desks and finance departments. Combines Float's spreadsheet engine with locked GST billing, driver payroll, compliance alerts, and owner sign-off controls.
             </p>
 
             <!-- Interactive Highlight Switcher -->
-            <div class="pill-switcher" data-card="finance">
+            <div class="pill-switcher switcher-finance" data-card="finance">
               <button type="button" class="pill-btn active" data-detail="fin-tax">GST &amp; Payroll</button>
-              <button type="button" class="pill-btn" data-detail="fin-risk">3-Tier Risk Policy</button>
-              <button type="button" class="pill-btn" data-detail="fin-dpdp">DPDP &amp; Expiries</button>
+              <button type="button" class="pill-btn" data-detail="fin-risk">Owner Approvals</button>
+              <button type="button" class="pill-btn" data-detail="fin-dpdp">Privacy &amp; Expiries</button>
             </div>
-            <div class="pill-detail" id="detail-finance">
-              Exact Decimal ROUND_HALF_UP tax math with immutable issued GST invoices, database-level protection triggers, and driver payroll covering PF, ESI, PT, and TDS.
+            <div class="pill-detail detail-finance" id="detail-finance">
+              Accurate GST rounding and issued invoices that cannot be silently altered, paired with complete driver payroll covering PF, ESI, PT, and TDS.
             </div>
 
-            <ul class="feature-list">
-              <li>Immutable issued GST invoices, credit notes &amp; deposit adjustment ledgers</li>
-              <li>Complete driver payroll (PF, ESI, PT, TDS) &amp; monthly reconciliation queues</li>
-              <li>3-tier governance policy with minimum owner approval thresholds</li>
-              <li>DPDP bank &amp; photo consent gates plus automatic GPS/EXIF metadata scrubbing</li>
-              <li>Automated 30/60/90-day expiry alerts for insurance, PUC, permits &amp; licences</li>
+            <ul class="feature-list feature-list-finance">
+              <li>
+                <strong>Issued invoices cannot be silently altered</strong>
+                <span class="tech-spec">Technical: Immutable sequential GST invoices, credit notes &amp; database-level triggers</span>
+              </li>
+              <li>
+                <strong>Accurate GST rounding &amp; complete driver payroll</strong>
+                <span class="tech-spec">Technical: Exact Decimal ROUND_HALF_UP tax math with PF, ESI, PT &amp; TDS reconciliation</span>
+              </li>
+              <li>
+                <strong>Clear manager &amp; owner approval checkpoints</strong>
+                <span class="tech-spec">3-tier governance policy requiring owner sign-off on bank, salary &amp; payout changes</span>
+              </li>
+              <li>
+                <strong>Automatic removal of hidden photo location information</strong>
+                <span class="tech-spec">Technical: India DPDP consent logs plus automatic GPS &amp; EXIF metadata scrubbing</span>
+              </li>
+              <li>
+                <strong>Early document renewal reminders (30 / 60 / 90 days)</strong>
+                <span class="tech-spec">Automatic alerts for vehicle insurance, PUC, permits &amp; driver licences</span>
+              </li>
             </ul>
 
             <div class="product-footer">
               <div class="price-note">
-                <span class="price-label">Company Pricing</span>
-                <strong>Contact us for licensing &amp; buyout options</strong>
+                <span class="price-label">Edition Pricing</span>
+                <strong>Starts at ₹3 Lakh (One-Time)</strong>
               </div>
-              <a href="#contact" class="btn btn-primary" data-product="Float for Finance">Request Quote</a>
+              <a href="#plans" class="btn btn-finance">See All 5 Plans</a>
             </div>
           </article>
         </div>
@@ -363,10 +389,9 @@
       <div class="container">
         <div class="section-head reveal">
           <div class="section-label">Float Editions &amp; Pricing</div>
-          <h2>Five clear editions. Built to scale with your fleet.</h2>
+          <h2>Five clear editions. Built to grow with your fleet.</h2>
           <p class="section-sub">
-            Every Float edition runs locally with <strong>unlimited staff and shift workers</strong> — choose the
-            fleet capacity, workflow automation, and branch governance that matches your company.
+            Every Float edition is a <strong>one-time purchase</strong> with <strong>unlimited staff and shift workers</strong>. Start with the fleet size you manage today and upgrade anytime by paying only the difference.
           </p>
         </div>
 
@@ -376,45 +401,70 @@
           <article class="plan-card sheen-card reveal" style="--delay: 40ms">
             <div class="plan-top">
               <span class="plan-tier">01 · Starter</span>
-              <span class="plan-capacity">Up to 25 Cars · 1 Branch</span>
+              <span class="plan-branch-pill">1 Branch</span>
             </div>
             <h3>1. Float Basic</h3>
-            <div class="plan-price-row">
-              <strong class="plan-price">₹3 Lakh</strong>
-              <span class="plan-price-note">One-time company edition</span>
+            <div class="plan-price-block">
+              <div class="plan-price-row">
+                <strong class="plan-price">₹3 Lakh</strong>
+                <span class="plan-price-note">One-time payment</span>
+              </div>
+              <div class="plan-capacity-bar">
+                <strong>Up to 25 Cars</strong> · 1 Branch · Unlimited Staff
+              </div>
             </div>
+
+            <div class="plan-diff plan-diff-base">
+              <strong>Foundation Edition:</strong> Fast counter billing, express wash turnaround &amp; unlimited shift logins.
+            </div>
+
             <p class="plan-tagline">
-              <strong>Starter Counter Edition</strong> — Unlimited Staff &amp; Workers · Up to 25 Cars · Express Turnaround &amp; Heavy-Ready Speed
+              <strong>Starter Counter Edition</strong> — Express Turnaround &amp; Heavy-Ready Speed
             </p>
             <p class="plan-desc">
-              Built for single-counter car rental desks that want fast, zero-bottleneck daily operations without paying
-              per staff seat. Every shift worker gets their own login, backed by <strong>64 concurrent HTTP workers</strong>
-              and instant search.
+              Built for single-counter rental desks replacing Excel sheets and manual WhatsApp quotes with instant paperwork and fast wash-bay turnaround.
             </p>
 
             <div class="plan-block-title"><strong>Key Features</strong></div>
             <ul class="feature-list plan-features">
-              <li><strong>Unlimited Staff &amp; Shift Workers</strong> (zero user limits, zero rate throttling, 600 req/min API capacity)</li>
-              <li><strong>Up to 25 Vehicles</strong>, 1 Branch Location</li>
-              <li><strong>Express Clean-to-Ready Turnaround Queue</strong> (1-click Wash Done → Mark Ready with TAT timer)</li>
-              <li><strong>Instant Rental &amp; GST Bill Calculator</strong> (5% / 18% CGST + SGST &amp; Deposit math)</li>
-              <li><strong>Instant Quote, Rate Card &amp; Print-Ready Rental Agreements</strong> (Self-Drive &amp; Chauffeur)</li>
-              <li><strong>AI Command Center</strong> (<code>ops_command_center</code>) + OS Command &amp; Direct Desktop File Mastery (<code>run_os_command</code>, <code>save_to_desktop</code>)</li>
-              <li><strong>Daily Shift Command Radar</strong> &amp; Quick 4-to-8 Digit Counter PIN Lock</li>
-              <li><strong>English &amp; Hindi</strong> support</li>
+              <li>
+                <strong>Unlimited Staff &amp; Shift Workers</strong>
+                <span class="tech-spec">Zero per-seat limits, zero throttling · 64 concurrent HTTP workers &amp; 600 req/min API capacity</span>
+              </li>
+              <li>
+                <strong>Up to 25 Vehicles, 1 Branch Location</strong>
+              </li>
+              <li>
+                <strong>Express Clean-to-Ready Turnaround Queue</strong>
+                <span class="tech-spec">1-click Wash Done → Mark Ready with live turnaround timer (TAT)</span>
+              </li>
+              <li>
+                <strong>Instant Rental &amp; GST Bill Calculator</strong>
+                <span class="tech-spec">Accurate 5% / 18% CGST + SGST &amp; security deposit calculations</span>
+              </li>
+              <li>
+                <strong>Instant Quote, Rate Card &amp; Print-Ready Rental Agreements</strong>
+                <span class="tech-spec">Ready for both Self-Drive &amp; Chauffeur bookings</span>
+              </li>
+              <li>
+                <strong>AI Operations Assistant &amp; Direct Desktop File Saving</strong>
+                <span class="tech-spec">Technical: ops_command_center, run_os_command &amp; save_to_desktop tools</span>
+              </li>
+              <li>
+                <strong>Daily Shift Command Radar &amp; Quick Counter PIN Lock</strong>
+                <span class="tech-spec">4-to-8 digit instant staff lock screen · English &amp; Hindi support</span>
+              </li>
             </ul>
 
             <div class="plan-suit">
-              <strong>How It Suits the Company</strong>
+              <strong>How It Suits Your Company</strong>
               <p>
-                Ideal for small local rental agencies and single-desk garages replacing Excel sheets and manual
-                WhatsApp quotes with instant paperwork, fast wash-bay turnaround, and unlimited shift-worker logins
-                on one counter PC.
+                Ideal for small local rental agencies and single-desk garages moving off spreadsheets onto one fast counter PC with unlimited staff logins.
               </p>
             </div>
 
             <div class="plan-footer">
-              <a href="#contact" class="btn btn-outline btn-full" data-product="Float Basic (₹3 Lakh)">Select Float Basic — ₹3 Lakh</a>
+              <a href="#contact" class="btn btn-outline btn-full" data-product="Float Basic (₹3 Lakh)">Choose Float Basic — ₹3 Lakh</a>
             </div>
           </article>
 
@@ -422,85 +472,144 @@
           <article class="plan-card sheen-card reveal" style="--delay: 100ms">
             <div class="plan-top">
               <span class="plan-tier">02 · High-Volume</span>
-              <span class="plan-capacity">Up to 60 Cars · 1 Branch</span>
+              <span class="plan-branch-pill">1 Branch</span>
             </div>
             <h3>2. Float Plus</h3>
-            <div class="plan-price-row">
-              <strong class="plan-price">₹9 Lakh</strong>
-              <span class="plan-price-note">One-time company edition</span>
+            <div class="plan-price-block">
+              <div class="plan-price-row">
+                <strong class="plan-price">₹9 Lakh</strong>
+                <span class="plan-price-note">One-time payment</span>
+              </div>
+              <div class="plan-capacity-bar">
+                <strong>Up to 60 Cars</strong> · 1 Branch · Unlimited Staff
+              </div>
             </div>
+
+            <div class="plan-diff">
+              <strong>Upgrade over Basic:</strong> +35 cars, 1-click wave dispatch, 1-click trip extensions, FASTag/e-challan auto-matcher &amp; 13 Indian languages.
+            </div>
+
             <p class="plan-tagline">
-              <strong>High-Volume Counter Edition</strong> — Unlimited Workers · Up to 60 Cars · Batch Dispatch, 1-Click Extend &amp; Toll Matcher
+              <strong>High-Volume Counter Edition</strong> — Batch Dispatch, 1-Click Extend &amp; Toll Matcher
             </p>
             <p class="plan-desc">
-              Designed for busy single-location fleets handling daily airport/city waves, mid-trip extensions, and
-              post-trip FASTag or e-challan recoveries. Converts repetitive counter work into <strong>1-click actions</strong>.
+              Designed for busy single-location fleets handling daily airport/city waves, frequent mid-trip extensions, and FASTag or e-challan recoveries.
             </p>
 
-            <div class="plan-block-title"><strong>Key Features — Everything in Float Basic, PLUS:</strong></div>
+            <div class="plan-block-title"><strong>Everything in Basic, PLUS:</strong></div>
             <ul class="feature-list plan-features">
-              <li><strong>Up to 60 Vehicles</strong>, 1 Branch Location, <strong>Unlimited Staff &amp; Workers</strong></li>
-              <li><strong>1-Click Peak Wave Batch Auto-Dispatcher</strong> (confirm enquiries &amp; start due pickups in one wave)</li>
-              <li><strong>1-Click Mid-Trip Rental Extensions</strong> with automatic overlap checks &amp; prorated GST pricing</li>
-              <li><strong>FASTag Toll, E-Challan &amp; Fuel Plate+Timestamp Auto-Matcher</strong> (1-second renter lookup &amp; recovery)</li>
-              <li><strong>360° Handover &amp; Return Inspection Checklists</strong> + Damage/Deposit Deduction Estimator</li>
-              <li><strong>Customer KYC + Automatic Expired Driving Licence Blocker</strong>, Insurance/PUC Expiry Alerts &amp; Advance/Deposit Ledger</li>
-              <li><strong>All 13 Indian Languages</strong>, Excel/CSV Revenue Sheet Analyzer &amp; Google Drive File Backup</li>
+              <li>
+                <strong>Up to 60 Vehicles, 1 Branch Location</strong>
+                <span class="tech-spec">Unlimited staff &amp; shift workers included</span>
+              </li>
+              <li>
+                <strong>1-Click Peak Wave Batch Auto-Dispatcher</strong>
+                <span class="tech-spec">Confirm enquiries &amp; launch due pickups together in a single wave</span>
+              </li>
+              <li>
+                <strong>1-Click Mid-Trip Rental Extensions</strong>
+                <span class="tech-spec">Automatic booking overlap checks &amp; prorated GST pricing</span>
+              </li>
+              <li>
+                <strong>FASTag Toll, E-Challan &amp; Fuel Auto-Matcher</strong>
+                <span class="tech-spec">1-second vehicle plate + timestamp lookup to recover post-trip charges</span>
+              </li>
+              <li>
+                <strong>360° Handover &amp; Return Inspection Checklists</strong>
+                <span class="tech-spec">Includes damage &amp; deposit deduction estimator</span>
+              </li>
+              <li>
+                <strong>Customer KYC &amp; Expired Licence Blocker</strong>
+                <span class="tech-spec">Insurance/PUC expiry alerts &amp; advance/deposit ledger</span>
+              </li>
+              <li>
+                <strong>All 13 Indian Languages &amp; Google Drive Backup</strong>
+                <span class="tech-spec">Plus built-in Excel/CSV revenue sheet analyzer</span>
+              </li>
             </ul>
 
             <div class="plan-suit">
-              <strong>How It Suits the Company</strong>
+              <strong>How It Suits Your Company</strong>
               <p>
-                Best for growing city &amp; airport-counter rental operators managing 25–60 cars where morning dispatch
-                rushes, frequent trip extensions, and toll/challan leakage slow down the front desk.
+                Best for growing city and airport-counter operators running 25–60 cars where morning rushes and toll/challan leakage slow down the desk.
               </p>
             </div>
 
             <div class="plan-footer">
-              <a href="#contact" class="btn btn-outline btn-full" data-product="Float Plus (₹9 Lakh)">Select Float Plus — ₹9 Lakh</a>
+              <a href="#contact" class="btn btn-outline btn-full" data-product="Float Plus (₹9 Lakh)">Choose Float Plus — ₹9 Lakh</a>
             </div>
           </article>
 
-          <!-- 3. Float Pro -->
-          <article class="plan-card sheen-card reveal" style="--delay: 160ms">
+          <!-- 3. Float Pro (RECOMMENDED) -->
+          <article class="plan-card recommended sheen-card reveal" style="--delay: 160ms">
+            <div class="recommended-banner">Recommended · Best Value for Growing Agencies</div>
             <div class="plan-top">
-              <span class="plan-tier">03 · Full Agency</span>
-              <span class="plan-capacity">Up to 150 Cars · 1 Branch</span>
+              <span class="plan-tier tier-sage">03 · Full Agency</span>
+              <span class="plan-branch-pill">1 Branch</span>
             </div>
             <h3>3. Float Pro</h3>
-            <div class="plan-price-row">
-              <strong class="plan-price">₹12 Lakh</strong>
-              <span class="plan-price-note">One-time company edition</span>
+            <div class="plan-price-block">
+              <div class="plan-price-row">
+                <strong class="plan-price">₹12 Lakh</strong>
+                <span class="plan-price-note">One-time payment</span>
+              </div>
+              <div class="plan-capacity-bar capacity-recommended">
+                <strong>Up to 150 Cars</strong> · 1 Branch · Unlimited Staff
+              </div>
             </div>
+
+            <div class="plan-diff plan-diff-rec">
+              <strong>Upgrade over Plus:</strong> +90 cars, all 19 AI workflows, locked GST invoices &amp; credit notes, corporate B2B accounts, workshop cards &amp; profit analytics.
+            </div>
+
             <p class="plan-tagline">
-              <strong>Full Agency Command Edition</strong> — Unlimited Workers · Up to 150 Cars · GST Invoices, RevPAC Yield &amp; B2B Contracts
+              <strong>Full Agency Command Edition</strong> — GST Invoices, Yield Analytics &amp; B2B Contracts
             </p>
             <p class="plan-desc">
-              A complete financial, workshop, and fleet-yield command center for established rental companies. Combines
-              gap-free statutory <strong>GST billing</strong> with corporate B2B accounts and per-car profitability analytics.
+              A complete financial, workshop, and fleet-profitability command center combining statutory GST billing with corporate accounts and per-car yield tracking.
             </p>
 
-            <div class="plan-block-title"><strong>Key Features — Everything in Float Plus, PLUS:</strong></div>
+            <div class="plan-block-title"><strong>Everything in Plus, PLUS:</strong></div>
             <ul class="feature-list plan-features">
-              <li><strong>Up to 150 Vehicles</strong>, 1 Branch Location, <strong>Unlimited Staff &amp; Workers</strong></li>
-              <li><strong>All 19 AI Car Rental Workflows</strong></li>
-              <li><strong>Corporate B2B Contract Accounts</strong> (negotiated discounts, corporate GSTIN &amp; credit terms)</li>
-              <li><strong>RevPAC, ADR, Avg Clean-to-Ready TAT</strong> &amp; Automated Yield Advisories</li>
-              <li><strong>Immutable Sequential GST Invoices</strong> (<code>FLT/YYYY-YY/NNNNN</code>) &amp; Credit Notes (<code>CN/YYYY-YY/NNNNN</code>)</li>
-              <li><strong>Workshop Job Cards</strong>, Service Reminders, Photo Damage Canvas &amp; SHA-256 Digital Signatures</li>
-              <li><strong>30-Day Fleet Profitability Dashboard</strong> + Daily Automated WAL-Verified Backups</li>
+              <li>
+                <strong>Up to 150 Vehicles, 1 Branch Location</strong>
+                <span class="tech-spec">Unlimited staff &amp; shift workers included</span>
+              </li>
+              <li>
+                <strong>All 19 AI Car Rental Workflows</strong>
+                <span class="tech-spec">Full end-to-end counter, dispatch, billing &amp; fleet automation</span>
+              </li>
+              <li>
+                <strong>Corporate B2B Contract Accounts</strong>
+                <span class="tech-spec">Negotiated corporate discounts, company GSTIN &amp; credit terms</span>
+              </li>
+              <li>
+                <strong>Per-Car Revenue &amp; Yield Insights</strong>
+                <span class="tech-spec">Technical: RevPAC, ADR, Avg Clean-to-Ready TAT &amp; automated yield advisories</span>
+              </li>
+              <li>
+                <strong>Issued Invoices Cannot Be Silently Altered</strong>
+                <span class="tech-spec">Technical: Immutable sequential GST invoices (FLT/YYYY-YY/NNNNN) &amp; credit notes (CN/YYYY-YY/NNNNN)</span>
+              </li>
+              <li>
+                <strong>Workshop Job Cards &amp; Digital Signatures</strong>
+                <span class="tech-spec">Service reminders, photo damage canvas &amp; tamper-proof SHA-256 signatures</span>
+              </li>
+              <li>
+                <strong>30-Day Fleet Profitability &amp; Verified Daily Backups</strong>
+                <span class="tech-spec">Technical: Automated daily SQLite WAL-verified local backups</span>
+              </li>
             </ul>
 
             <div class="plan-suit">
-              <strong>How It Suits the Company</strong>
+              <strong>How It Suits Your Company</strong>
               <p>
-                Built for established mid-sized rental agencies that need strict GST compliance, corporate client
-                billing, workshop cost control, and data-driven pricing/utilization insights to maximize profit per vehicle.
+                Built for established mid-sized agencies needing strict GST compliance, corporate billing, workshop cost control, and clear profit-per-car visibility.
               </p>
             </div>
 
             <div class="plan-footer">
-              <a href="#contact" class="btn btn-outline btn-full" data-product="Float Pro (₹12 Lakh)">Select Float Pro — ₹12 Lakh</a>
+              <a href="#contact" class="btn btn-finance btn-full" data-product="Float Pro (₹12 Lakh)">Choose Float Pro — ₹12 Lakh</a>
             </div>
           </article>
         </div>
@@ -511,88 +620,303 @@
           <article class="plan-card sheen-card reveal" style="--delay: 80ms">
             <div class="plan-top">
               <span class="plan-tier">04 · Multi-Branch</span>
-              <span class="plan-capacity">Up to 500 Cars · 5 Branches</span>
+              <span class="plan-branch-pill">Up to 5 Branches</span>
             </div>
             <h3>4. Float Enterprise</h3>
-            <div class="plan-price-row">
-              <strong class="plan-price">₹15 Lakh</strong>
-              <span class="plan-price-note">One-time company edition</span>
+            <div class="plan-price-block">
+              <div class="plan-price-row">
+                <strong class="plan-price">₹15 Lakh</strong>
+                <span class="plan-price-note">One-time payment</span>
+              </div>
+              <div class="plan-capacity-bar">
+                <strong>Up to 500 Cars</strong> · Up to 5 Branches · Unlimited Staff
+              </div>
             </div>
+
+            <div class="plan-diff">
+              <strong>Upgrade over Pro:</strong> +350 cars, 5 branches, multi-computer office LAN server, 5 employee permission roles, cash drawer reconciliation, chauffeur roster &amp; DPDP compliance.
+            </div>
+
             <p class="plan-tagline">
-              <strong>Multi-Branch Scale Edition</strong> — Unlimited Workers · Up to 500 Cars · 5 Branches · LAN Server &amp; RBAC
+              <strong>Multi-Branch Scale Edition</strong> — Multi-PC Office Server &amp; Role-Based Employee Permissions
             </p>
             <p class="plan-desc">
-              Engineered for multi-desk, multi-branch rental companies running multiple counter PCs on a local office
-              network with strict <strong>role-based permissions</strong>, chauffeur rosters, and <strong>India DPDP Act 2023</strong> compliance.
+              Engineered for multi-desk, multi-branch rental companies running multiple counter computers together on an office network with strict staff accountability.
             </p>
 
-            <div class="plan-block-title"><strong>Key Features — Everything in Float Pro, PLUS:</strong></div>
+            <div class="plan-block-title"><strong>Everything in Pro, PLUS:</strong></div>
             <ul class="feature-list plan-features">
-              <li><strong>Up to 500 Vehicles</strong>, <strong>Up to 5 Branch Locations</strong>, <strong>Unlimited Staff &amp; Workers</strong></li>
-              <li><strong>Multi-Computer Branch LAN Server</strong> (Start Float Agency Server) with Fixed-Desk IP Session Binding</li>
-              <li><strong>5 Staff Permission Roles:</strong> Owner, Manager, Desk Agent, Accountant &amp; Read-Only Auditor</li>
-              <li><strong>End-of-Shift Cash Drawer Reconciliation</strong> &amp; Daily Collection Variance Reports</li>
-              <li><strong>Chauffeur / Driver Roster</strong> &amp; Conflict-Checked Driver Assignment</li>
-              <li><strong>Shared Agency AI Key</strong> &amp; Monthly Per-Employee AI Spend Caps</li>
-              <li><strong>India DPDP Act 2023 Compliance</strong> (Consent, Portability JSON Export &amp; Safe PII Erasure)</li>
-              <li><strong>Bulk CSV / Excel (.xlsx) Vehicle &amp; Customer Importer</strong> + One-Click Admin Backup &amp; Restore</li>
+              <li>
+                <strong>Up to 500 Vehicles &amp; Up to 5 Branch Locations</strong>
+                <span class="tech-spec">Unlimited staff &amp; shift workers across every counter</span>
+              </li>
+              <li>
+                <strong>Multi-Computer Office Network Server</strong>
+                <span class="tech-spec">Technical: Branch LAN Server (Start Float Agency Server) with fixed-desk IP session binding</span>
+              </li>
+              <li>
+                <strong>Role-Based Employee Permissions (5 Clear Roles)</strong>
+                <span class="tech-spec">Technical: RBAC for Owner, Manager, Desk Agent, Accountant &amp; Read-Only Auditor</span>
+              </li>
+              <li>
+                <strong>End-of-Shift Cash Drawer Reconciliation</strong>
+                <span class="tech-spec">Daily collection variance reports for full cash accountability</span>
+              </li>
+              <li>
+                <strong>Chauffeur / Driver Roster &amp; Conflict Prevention</strong>
+                <span class="tech-spec">Automatic double-booking prevention when assigning drivers</span>
+              </li>
+              <li>
+                <strong>Shared Agency AI Key &amp; Per-Employee Spend Caps</strong>
+                <span class="tech-spec">Central admin control over monthly AI usage per staff member</span>
+              </li>
+              <li>
+                <strong>India DPDP Act 2023 Privacy Compliance</strong>
+                <span class="tech-spec">Consent tracking, customer data export (JSON) &amp; safe personal data erasure</span>
+              </li>
+              <li>
+                <strong>Bulk Excel/CSV Importer &amp; 1-Click Backup/Restore</strong>
+                <span class="tech-spec">Fast migration for existing vehicle lists and customer databases (.xlsx / .csv)</span>
+              </li>
             </ul>
 
             <div class="plan-suit">
-              <strong>How It Suits the Company</strong>
+              <strong>How It Suits Your Company</strong>
               <p>
-                Perfect for regional multi-branch rental companies with separate front-desk agents, accountants, managers,
-                and auditors working simultaneously across multiple computers who need cash accountability and strict data governance.
+                Perfect for regional multi-branch agencies with separate desk agents, accountants, managers, and auditors working simultaneously across office PCs.
               </p>
             </div>
 
             <div class="plan-footer">
-              <a href="#contact" class="btn btn-outline btn-full" data-product="Float Enterprise (₹15 Lakh)">Select Float Enterprise — ₹15 Lakh</a>
+              <a href="#contact" class="btn btn-outline btn-full" data-product="Float Enterprise (₹15 Lakh)">Choose Float Enterprise — ₹15 Lakh</a>
             </div>
           </article>
 
           <!-- 5. Float Enterprise Max -->
-          <article class="plan-card featured sheen-card reveal" style="--delay: 140ms">
+          <article class="plan-card flagship sheen-card reveal" style="--delay: 140ms">
             <div class="plan-top">
-              <span class="plan-tier tier-sage">05 · Flagship Unlimited</span>
-              <span class="plan-capacity">Unlimited Cars &amp; Branches</span>
+              <span class="plan-tier tier-flagship">05 · Flagship Unlimited</span>
+              <span class="plan-branch-pill">Unlimited Branches</span>
             </div>
             <h3>5. Float Enterprise Max</h3>
-            <div class="plan-price-row">
-              <strong class="plan-price">₹18 Lakh</strong>
-              <span class="plan-price-note">One-time company edition</span>
+            <div class="plan-price-block">
+              <div class="plan-price-row">
+                <strong class="plan-price">₹18 Lakh</strong>
+                <span class="plan-price-note">One-time payment</span>
+              </div>
+              <div class="plan-capacity-bar capacity-flagship">
+                <strong>Unlimited Cars</strong> · Unlimited Branches · Unlimited Staff
+              </div>
             </div>
+
+            <div class="plan-diff plan-diff-flagship">
+              <strong>Upgrade over Enterprise:</strong> Removes all car &amp; branch limits + inter-branch vehicle transfers, complete audit trail, external tool connections (MCP), desktop automation &amp; 100% offline AI.
+            </div>
+
             <p class="plan-tagline">
-              <strong>Unlimited Multi-City Fleet Command</strong> — Unlimited Workers, Cars &amp; Branches · MCP · Desktop AI · Offline AI
+              <strong>Unlimited Multi-City Fleet Command</strong> — Uncapped Scale · External Tool Integrations · Offline AI
             </p>
             <p class="plan-desc">
-              The flagship, uncapped command platform for large multi-city and airport-network rental enterprises. Removes
-              all fleet and branch ceilings while adding inter-branch transfers, full JSON audit trails, <strong>MCP integrations</strong>,
-              desktop automation, and <strong>100% offline AI</strong>.
+              The uncapped flagship platform for large multi-city and airport-network rental enterprises requiring cross-city transfers, forensic audit logs, and air-gapped offline AI.
             </p>
 
-            <div class="plan-block-title"><strong>Key Features — Everything in Float Enterprise, PLUS:</strong></div>
+            <div class="plan-block-title"><strong>Everything in Enterprise, PLUS:</strong></div>
             <ul class="feature-list plan-features">
-              <li><strong>UNLIMITED Vehicles</strong>, <strong>UNLIMITED Branches</strong>, <strong>UNLIMITED Staff &amp; Workers</strong></li>
-              <li><strong>Audited Inter-Branch Vehicle Transfers</strong> across cities and airport counters</li>
-              <li><strong>Complete Before-and-After JSON Field-Level Audit Trail</strong> for every sensitive action</li>
-              <li><strong>Model Context Protocol (MCP) Support</strong> to connect live GPS telematics, CRMs &amp; ERPs</li>
-              <li><strong>Operator-Confirmed AI Desktop Automation</strong> (<code>use_computer</code>) on Windows &amp; macOS</li>
-              <li><strong>100% Offline Local AI Runtime Support</strong> (Ollama / local OpenAI-compatible server)</li>
+              <li>
+                <strong>UNLIMITED Vehicles, Branches &amp; Staff</strong>
+                <span class="tech-spec">Zero fleet caps or branch ceilings as you expand to new cities</span>
+              </li>
+              <li>
+                <strong>Audited Inter-Branch Vehicle Transfers</strong>
+                <span class="tech-spec">Track fleet rebalancing smoothly across cities and airport counters</span>
+              </li>
+              <li>
+                <strong>Complete Before-and-After Change Audit Trail</strong>
+                <span class="tech-spec">Technical: Field-level JSON audit logs recorded for every sensitive action</span>
+              </li>
+              <li>
+                <strong>Connect with External Business Tools</strong>
+                <span class="tech-spec">Technical: Model Context Protocol (MCP) support for live GPS telematics, CRMs &amp; ERPs</span>
+              </li>
+              <li>
+                <strong>Operator-Confirmed AI Desktop Automation</strong>
+                <span class="tech-spec">Technical: Safe use_computer automation on Windows &amp; macOS with human confirmation</span>
+              </li>
+              <li>
+                <strong>100% Offline Local AI Support</strong>
+                <span class="tech-spec">Technical: Runs with Ollama or any local OpenAI-compatible server — zero internet needed</span>
+              </li>
             </ul>
 
             <div class="plan-suit">
-              <strong>How It Suits the Company</strong>
+              <strong>How It Suits Your Company</strong>
               <p>
-                Tailored for large multi-city rental enterprises and corporate fleet operators requiring uncapped scale,
-                cross-city fleet rebalancing, external telematics/ERP integration, forensic auditability, and air-gapped/offline AI capability.
+                Tailored for large multi-city enterprises and corporate fleet networks needing uncapped growth, telematics/ERP links, forensic audits, and offline AI.
               </p>
             </div>
 
             <div class="plan-footer">
-              <a href="#contact" class="btn btn-primary btn-full" data-product="Float Enterprise Max (₹18 Lakh)">Select Float Enterprise Max — ₹18 Lakh</a>
+              <a href="#contact" class="btn btn-primary btn-full" data-product="Float Enterprise Max (₹18 Lakh)">Choose Enterprise Max — ₹18 Lakh</a>
             </div>
           </article>
+        </div>
+
+        <!-- Side-by-Side Comparison Table -->
+        <div class="comparison-block reveal">
+          <div class="comparison-head">
+            <h3>Side-by-Side Plan Comparison</h3>
+            <p>Compare every Float edition at a glance — scroll horizontally on smaller screens.</p>
+          </div>
+          <div class="table-scroll" role="region" aria-label="Float Plan Comparison Table" tabindex="0">
+            <table class="compare-table">
+              <thead>
+                <tr>
+                  <th scope="col">Capability</th>
+                  <th scope="col">Basic<span class="th-price">₹3 Lakh</span></th>
+                  <th scope="col">Plus<span class="th-price">₹9 Lakh</span></th>
+                  <th scope="col" class="col-rec">Pro <span class="th-badge">Recommended</span><span class="th-price">₹12 Lakh</span></th>
+                  <th scope="col">Enterprise<span class="th-price">₹15 Lakh</span></th>
+                  <th scope="col">Enterprise Max<span class="th-price">₹18 Lakh</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Vehicle Capacity</strong></td>
+                  <td>Up to 25 cars</td>
+                  <td>Up to 60 cars</td>
+                  <td class="col-rec"><strong>Up to 150 cars</strong></td>
+                  <td>Up to 500 cars</td>
+                  <td><strong>Unlimited</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>Branch Locations</strong></td>
+                  <td>1 branch</td>
+                  <td>1 branch</td>
+                  <td class="col-rec">1 branch</td>
+                  <td>Up to 5 branches</td>
+                  <td><strong>Unlimited</strong></td>
+                </tr>
+                <tr>
+                  <td><strong>Staff &amp; Shift Worker Logins</strong></td>
+                  <td>Unlimited</td>
+                  <td>Unlimited</td>
+                  <td class="col-rec">Unlimited</td>
+                  <td>Unlimited</td>
+                  <td>Unlimited</td>
+                </tr>
+                <tr>
+                  <td><strong>Express Wash Queue &amp; GST Quote/Agreements</strong></td>
+                  <td><span class="tbl-yes">✓</span></td>
+                  <td><span class="tbl-yes">✓</span></td>
+                  <td class="col-rec"><span class="tbl-yes">✓</span></td>
+                  <td><span class="tbl-yes">✓</span></td>
+                  <td><span class="tbl-yes">✓</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Languages Supported</strong></td>
+                  <td>English &amp; Hindi</td>
+                  <td>All 13 Indian</td>
+                  <td class="col-rec">All 13 Indian</td>
+                  <td>All 13 Indian</td>
+                  <td>All 13 Indian</td>
+                </tr>
+                <tr>
+                  <td><strong>Batch Dispatch, 1-Click Extend &amp; FASTag Matcher</strong></td>
+                  <td><span class="tbl-no">—</span></td>
+                  <td><span class="tbl-yes">✓</span></td>
+                  <td class="col-rec"><span class="tbl-yes">✓</span></td>
+                  <td><span class="tbl-yes">✓</span></td>
+                  <td><span class="tbl-yes">✓</span></td>
+                </tr>
+                <tr>
+                  <td><strong>All 19 AI Workflows, Locked GST Invoices &amp; B2B Accounts</strong></td>
+                  <td><span class="tbl-no">—</span></td>
+                  <td><span class="tbl-no">—</span></td>
+                  <td class="col-rec"><span class="tbl-yes">✓</span></td>
+                  <td><span class="tbl-yes">✓</span></td>
+                  <td><span class="tbl-yes">✓</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Workshop Job Cards &amp; Per-Car Profit Analytics (RevPAC)</strong></td>
+                  <td><span class="tbl-no">—</span></td>
+                  <td><span class="tbl-no">—</span></td>
+                  <td class="col-rec"><span class="tbl-yes">✓</span></td>
+                  <td><span class="tbl-yes">✓</span></td>
+                  <td><span class="tbl-yes">✓</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Multi-PC Office LAN Server &amp; 5 Employee Permission Roles</strong></td>
+                  <td><span class="tbl-no">—</span></td>
+                  <td><span class="tbl-no">—</span></td>
+                  <td class="col-rec"><span class="tbl-no">—</span></td>
+                  <td><span class="tbl-yes">✓</span></td>
+                  <td><span class="tbl-yes">✓</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Cash Drawer Reconciliation, Driver Roster &amp; DPDP Act 2023</strong></td>
+                  <td><span class="tbl-no">—</span></td>
+                  <td><span class="tbl-no">—</span></td>
+                  <td class="col-rec"><span class="tbl-no">—</span></td>
+                  <td><span class="tbl-yes">✓</span></td>
+                  <td><span class="tbl-yes">✓</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Inter-Branch Transfers &amp; Complete Before/After Audit Trail</strong></td>
+                  <td><span class="tbl-no">—</span></td>
+                  <td><span class="tbl-no">—</span></td>
+                  <td class="col-rec"><span class="tbl-no">—</span></td>
+                  <td><span class="tbl-no">—</span></td>
+                  <td><span class="tbl-yes">✓</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Connect External Tools (MCP), Desktop AI &amp; 100% Offline AI</strong></td>
+                  <td><span class="tbl-no">—</span></td>
+                  <td><span class="tbl-no">—</span></td>
+                  <td class="col-rec"><span class="tbl-no">—</span></td>
+                  <td><span class="tbl-no">—</span></td>
+                  <td><span class="tbl-yes">✓</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- What Every Plan Includes: Onboarding, Installation, Support & Updates -->
+        <div class="included-panel reveal">
+          <div class="included-head">
+            <div class="section-label">Included With Every Edition</div>
+            <h3>Onboarding, installation, support, and future updates — explained clearly.</h3>
+          </div>
+          <div class="included-grid">
+            <div class="included-card">
+              <span class="inc-num">01</span>
+              <h4>Guided Installation</h4>
+              <p>
+                We help install Float directly on your Mac or Windows computers. Single-counter setups typically finish in <strong>15–30 minutes</strong>, and multi-PC office LAN setups take <strong>1–2 hours</strong>.
+              </p>
+            </div>
+            <div class="included-card">
+              <span class="inc-num">02</span>
+              <h4>Hands-On Onboarding</h4>
+              <p>
+                Includes a live training session for your managers and counter staff, GST rate-card setup, and help importing your existing vehicle and customer spreadsheets.
+              </p>
+            </div>
+            <div class="included-card">
+              <span class="inc-num">03</span>
+              <h4>Direct Founder Support</h4>
+              <p>
+                No generic ticket bots. You receive direct email and scheduled screen-share technical support straight from the engineers who built Float.
+              </p>
+            </div>
+            <div class="included-card">
+              <span class="inc-num">04</span>
+              <h4>Future Updates Included</h4>
+              <p>
+                Every one-time plan includes <strong>12 months of free software updates</strong> (security fixes, GST compliance updates, and refinements). After year one, renewals are optional — your licensed software keeps working forever.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -602,31 +926,44 @@
       <div class="container">
         <div class="section-head reveal">
           <div class="section-label">How It Fits Your Office</div>
-          <h2>From download to daily operations in three calm steps.</h2>
-          <p class="section-sub">Click any stage below to preview how NovaForge operates inside your company.</p>
+          <h2>From download to daily operations in three connected steps.</h2>
+          <p class="section-sub">
+            Select any step below to see real Float screens and how quickly your team gets up and running.
+          </p>
+          <div class="install-time-banner">
+            <span class="time-dot" aria-hidden="true"></span>
+            <span><strong>Typical installation time:</strong> 15–30 minutes for a single counter PC · 1–2 hours for a multi-computer office network.</span>
+          </div>
         </div>
 
         <div class="workflow-grid reveal">
           <div class="workflow-steps" role="tablist" aria-label="Deployment steps">
+            <div class="wf-connector" aria-hidden="true"></div>
+
             <button type="button" class="wf-step active" data-step="0" role="tab" aria-selected="true">
-              <span class="wf-num">01</span>
+              <span class="wf-node">01</span>
               <span class="wf-text">
-                <strong>Launch locally in seconds</strong>
-                <span>Run on Mac, Windows, or an office LAN server with zero external dependencies or cloud account setup.</span>
+                <span class="wf-meta">Step 1 · About 5 minutes</span>
+                <strong>Launch locally on your office PC</strong>
+                <span>Open Float on Mac, Windows, or your office network — no extra software or cloud account setup needed.</span>
               </span>
             </button>
+
             <button type="button" class="wf-step" data-step="1" role="tab" aria-selected="false">
-              <span class="wf-num">02</span>
+              <span class="wf-node">02</span>
               <span class="wf-text">
-                <strong>Plug in your company API key</strong>
-                <span>Keys are encrypted on your machine and sealed in transit — team members never see raw keys.</span>
+                <span class="wf-meta">Step 2 · About 3 minutes</span>
+                <strong>Connect your company AI key</strong>
+                <span>Paste your key once. Advanced data encryption protects it on your computer so staff never see the raw key.</span>
               </span>
             </button>
+
             <button type="button" class="wf-step" data-step="2" role="tab" aria-selected="false">
-              <span class="wf-num">03</span>
+              <span class="wf-node">03</span>
               <span class="wf-text">
+                <span class="wf-meta">Step 3 · Ready on Day 1</span>
                 <strong>Draft, review, and approve cleanly</strong>
-                <span>Staff prepare sheets, payslips, and invoices; owners approve sensitive changes with a complete audit log.</span>
+                <span>Desk staff prepare quotes, payroll, and GST bills while owners sign off on important changes with a complete history.</span>
               </span>
             </button>
           </div>
@@ -639,10 +976,10 @@
                   <span class="tl tl-yellow"></span>
                   <span class="tl tl-green"></span>
                 </div>
-                <span class="preview-address" id="previewTitle">localhost:8080 · Local Setup</span>
+                <span class="preview-address" id="previewTitle">Float · Local Workspace (Step 1 of 3)</span>
               </div>
               <div class="preview-content" id="previewContent">
-                <!-- Populated smoothly by script.js -->
+                <!-- Populated smoothly by script.js with real screenshot + facts -->
               </div>
             </div>
           </div>
@@ -668,9 +1005,9 @@
             </div>
             <h4>Private by Architecture</h4>
             <p>
-              SQLite WAL databases, local artifacts, and CSRF/Host defenses keep company records
-              anchored strictly inside your workstation or private LAN.
+              Reliable local data storage keeps your company files, customer records, and financial history strictly inside your workstation or private office network.
             </p>
+            <span class="tech-spec">Technical: SQLite WAL crash-safe database, local artifacts &amp; CSRF/Host request protection</span>
           </div>
 
           <div class="pillar-card sheen-card reveal" style="--delay: 110ms">
@@ -683,9 +1020,9 @@
             </div>
             <h4>Human Authority First</h4>
             <p>
-              AI prepares drafts, schedules, and calculations — while managers retain non-negotiable
-              sign-off over payroll runs, bank updates, and issued tax records.
+              AI prepares drafts, schedules, and calculations — while managers keep final sign-off over payroll runs, bank updates, and locked tax records.
             </p>
+            <span class="tech-spec">Technical: 3-tier approval gates &amp; role-based employee permissions (RBAC)</span>
           </div>
 
           <div class="pillar-card sheen-card reveal" style="--delay: 180ms">
@@ -698,65 +1035,78 @@
             </div>
             <h4>Tested &amp; Dependable</h4>
             <p>
-              Built with zero third-party runtime packages, verified under strict test suites covering
-              security, Decimal tax math, and thread safety.
+              Built for accurate GST rounding and reliable operation with multiple users working at the same time — without relying on fragile external plugins.
             </p>
+            <span class="tech-spec">Technical: Zero third-party runtime packages · verified Decimal ROUND_HALF_UP math &amp; thread safety</span>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Founders -->
+    <!-- Founders (Distinct Dark Archival Editorial Section) -->
     <section class="founders" id="founders">
       <div class="container">
-        <div class="section-head reveal">
-          <div class="section-label">The People Behind NovaForge</div>
-          <h2>Made and run by three founders.</h2>
-          <p class="section-sub">
-            When you partner with NovaForge, you work directly with the builders who designed,
-            engineered, and support every line of the product.
+        <div class="founders-header reveal">
+          <div class="section-label founders-label">The People Behind NovaForge</div>
+          <h2>Made, engineered, and supported by three founders.</h2>
+          <p class="founders-sub">
+            When your company chooses NovaForge, you never get passed to an anonymous call center. You work directly with the three builders who designed and wrote the software.
           </p>
         </div>
 
         <div class="founders-grid">
-          <article class="founder-card sheen-card reveal" style="--delay: 60ms">
-            <div class="crest-wrap">
-              <div class="crest-ring" aria-hidden="true"></div>
-              <div class="founder-avatar">P</div>
+          <article class="founder-card reveal" style="--delay: 60ms">
+            <div class="founder-top">
+              <div class="crest-wrap">
+                <div class="crest-ring" aria-hidden="true"></div>
+                <div class="founder-avatar">P</div>
+              </div>
+              <span class="founder-tag">Leadership &amp; Strategy</span>
             </div>
             <h3>Prabhjot</h3>
             <div class="founder-role">Co-Founder &amp; Chief Executive Officer (CEO)</div>
             <p>
-              Directs company vision, enterprise partnerships, and deployment strategy — helping
-              businesses adopt practical AI tools with clear return on investment.
+              Directs company vision, client partnerships, and rollout strategy — helping organizations adopt practical AI tools with clear return on investment.
             </p>
           </article>
 
-          <article class="founder-card sheen-card reveal" style="--delay: 130ms">
-            <div class="crest-wrap">
-              <div class="crest-ring" aria-hidden="true"></div>
-              <div class="founder-avatar">S</div>
+          <article class="founder-card reveal" style="--delay: 130ms">
+            <div class="founder-top">
+              <div class="crest-wrap">
+                <div class="crest-ring" aria-hidden="true"></div>
+                <div class="founder-avatar">S</div>
+              </div>
+              <span class="founder-tag">Core Systems &amp; AI</span>
             </div>
             <h3>Shiva</h3>
             <div class="founder-role">Co-Founder &amp; Lead Developer</div>
             <p>
-              Engineers NovaForge's core software systems, local-first database architecture,
-              cryptographic key safety, financial computation, and AI agent engine.
+              Engineers NovaForge's core software, reliable local data storage, advanced data encryption, accurate GST computation, and AI agent architecture.
             </p>
           </article>
 
-          <article class="founder-card sheen-card reveal" style="--delay: 200ms">
-            <div class="crest-wrap">
-              <div class="crest-ring" aria-hidden="true"></div>
-              <div class="founder-avatar">Y</div>
+          <article class="founder-card reveal" style="--delay: 200ms">
+            <div class="founder-top">
+              <div class="crest-wrap">
+                <div class="crest-ring" aria-hidden="true"></div>
+                <div class="founder-avatar">Y</div>
+              </div>
+              <span class="founder-tag">Product &amp; Craft</span>
             </div>
             <h3>Yatharth</h3>
             <div class="founder-role">Co-Founder &amp; Head of Product &amp; Design</div>
             <p>
-              Crafts every user interface and human workflow inside NovaForge so financial teams
-              and staff enjoy calm, readable, distraction-free tools.
+              Shapes every interface and daily workflow inside NovaForge so front-desk staff and finance teams enjoy calm, readable, distraction-free tools.
             </p>
           </article>
+        </div>
+
+        <div class="founders-promise reveal">
+          <div class="promise-copy">
+            <strong>Direct Founder Accountability</strong>
+            <span>Every onboarding call, installation check, and support email goes straight to Prabhjot, Shiva, and Yatharth.</span>
+          </div>
+          <a href="#contact" class="btn btn-founder-cta">Write to the Founders</a>
         </div>
       </div>
     </section>
@@ -767,19 +1117,93 @@
         <div class="section-head reveal">
           <div class="section-label">Common Questions</div>
           <h2>Straight answers before we talk.</h2>
+          <p class="section-sub">
+            Clear details on installation, one-time licensing, updates, computer transfers, and technical support.
+          </p>
         </div>
 
         <div class="faq-list reveal">
           <div class="faq-item">
             <button type="button" class="faq-q" aria-expanded="false">
-              <span>How does pricing work for Float AI Agent and Float for Finance?</span>
+              <span>How does installation work, and how long does it take?</span>
               <span class="faq-plus" aria-hidden="true"></span>
             </button>
             <div class="faq-a">
               <div class="faq-a-inner">
-                We tailor licensing and full software buyout packages based on your team size,
-                workstations, and onboarding requirements. Email us at info.novaforge.2026@gmail.com
-                and we will share clear options for your company.
+                <p>
+                  Float ships as a ready-to-run app for macOS and Windows with zero extra software or databases to install manually. A single counter PC is normally set up and ready in <strong>15 to 30 minutes</strong>, while a multi-computer office network (LAN server) setup takes around <strong>1 to 2 hours</strong>.
+                </p>
+                <p>
+                  Our team guides you through installation step by step over screen-share so your desk is ready the same day.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-q" aria-expanded="false">
+              <span>How do licensing and one-time payments work?</span>
+              <span class="faq-plus" aria-hidden="true"></span>
+            </button>
+            <div class="faq-a">
+              <div class="faq-a-inner">
+                <p>
+                  Every Float edition (from Basic at <strong>₹3 Lakh</strong> to Enterprise Max at <strong>₹18 Lakh</strong>) is a <strong>one-time company purchase</strong> — not a recurring per-employee subscription. You receive unlimited staff and shift-worker logins with no monthly seat fees.
+                </p>
+                <p>
+                  If your fleet grows later, you can upgrade to a higher edition smoothly by paying the difference between plans.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-q" aria-expanded="false">
+              <span>What about future software updates and maintenance?</span>
+              <span class="faq-plus" aria-hidden="true"></span>
+            </button>
+            <div class="faq-a">
+              <div class="faq-a-inner">
+                <p>
+                  Every new Float license includes <strong>12 months of free updates</strong>, covering security patches, GST/tax rule updates, performance improvements, and bug fixes.
+                </p>
+                <p>
+                  After the first year, you can choose an optional annual maintenance plan for continued updates and priority support. If you decide not to renew, your installed Float edition continues running permanently on your computers with zero lockouts.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-q" aria-expanded="false">
+              <span>What happens if our company changes or replaces computers?</span>
+              <span class="faq-plus" aria-hidden="true"></span>
+            </button>
+            <div class="faq-a">
+              <div class="faq-a-inner">
+                <p>
+                  Your license belongs to your company, not a single piece of hardware. If you buy a new Mac or Windows PC, we transfer your license cleanly to the new machine at no extra license fee.
+                </p>
+                <p>
+                  Float includes built-in daily backups and a simple backup/restore tool so your complete history — vehicles, customers, GST invoices, and spreadsheets — moves safely to your new computer in minutes.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-q" aria-expanded="false">
+              <span>What technical support do we receive after purchase?</span>
+              <span class="faq-plus" aria-hidden="true"></span>
+            </button>
+            <div class="faq-a">
+              <div class="faq-a-inner">
+                <p>
+                  You receive direct technical support from the NovaForge founders and engineering team via email (<strong>info.novaforge.2026@gmail.com</strong>) and scheduled remote screen-share sessions whenever your team needs help with setup, backups, GST formatting, or staff permissions.
+                </p>
+                <p>
+                  Multi-branch Enterprise and Enterprise Max clients also receive priority response windows for branch network and external tool integrations.
+                </p>
               </div>
             </div>
           </div>
@@ -791,9 +1215,13 @@
             </button>
             <div class="faq-a">
               <div class="faq-a-inner">
-                No. Both Float AI Agent and Float for Finance run locally inside your own company
-                machine or office network. In Float for Finance, driver and personal photos are even
-                withheld from external AI providers and scrubbed of GPS/EXIF metadata automatically.
+                <p>
+                  No. Both Float AI Agent and Float for Finance run inside your own office computer or private network using reliable local data storage. Your records never sit on NovaForge servers.
+                </p>
+                <p>
+                  In Float for Finance, driver and personal photos are withheld from external AI providers and undergo automatic removal of hidden photo location information.
+                  <span class="tech-spec">Technical: Local SQLite WAL database &amp; automatic GPS/EXIF metadata scrubbing</span>
+                </p>
               </div>
             </div>
           </div>
@@ -805,9 +1233,9 @@
             </button>
             <div class="faq-a">
               <div class="faq-a-inner">
-                Float runs smoothly on macOS and Windows with zero external runtime dependencies.
-                Your team can connect OpenAI, Anthropic, Google Gemini, OpenRouter, or compatible
-                local models using your own organization or individual API key.
+                <p>
+                  Float runs smoothly on both macOS and Windows. You can connect OpenAI, Anthropic, Google Gemini, or OpenRouter using your own company API key — or run 100% offline local AI models on Enterprise Max.
+                </p>
               </div>
             </div>
           </div>
@@ -819,8 +1247,9 @@
             </button>
             <div class="faq-a">
               <div class="faq-a-inner">
-                Yes. Write to info.novaforge.2026@gmail.com with your company name and workflow, and
-                our founders will arrange a direct demonstration and help configure a pilot on your machines.
+                <p>
+                  Yes. Write to <strong>info.novaforge.2026@gmail.com</strong> with your company name and fleet size, and our founders will schedule a direct walkthrough and help set up a live pilot on your office computer.
+                </p>
               </div>
             </div>
           </div>
@@ -836,8 +1265,7 @@
             <div class="section-label">Costs &amp; Licensing Inquiries</div>
             <h2>Speak directly with the NovaForge founders.</h2>
             <p>
-              For pricing on Float AI Agent or Float for Finance — whether you want a single-office
-              license, company-wide deployment, or complete buyout — write to us directly.
+              Ready to select a Float edition, book a live demonstration, or discuss custom rollout for your team? Write to us directly and we will respond promptly.
             </p>
 
             <div class="email-card">
@@ -862,11 +1290,11 @@
               <input type="text" id="companyName" name="companyName" placeholder="e.g. Apex Mobility Pvt Ltd" required />
             </div>
             <div class="form-row">
-              <label for="productSelect">Which Product Are You Interested In?</label>
+              <label for="productSelect">Which Plan or Product Are You Interested In?</label>
               <select id="productSelect" name="productSelect">
                 <option value="Float Basic (₹3 Lakh)">Float Basic — ₹3 Lakh (Up to 25 Cars)</option>
                 <option value="Float Plus (₹9 Lakh)">Float Plus — ₹9 Lakh (Up to 60 Cars)</option>
-                <option value="Float Pro (₹12 Lakh)">Float Pro — ₹12 Lakh (Up to 150 Cars)</option>
+                <option value="Float Pro (₹12 Lakh)">Float Pro — ₹12 Lakh (Up to 150 Cars · Recommended)</option>
                 <option value="Float Enterprise (₹15 Lakh)">Float Enterprise — ₹15 Lakh (Up to 500 Cars, 5 Branches)</option>
                 <option value="Float Enterprise Max (₹18 Lakh)">Float Enterprise Max — ₹18 Lakh (Unlimited)</option>
                 <option value="Both Float AI Agent & Float for Finance">Both Float AI Agent &amp; Float for Finance</option>
@@ -874,7 +1302,7 @@
             </div>
             <div class="form-row">
               <label for="messageInput">Message</label>
-              <textarea id="messageInput" name="messageInput" rows="3" placeholder="Tell us your team size, OS (Mac/Windows), or pricing questions..."></textarea>
+              <textarea id="messageInput" name="messageInput" rows="3" placeholder="Tell us your fleet size, number of branches, OS (Mac/Windows), or questions..."></textarea>
             </div>
             <div class="form-actions">
               <button type="submit" class="btn btn-primary btn-full">

@@ -18,33 +18,46 @@
   const $ = (id) => document.getElementById(id);
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-  /* ── Header: compact on scroll, auto-hide on scroll down, manual collapse ── */
+  /* ── Persistent sticky header + active section highlighting ────────────── */
   const header = $("siteHeader");
   const progressBar = $("scrollProgress");
   const backToTop = $("backToTop");
-  const collapseBtn = $("collapseBar");
-  const barHandle = $("barHandle");
   const menuToggle = $("menuToggle");
   const mobileNav = $("mobileNav");
+  const trackedNavLinks = document.querySelectorAll(".nav-links a[data-section], .mobile-nav a[data-section]");
+  const trackedSections = [...new Set([...trackedNavLinks].map((a) => a.dataset.section))]
+    .map((id) => $(id))
+    .filter(Boolean);
 
-  let lastY = window.scrollY;
   let ticking = false;
-  let manuallyCollapsed = false;
 
-  function menuOpen() {
-    return mobileNav && !mobileNav.hidden;
+  function setActiveNav(activeId) {
+    trackedNavLinks.forEach((link) => {
+      const match = link.dataset.section === activeId;
+      link.classList.toggle("active", match);
+      if (match) {
+        link.setAttribute("aria-current", "location");
+      } else {
+        link.removeAttribute("aria-current");
+      }
+    });
   }
 
-  function setCollapsed(collapsed) {
-    if (!header) return;
-    header.classList.toggle("collapsed", collapsed);
-    // The "Menu" tab is only needed when the user closed the bar on purpose;
-    // an auto-hidden bar comes back on its own when scrolling up.
-    const showHandle = collapsed && manuallyCollapsed;
-    if (barHandle) {
-      barHandle.classList.toggle("show", showHandle);
-      barHandle.tabIndex = showHandle ? 0 : -1;
+  function updateActiveSection() {
+    if (!trackedSections.length) return;
+    const scrollPos = window.scrollY + (header ? header.offsetHeight : 70) + 120;
+    const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 40;
+    if (atBottom) {
+      setActiveNav(trackedSections[trackedSections.length - 1].id);
+      return;
     }
+    let current = "";
+    for (const sec of trackedSections) {
+      if (sec.offsetTop <= scrollPos) {
+        current = sec.id;
+      }
+    }
+    setActiveNav(current);
   }
 
   function onScroll() {
@@ -62,19 +75,7 @@
     if (backToTop) {
       backToTop.hidden = y < 500;
     }
-
-    // Auto-hide only when the user has not pinned it closed and the menu is shut.
-    if (!manuallyCollapsed && !menuOpen()) {
-      const delta = y - lastY;
-      if (y < 120) {
-        setCollapsed(false);
-      } else if (delta > 6) {
-        setCollapsed(true);
-      } else if (delta < -6) {
-        setCollapsed(false);
-      }
-    }
-    lastY = y;
+    updateActiveSection();
     ticking = false;
   }
 
@@ -85,21 +86,6 @@
     }
   }, { passive: true });
   onScroll();
-
-  if (collapseBtn) {
-    collapseBtn.addEventListener("click", () => {
-      closeMenu();
-      manuallyCollapsed = true;
-      setCollapsed(true);
-    });
-  }
-
-  if (barHandle) {
-    barHandle.addEventListener("click", () => {
-      manuallyCollapsed = false;
-      setCollapsed(false);
-    });
-  }
 
   if (backToTop) {
     backToTop.addEventListener("click", () => {
@@ -116,18 +102,23 @@
   }
 
   if (menuToggle && mobileNav) {
-    menuToggle.addEventListener("click", () => {
+    menuToggle.addEventListener("click", (e) => {
+      e.stopPropagation();
       const willOpen = mobileNav.hidden;
       mobileNav.hidden = !willOpen;
       menuToggle.setAttribute("aria-expanded", String(willOpen));
       menuToggle.setAttribute("aria-label", willOpen ? "Close menu" : "Open menu");
-      if (willOpen) setCollapsed(false);
     });
     mobileNav.querySelectorAll("a").forEach((link) => link.addEventListener("click", closeMenu));
+    document.addEventListener("click", (e) => {
+      if (!mobileNav.hidden && !mobileNav.contains(e.target) && !menuToggle.contains(e.target)) {
+        closeMenu();
+      }
+    });
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") closeMenu();
     });
-    window.matchMedia("(min-width: 921px)").addEventListener("change", (e) => {
+    window.matchMedia("(min-width: 961px)").addEventListener("change", (e) => {
       if (e.matches) closeMenu();
     });
   }
@@ -152,7 +143,7 @@
           io.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+    }, { threshold: 0.04, rootMargin: "0px 0px -20px 0px" });
     reveals.forEach((el) => io.observe(el));
   } else {
     reveals.forEach((el) => el.classList.add("visible"));
@@ -676,12 +667,12 @@
 
   /* ── Product capability switchers ────────────────────────────────────── */
   const DETAILS = {
-    "agent-sheets": "Built-in 1,000 × 1,000 spreadsheet grid supporting Excel (.xlsx) import and export, PDF generation, live charts, and formulas without leaving the app.",
-    "agent-security": "Your API key stays encrypted on disk with a device-bound key, travels inside AES-256-GCM envelopes, and is guarded by Host and origin checks. No third-party tracking.",
-    "agent-admin": "Admins control model access, monthly spend limits for each member, workspace notices, and automatic daily backups from one clear panel.",
-    "fin-tax": "Exact decimal tax math with immutable issued GST invoices, database-level protection, and driver payroll covering PF, ESI, PT, and TDS.",
-    "fin-risk": "A three-tier approval policy lets desk staff prepare routine work while owners and finance managers sign off on bank, salary, and payout changes.",
-    "fin-dpdp": "Recorded consent for bank details and driver photos, automatic removal of GPS and EXIF data from photos, and 30, 60, and 90-day vehicle document reminders."
+    "agent-sheets": "Built-in 1,000 × 1,000 spreadsheet grid supporting Excel (.xlsx) import and export, PDF reports, live charts, and formulas without leaving the app.",
+    "agent-security": "Advanced data encryption locks your API key directly to your office computer so staff never see the raw key. (Technical: AES-256-GCM sealed key transport & local encryption.)",
+    "agent-admin": "Role-based employee permissions let admins set model access, monthly spend caps per person, workspace notices, and automated daily backups from one panel.",
+    "fin-tax": "Accurate GST rounding and issued invoices that cannot be silently altered, paired with complete driver payroll covering PF, ESI, PT, and TDS. (Technical: Exact Decimal ROUND_HALF_UP math.)",
+    "fin-risk": "Clear manager and owner approval checkpoints let desk staff prepare routine drafts while owners sign off on bank updates, salary runs, and payout changes.",
+    "fin-dpdp": "Recorded consent for bank details and driver photos, automatic removal of hidden photo location information (GPS & EXIF scrubbing), and 30 / 60 / 90-day renewal alerts."
   };
 
   document.querySelectorAll(".pill-switcher").forEach((group) => {
@@ -707,39 +698,45 @@
     });
   });
 
-  /* ── "How it fits your office" preview ───────────────────────────────── */
+  /* ── "How it fits your office" preview with real screenshots ─────────── */
   const WF_DATA = [
     {
-      address: "Float · First launch",
-      tag: "Step 01 · Local workspace",
+      address: "Float · Local Workspace (Step 1 of 3)",
+      tag: "Step 01 · ~5 minutes",
+      image: "assets/step-1-launch.png",
+      alt: "Screenshot of Float running locally with the Express Clean-to-Ready turnaround queue and local backup status",
       title: "Opens straight away on Mac or Windows",
-      desc: "Run Float on one computer or share it across your office network. The database sets itself up beside the app.",
+      desc: "Run Float on one counter PC or share it across your office network. Reliable local data storage sets itself up automatically beside the app.",
       rows: [
         ["Extra software needed", "None"],
-        ["Where data lives", "Your own computer"],
-        ["Backups", "Automatic, every day"]
+        ["Where data lives", "Your own office PC"],
+        ["Daily backups", "Automatic & verified"]
       ]
     },
     {
-      address: "Settings · Model & keys",
-      tag: "Step 02 · Bring your own key",
-      title: "Connect OpenAI, Anthropic, Google, or a local model",
-      desc: "Paste your company key once. Float encrypts it, and team members only ever see the last four characters.",
+      address: "Float Settings · Company AI Key (Step 2 of 3)",
+      tag: "Step 02 · ~3 minutes",
+      image: "assets/step-2-apikey.png",
+      alt: "Screenshot of Float API key settings showing masked company key and monthly per-employee spend caps",
+      title: "Connect OpenAI, Anthropic, Google, or Offline AI",
+      desc: "Paste your company key once. Advanced data encryption protects it on disk, and desk staff only ever see the last four characters.",
       rows: [
-        ["Key protection", "AES-256-GCM"],
+        ["Key protection", "Advanced encryption"],
         ["Visible to staff", "Last 4 characters"],
-        ["Spending", "Monthly limit per member"]
+        ["Budget control", "Monthly cap per user"]
       ]
     },
     {
-      address: "Float for Finance · Approvals",
-      tag: "Step 03 · Human sign-off",
-      title: "Float prepares the work. Your managers decide.",
-      desc: "Payroll runs, bank updates, deposit adjustments, and final GST invoices wait for a named person to approve them.",
+      address: "Float for Finance · Owner Approvals (Step 3 of 3)",
+      tag: "Step 03 · Ready on Day 1",
+      image: "assets/step-3-approvals.png",
+      alt: "Screenshot of Float for Finance Owner Approval Queue showing driver salary run and locked GST invoice",
+      title: "Float prepares the work. Your owners decide.",
+      desc: "Payroll runs, deposit adjustments, bank edits, and final GST invoices wait for a named owner to approve — and issued invoices cannot be silently altered.",
       rows: [
-        ["Driver salary run", "Waiting for approval"],
-        ["GST invoice INV-2041", "Locked once issued"],
-        ["Activity history", "Every change recorded"]
+        ["Driver salary run", "Owner sign-off"],
+        ["Issued GST invoices", "Locked permanently"],
+        ["Activity history", "Every change logged"]
       ]
     }
   ];
@@ -751,13 +748,26 @@
 
   function buildPreview(data) {
     previewContent.innerHTML = "";
+
+    const frame = el("div", "pv-shot-frame");
+    const img = document.createElement("img");
+    img.src = data.image;
+    img.alt = data.alt;
+    img.className = "pv-shot";
+    img.loading = "lazy";
+    frame.append(img);
+
+    const caption = el("div", "pv-caption-bar");
+    caption.append(el("div", "pv-tag", data.tag), el("h4", null, data.title), el("p", null, data.desc));
+
     const rows = el("div", "pv-rows");
     data.rows.forEach(([k, v]) => {
       const row = el("div", "pv-row");
       row.append(el("strong", null, k), el("span", "pv-pill", v));
       rows.append(row);
     });
-    previewContent.append(el("div", "pv-tag", data.tag), el("h4", null, data.title), el("p", null, data.desc), rows);
+
+    previewContent.append(frame, caption, rows);
     if (previewTitle) previewTitle.textContent = data.address;
   }
 
