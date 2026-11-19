@@ -591,7 +591,7 @@ button, input, select, textarea {
 }
 
 .hero-headline {
-  font-size: clamp(2.5rem, 4.4vw, 3.6rem);
+  font-size: clamp(2.15rem, 3.6vw, 3.15rem);
   letter-spacing: -0.02em;
   margin-bottom: 20px;
 }
