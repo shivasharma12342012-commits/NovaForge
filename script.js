@@ -409,7 +409,7 @@
   function offlineNovaForgeAI(q) {
     const s = q.toLowerCase();
     if (/^(hi|hello|hey|namaste)\b/.test(s)) {
-      return "Hello from NovaForge! Ask me about Float AI Agent, Float for Finance, our founders, security, or pricing.";
+      return "NovaForge assistant ready. Ask about Float AI Agent, Float for Finance, our founders, security, or pricing.";
     }
     if (/(founder|founded|team|who made|who built|who runs|owner|ceo|developer|designer|shiva|prabhjot|yatharth)/.test(s)) {
       return "NovaForge is founded and run by Prabhjot (Co-Founder & CEO), Shiva (Co-Founder & Lead Developer), and Yatharth (Co-Founder & Head of Product & Design).";
@@ -487,7 +487,7 @@
         sessionStorage.setItem(SESSION_KEY_STORAGE, key);
         sessionStorage.setItem(SESSION_PROV_STORAGE, prov);
       } catch { /* ignore */ }
-      await typeText(`✓ Session API key saved for ${prov}. Ask any question now!`, "term-ok", alive, 10);
+      await typeText(`✓ Session API key saved for ${prov}. Ask a question.`, "term-ok", alive, 10);
       busy = false;
       mountPrompt(true);
       return;
@@ -505,7 +505,7 @@
     }
 
     if (lower === "whoami") {
-      await typeText("guest@novaforge — welcome! Ask anything about our products.", "term-info", alive, 10);
+      await typeText("guest@novaforge — ready. Ask about our products.", "term-info", alive, 10);
       busy = false;
       mountPrompt(true);
       return;
