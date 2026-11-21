@@ -11,7 +11,7 @@
   const TERMINAL_AI = {
     provider: "openai",
     model: "gpt-oss-120b",
-    apiKey: "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", // <-- PASTE YOUR API KEY HERE
+    apiKey: "", // <-- PASTE YOUR API KEY HERE
   };
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
