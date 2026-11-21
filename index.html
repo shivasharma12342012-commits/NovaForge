@@ -244,11 +244,28 @@
       </div>
     </section>
 
-    <!-- Products Showcase -->
+    <!-- Products Showcase (Signature Float Aura Stage) -->
     <section class="products" id="products">
-      <div class="container">
-        <div class="section-head reveal">
-          <div class="section-label">Our Flagship Products</div>
+      <div class="products-aura" aria-hidden="true">
+        <div class="aura-orb aura-orb-agent" id="auraOrbAgent"></div>
+        <div class="aura-orb aura-orb-finance" id="auraOrbFinance"></div>
+        <svg class="aura-compass" viewBox="0 0 320 320" fill="none">
+          <circle cx="160" cy="160" r="144" stroke="currentColor" stroke-width="0.8" stroke-dasharray="3 9"/>
+          <circle cx="160" cy="160" r="108" stroke="currentColor" stroke-width="0.6"/>
+          <circle cx="160" cy="160" r="72" stroke="currentColor" stroke-width="0.6" stroke-dasharray="2 6"/>
+          <path d="M160 8V34M160 286V312M8 160H34M286 160H312" stroke="currentColor" stroke-width="1"/>
+        </svg>
+      </div>
+
+      <div class="container products-stage">
+        <div class="section-head products-head reveal">
+          <div class="float-suite-crest">
+            <span class="crest-logo-chip">
+              <img src="assets/float-logo.png" alt="" width="24" height="24" />
+            </span>
+            <span class="crest-label">The Float Suite · Flagship Craft</span>
+            <span class="crest-rule" aria-hidden="true"></span>
+          </div>
           <h2>Two focused tools. Built cleanly for daily work.</h2>
           <p class="section-sub">
             Each NovaForge product serves a distinct business need, ships completely self-contained, and stays easy for non-technical staff to use every day.
@@ -257,10 +274,15 @@
 
         <div class="product-grid">
           <!-- Float AI Agent (Warm Terracotta Theme) -->
-          <article class="product-card product-agent sheen-card reveal" style="--delay: 60ms">
+          <article class="product-card product-agent float-aura-card sheen-card reveal" style="--delay: 60ms">
+            <span class="card-top-bar" aria-hidden="true"></span>
+            <div class="card-aura-glow" aria-hidden="true"></div>
             <div class="card-top">
-              <div class="product-icon product-icon-logo">
-                <img src="assets/float-logo.png" alt="Float AI Agent logo" class="float-product-logo" width="44" height="44" />
+              <div class="logo-aura-wrap logo-aura-agent">
+                <span class="logo-ring" aria-hidden="true"></span>
+                <div class="product-icon product-icon-logo">
+                  <img src="assets/float-logo.png" alt="Float AI Agent logo" class="float-product-logo" width="44" height="44" />
+                </div>
               </div>
               <span class="product-badge badge-agent">AI Workspace &amp; Sheets</span>
             </div>
@@ -273,11 +295,12 @@
             </div>
 
             <p class="product-desc">
-              A private AI assistant and full spreadsheet studio built right into one calm desktop app. Draft reports, analyze documents, and build 1,000 × 1,000 workbooks with live formulas and charts.
+              A private AI assistant and full spreadsheet studio built right into one focused desktop app. Draft reports, analyze documents, and build 1,000 × 1,000 workbooks with live formulas and charts.
             </p>
 
-            <!-- Interactive Highlight Switcher -->
+            <!-- Interactive Highlight Switcher with Spring Glider -->
             <div class="pill-switcher switcher-agent" data-card="agent">
+              <span class="pill-glider" aria-hidden="true"></span>
               <button type="button" class="pill-btn active" data-detail="agent-sheets">Float Sheets</button>
               <button type="button" class="pill-btn" data-detail="agent-security">Privacy &amp; Keys</button>
               <button type="button" class="pill-btn" data-detail="agent-admin">Team Admin</button>
@@ -286,7 +309,7 @@
               Built-in 1,000 × 1,000 spreadsheet grid supporting Excel (.xlsx) import and export, PDF reports, live charts, and formulas without leaving the app.
             </div>
 
-            <ul class="feature-list feature-list-agent">
+            <ul class="feature-list feature-list-agent float-cascade">
               <li>
                 <strong>Runs directly on Mac &amp; Windows with zero extra software</strong>
                 <span class="tech-spec">Self-contained local runtime — no external packages or cloud server setup</span>
@@ -314,15 +337,25 @@
                 <span class="price-label">Company Editions</span>
                 <strong>One-time licensing &amp; buyout options</strong>
               </div>
-              <a href="#contact" class="btn btn-agent" data-product="Both Float AI Agent & Float for Finance">Request Quote</a>
+              <a href="#contact" class="btn btn-agent btn-aura-cta" data-product="Both Float AI Agent & Float for Finance">
+                <span>Request Quote</span>
+                <svg viewBox="0 0 18 18" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M3.5 9h11M10.5 5l4 4-4 4"/>
+                </svg>
+              </a>
             </div>
           </article>
 
           <!-- Float for Finance (Deep Forest Sage Theme) -->
-          <article class="product-card product-finance sheen-card reveal" style="--delay: 140ms">
+          <article class="product-card product-finance float-aura-card sheen-card reveal" style="--delay: 180ms">
+            <span class="card-top-bar" aria-hidden="true"></span>
+            <div class="card-aura-glow" aria-hidden="true"></div>
             <div class="card-top">
-              <div class="product-icon product-icon-logo">
-                <img src="assets/float-logo.png" alt="Float for Finance logo" class="float-product-logo" width="44" height="44" />
+              <div class="logo-aura-wrap logo-aura-finance">
+                <span class="logo-ring" aria-hidden="true"></span>
+                <div class="product-icon product-icon-logo">
+                  <img src="assets/float-logo.png" alt="Float for Finance logo" class="float-product-logo" width="44" height="44" />
+                </div>
               </div>
               <span class="product-badge badge-finance">Fleet, GST &amp; Payroll Suite</span>
             </div>
@@ -338,8 +371,9 @@
               Built specifically for vehicle rental desks and finance departments. Combines Float's spreadsheet engine with locked GST billing, driver payroll, compliance alerts, and owner sign-off controls.
             </p>
 
-            <!-- Interactive Highlight Switcher -->
+            <!-- Interactive Highlight Switcher with Spring Glider -->
             <div class="pill-switcher switcher-finance" data-card="finance">
+              <span class="pill-glider" aria-hidden="true"></span>
               <button type="button" class="pill-btn active" data-detail="fin-tax">GST &amp; Payroll</button>
               <button type="button" class="pill-btn" data-detail="fin-risk">Owner Approvals</button>
               <button type="button" class="pill-btn" data-detail="fin-dpdp">Privacy &amp; Expiries</button>
@@ -348,7 +382,7 @@
               Accurate GST rounding and issued invoices that cannot be silently altered, paired with complete driver payroll covering PF, ESI, PT, and TDS.
             </div>
 
-            <ul class="feature-list feature-list-finance">
+            <ul class="feature-list feature-list-finance float-cascade">
               <li>
                 <strong>Issued invoices cannot be silently altered</strong>
                 <span class="tech-spec">Technical: Immutable sequential GST invoices, credit notes &amp; database-level triggers</span>
@@ -376,7 +410,12 @@
                 <span class="price-label">Edition Pricing</span>
                 <strong>Starts at ₹6 Lakh (One-Time)</strong>
               </div>
-              <a href="#plans" class="btn btn-finance">See All 5 Plans</a>
+              <a href="#plans" class="btn btn-finance btn-aura-cta">
+                <span>See All 5 Plans</span>
+                <svg viewBox="0 0 18 18" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M3.5 9h11M10.5 5l4 4-4 4"/>
+                </svg>
+              </a>
             </div>
           </article>
         </div>

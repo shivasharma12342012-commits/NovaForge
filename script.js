@@ -665,7 +665,7 @@
     runTerminal("float");
   }
 
-  /* ── Product capability switchers ────────────────────────────────────── */
+  /* ── Product capability switchers (with spring pill glider) ──────────── */
   const DETAILS = {
     "agent-sheets": "Built-in 1,000 × 1,000 spreadsheet grid supporting Excel (.xlsx) import and export, PDF reports, live charts, and formulas without leaving the app.",
     "agent-security": "Advanced data encryption locks your API key directly to your office computer so staff never see the raw key. (Technical: AES-256-GCM sealed key transport & local encryption.)",
@@ -675,9 +675,36 @@
     "fin-dpdp": "Recorded consent for bank details and driver photos, automatic removal of hidden photo location information (GPS & EXIF scrubbing), and 30 / 60 / 90-day renewal alerts."
   };
 
+  const gliderUpdaters = [];
+
   document.querySelectorAll(".pill-switcher").forEach((group) => {
     const box = $("detail-" + group.dataset.card);
+    const glider = group.querySelector(".pill-glider");
     let token = 0;
+
+    function moveGlider(activeBtn, instant = false) {
+      if (!glider || !activeBtn) return;
+      group.classList.add("has-glider");
+      if (instant) glider.style.transition = "none";
+      glider.style.width = activeBtn.offsetWidth + "px";
+      glider.style.height = activeBtn.offsetHeight + "px";
+      glider.style.transform = `translate3d(${activeBtn.offsetLeft}px, ${activeBtn.offsetTop - 5}px, 0)`;
+      glider.classList.add("ready");
+      if (instant) {
+        void glider.offsetWidth;
+        glider.style.transition = "";
+      }
+    }
+
+    const initialActive = group.querySelector(".pill-btn.active");
+    if (initialActive) {
+      requestAnimationFrame(() => moveGlider(initialActive, true));
+      gliderUpdaters.push(() => {
+        const cur = group.querySelector(".pill-btn.active");
+        if (cur) moveGlider(cur, true);
+      });
+    }
+
     group.querySelectorAll(".pill-btn").forEach((btn) => {
       btn.setAttribute("aria-pressed", String(btn.classList.contains("active")));
       btn.addEventListener("click", () => {
@@ -686,17 +713,116 @@
           b.classList.toggle("active", b === btn);
           b.setAttribute("aria-pressed", String(b === btn));
         });
+        moveGlider(btn, false);
         if (!box) return;
         const mine = ++token;
-        box.style.opacity = "0";
+        box.classList.add("swapping");
         setTimeout(() => {
           if (mine !== token) return;
           box.textContent = DETAILS[btn.dataset.detail] || "";
-          box.style.opacity = "1";
-        }, 160);
+          box.classList.remove("swapping");
+        }, 170);
       });
     });
   });
+
+  if (gliderUpdaters.length) {
+    window.addEventListener("resize", () => gliderUpdaters.forEach((fn) => fn()), { passive: true });
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => gliderUpdaters.forEach((fn) => fn()));
+    }
+  }
+
+  /* ── Signature Float Aura: 3D Spring Tilt, Magnetic CTAs & Orb Depth ─── */
+  if (!reduceMotion && window.matchMedia("(hover: hover)").matches) {
+    document.querySelectorAll(".float-aura-card").forEach((card) => {
+      let tx = 0, ty = 0, tLift = 0;
+      let cx = 0, cy = 0, cLift = 0;
+      let rafId = 0;
+
+      function step() {
+        cx += (tx - cx) * 0.12;
+        cy += (ty - cy) * 0.12;
+        cLift += (tLift - cLift) * 0.14;
+        card.style.setProperty("--rx", cx.toFixed(2) + "deg");
+        card.style.setProperty("--ry", cy.toFixed(2) + "deg");
+        card.style.setProperty("--lift", cLift.toFixed(2) + "px");
+
+        if (Math.abs(tx - cx) > 0.02 || Math.abs(ty - cy) > 0.02 || Math.abs(tLift - cLift) > 0.04) {
+          rafId = requestAnimationFrame(step);
+        } else {
+          card.style.setProperty("--rx", tx + "deg");
+          card.style.setProperty("--ry", ty + "deg");
+          card.style.setProperty("--lift", tLift + "px");
+          rafId = 0;
+        }
+      }
+
+      function kick() {
+        if (!rafId) rafId = requestAnimationFrame(step);
+      }
+
+      card.addEventListener("pointermove", (e) => {
+        const r = card.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width;
+        const py = (e.clientY - r.top) / r.height;
+        card.style.setProperty("--mx", (px * 100).toFixed(1) + "%");
+        card.style.setProperty("--my", (py * 100).toFixed(1) + "%");
+        tx = (0.5 - py) * 5.2;
+        ty = (px - 0.5) * 5.6;
+        tLift = -7;
+        kick();
+      });
+
+      card.addEventListener("pointerleave", () => {
+        tx = 0;
+        ty = 0;
+        tLift = 0;
+        kick();
+      });
+    });
+
+    /* Subtle magnetic pull on Float section CTA buttons */
+    document.querySelectorAll(".btn-aura-cta").forEach((btn) => {
+      btn.addEventListener("pointermove", (e) => {
+        const r = btn.getBoundingClientRect();
+        const dx = ((e.clientX - r.left) / r.width - 0.5) * 10;
+        const dy = ((e.clientY - r.top) / r.height - 0.5) * 7;
+        btn.style.setProperty("--mag-x", dx.toFixed(1) + "px");
+        btn.style.setProperty("--mag-y", dy.toFixed(1) + "px");
+      });
+      btn.addEventListener("pointerleave", () => {
+        btn.style.setProperty("--mag-x", "0px");
+        btn.style.setProperty("--mag-y", "0px");
+      });
+    });
+  }
+
+  /* Scroll-linked depth drift on Float Aura background orbs */
+  const productsSection = $("products");
+  const orbAgent = $("auraOrbAgent");
+  const orbFinance = $("auraOrbFinance");
+  if (!reduceMotion && productsSection && orbAgent && orbFinance) {
+    let orbTick = false;
+    const updateOrbs = () => {
+      const rect = productsSection.getBoundingClientRect();
+      const vh = window.innerHeight || 800;
+      if (rect.bottom > -120 && rect.top < vh + 120) {
+        const progress = (vh - rect.top) / (vh + rect.height) - 0.5;
+        const shift = progress * 48;
+        orbAgent.style.marginTop = shift.toFixed(1) + "px";
+        orbFinance.style.marginBottom = shift.toFixed(1) + "px";
+      }
+      orbTick = false;
+    };
+    window.addEventListener("scroll", () => {
+      if (!orbTick) {
+        orbTick = true;
+        requestAnimationFrame(updateOrbs);
+      }
+    }, { passive: true });
+    updateOrbs();
+  }
 
   /* ── "How it fits your office" preview with real screenshots ─────────── */
   const WF_DATA = [
