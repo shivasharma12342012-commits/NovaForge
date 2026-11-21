@@ -11,7 +11,7 @@
   const TERMINAL_AI = {
     provider: "openai",
     model: "gpt-oss-120b",
-    apiKey: "", // <-- PASTE YOUR API KEY HERE
+    apiKey: "", // Leave blank; set a session key in the terminal via `setkey <your-api-key>`
   };
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
