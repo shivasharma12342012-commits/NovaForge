@@ -236,7 +236,7 @@
     "with a 1,000x1,000 spreadsheet studio (Float Sheets), .xlsx/.pdf export, BYO API key, AES-256-GCM transport; " +
     "(2) Float for Finance — fleet & car rental finance suite with immutable GST invoices, driver payroll (PF/ESI/PT/TDS), " +
     "3-tier owner approval policy, DPDP consent & GPS/EXIF photo scrubbing, and 30/60/90-day expiry alerts. " +
-    "Float Plans (all include unlimited staff & shift workers): Basic (₹3 Lakh, up to 25 cars, 1 branch), " +
+    "Float Plans (all include unlimited staff & shift workers): Basic (₹6 Lakh, up to 25 cars, 1 branch), " +
     "Plus (₹9 Lakh, up to 60 cars, batch dispatch & FASTag/e-challan matcher), Pro (₹12 Lakh, up to 150 cars, 19 AI workflows, GST invoices & RevPAC), " +
     "Enterprise (₹15 Lakh, up to 500 cars, 5 branches, LAN server, RBAC & DPDP), Enterprise Max (₹18 Lakh, unlimited cars/branches, MCP, desktop AI & offline AI). " +
     "Founders: Prabhjot (Co-Founder & CEO), Shiva (Co-Founder & Lead Developer), Yatharth (Co-Founder & Head of Product & Design). " +
