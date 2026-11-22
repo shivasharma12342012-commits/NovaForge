@@ -237,8 +237,8 @@
     "(2) Float for Finance — fleet & car rental finance suite with immutable GST invoices, driver payroll (PF/ESI/PT/TDS), " +
     "3-tier owner approval policy, DPDP consent & GPS/EXIF photo scrubbing, and 30/60/90-day expiry alerts. " +
     "Float Plans (all include unlimited staff & shift workers): Basic (₹6 Lakh, up to 25 cars, 1 branch), " +
-    "Plus (₹9 Lakh, up to 60 cars, batch dispatch & FASTag/e-challan matcher), Pro (₹12 Lakh, up to 150 cars, 19 AI workflows, GST invoices & RevPAC), " +
-    "Enterprise (₹15 Lakh, up to 500 cars, 5 branches, LAN server, RBAC & DPDP), Enterprise Max (₹18 Lakh, unlimited cars/branches, MCP, desktop AI & offline AI). " +
+    "Plus (₹9 Lakh, up to 60 cars, batch dispatch & FASTag/e-challan matcher), Pro (₹13.5 Lakh, up to 150 cars, 19 AI workflows, GST invoices, RevPAC & tough-grade privacy/cyber-attack security), " +
+    "Enterprise (₹16.5 Lakh, up to 500 cars, 5 branches, LAN server, RBAC, DPDP & tough-grade privacy/cyber-attack security), Enterprise Max (₹21 Lakh, unlimited cars/branches, MCP, desktop AI, offline AI & maximum cyber-attack security). " +
     "Founders: Prabhjot (Co-Founder & CEO), Shiva (Co-Founder & Lead Developer), Yatharth (Co-Founder & Head of Product & Design). " +
     "For licensing or buyout inquiries, direct users to info.novaforge.2026@gmail.com. Answer concisely in 2-4 crisp plain-text sentences suitable for a terminal.";
 
@@ -435,7 +435,7 @@
       return "NovaForge is founded and run by Prabhjot (Co-Founder & CEO), Shiva (Co-Founder & Lead Developer), and Yatharth (Co-Founder & Head of Product & Design).";
     }
     if (/(price|cost|buy|license|quote|how much|plan|basic|plus|pro|enterprise|subscription)/.test(s)) {
-      return `Float editions (one-time, unlimited staff): Basic ₹6 Lakh (25 cars) · Plus ₹9 Lakh (60 cars) · Pro ₹12 Lakh (150 cars, Recommended) · Enterprise ₹15 Lakh (500 cars, 5 branches) · Enterprise Max ₹18 Lakh (Unlimited). Email ${EMAIL} for a walkthrough.`;
+      return `Float editions (one-time, unlimited staff): Basic ₹6 Lakh (25 cars) · Plus ₹9 Lakh (60 cars) · Pro ₹13.5 Lakh (150 cars, Recommended) · Enterprise ₹16.5 Lakh (500 cars, 5 branches) · Enterprise Max ₹21 Lakh (Unlimited). Pro, Enterprise & Enterprise Max all include tough-grade privacy and high-level security against cyber attacks. Email ${EMAIL} for a walkthrough.`;
     }
     if (/(contact|email|reach|demo|pilot|talk)/.test(s)) {
       return `Reach our founders directly at ${EMAIL}, or use the inquiry form at the bottom of this page.`;
@@ -554,9 +554,9 @@
       await typeText(
         "Float Basic          ₹6 Lakh   (Up to 25 cars · 1 branch)\n" +
         "Float Plus           ₹9 Lakh   (Up to 60 cars · 1 branch)\n" +
-        "Float Pro            ₹12 Lakh  (Up to 150 cars · Recommended)\n" +
-        "Float Enterprise     ₹15 Lakh  (Up to 500 cars · 5 branches)\n" +
-        "Float Enterprise Max ₹18 Lakh  (Unlimited cars & branches)",
+        "Float Pro            ₹13.5 Lakh (Up to 150 cars · Recommended · Tough-grade cyber security)\n" +
+        "Float Enterprise     ₹16.5 Lakh (Up to 500 cars · 5 branches · Tough-grade cyber security)\n" +
+        "Float Enterprise Max ₹21 Lakh   (Unlimited cars & branches · Maximum cyber security)",
         "term-info",
         alive,
         7
