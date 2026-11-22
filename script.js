@@ -1097,4 +1097,23 @@
       showToast("Opening your email app…");
     });
   }
+
+  /* ── Gentle scroll depth for the colored ASCII Float logo background ─── */
+  const asciiFloatArt = $("asciiFloatArt");
+  if (!reduceMotion && asciiFloatArt) {
+    let asciiTick = false;
+    const syncAsciiBg = () => {
+      const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      const ratio = window.scrollY / maxScroll - 0.5;
+      asciiFloatArt.style.setProperty("--ascii-y", (ratio * -44).toFixed(1) + "px");
+      asciiTick = false;
+    };
+    window.addEventListener("scroll", () => {
+      if (!asciiTick) {
+        asciiTick = true;
+        requestAnimationFrame(syncAsciiBg);
+      }
+    }, { passive: true });
+    syncAsciiBg();
+  }
 })();
