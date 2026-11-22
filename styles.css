@@ -771,6 +771,9 @@ button, input, select, textarea {
   overflow-wrap: anywhere;
   scrollbar-width: thin;
   scrollbar-color: #4D463F transparent;
+}
+
+.mac-body.term-awake {
   cursor: text;
 }
 
@@ -800,14 +803,14 @@ button, input, select, textarea {
 .term-spin { color: #E5B55C; }
 .term-info { color: #C7BFB3; }
 .term-ai { color: #EAE3D7; }
-.term-hint { color: #8C8479; font-size: 12px; }
 
 .term-input-line {
+  position: relative;
   display: flex;
   align-items: center;
   flex-wrap: nowrap;
   gap: 0;
-  margin-top: 4px;
+  margin-top: 2px;
 }
 
 .term-prompt-fixed {
@@ -815,9 +818,16 @@ button, input, select, textarea {
   white-space: pre;
 }
 
-.term-input {
+.term-input-wrap {
+  position: relative;
   flex: 1;
   min-width: 60px;
+  display: flex;
+  align-items: center;
+}
+
+.term-input {
+  width: 100%;
   background: transparent;
   border: none;
   outline: none;
@@ -828,10 +838,17 @@ button, input, select, textarea {
   line-height: inherit;
   color: #FAF7F1;
   caret-color: #E5B55C;
+  cursor: inherit;
 }
 
-.term-input::placeholder {
-  color: #7D756B;
+.term-idle-cursor {
+  position: absolute;
+  left: 0;
+  pointer-events: none;
+}
+
+.term-input-wrap.typing .term-idle-cursor {
+  display: none;
 }
 
 .term-cursor {

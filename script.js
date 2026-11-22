@@ -305,14 +305,25 @@
 
     const row = el("div", "term-input-line");
     const promptSpan = el("span", "term-prompt term-prompt-fixed", PROMPT);
+    const wrap = el("div", "term-input-wrap");
+    const idleCursor = el("span", "term-cursor term-idle-cursor");
     const input = document.createElement("input");
     input.type = "text";
     input.className = "term-input";
     input.id = "termInput";
     input.autocomplete = "off";
     input.spellcheck = false;
-    input.setAttribute("aria-label", "Type a question or command in the NovaForge terminal");
-    input.placeholder = "Ask anything or type 'help'…";
+    input.setAttribute("aria-label", "Terminal command prompt");
+
+    const syncCursor = () => {
+      const active = document.activeElement === input || input.value.length > 0;
+      wrap.classList.toggle("typing", active);
+      if (active) terminalBody.classList.add("term-awake");
+    };
+
+    input.addEventListener("focus", syncCursor);
+    input.addEventListener("blur", syncCursor);
+    input.addEventListener("input", syncCursor);
 
     input.addEventListener("keydown", (e) => {
       if (e.key === "Enter") {
@@ -324,6 +335,7 @@
         e.preventDefault();
         histIdx = histIdx < 0 ? cmdHistory.length - 1 : Math.max(0, histIdx - 1);
         input.value = cmdHistory[histIdx] || "";
+        syncCursor();
       } else if (e.key === "ArrowDown") {
         if (histIdx < 0) return;
         e.preventDefault();
@@ -334,18 +346,26 @@
         } else {
           input.value = cmdHistory[histIdx] || "";
         }
+        syncCursor();
       }
     });
 
-    row.append(promptSpan, input);
+    wrap.append(input, idleCursor);
+    row.append(promptSpan, wrap);
     terminalBody.append(row);
     scrollTerminal();
-    if (focusInput) input.focus({ preventScroll: true });
+    if (focusInput) {
+      input.focus({ preventScroll: true });
+      syncCursor();
+    }
   }
 
   async function callProviderAI(question, cfg) {
     const { apiKey, provider, model } = cfg;
-    if (provider === "anthropic") {
+    const isOpenRouterKey = apiKey.startsWith("sk-or-v1-");
+    const effectiveProvider = isOpenRouterKey && provider === "openai" ? "openrouter" : provider;
+
+    if (effectiveProvider === "anthropic") {
       const res = await fetch("https://api.anthropic.com/v1/messages", {
         method: "POST",
         headers: {
@@ -366,7 +386,7 @@
       return (data.content && data.content[0] && data.content[0].text) || "";
     }
 
-    if (provider === "gemini") {
+    if (effectiveProvider === "gemini") {
       const gModel = model.includes("gemini") ? model : "gemini-2.0-flash";
       const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(gModel)}:generateContent?key=${encodeURIComponent(apiKey)}`;
       const res = await fetch(url, {
@@ -383,7 +403,7 @@
     }
 
     const endpoint =
-      provider === "openrouter"
+      effectiveProvider === "openrouter"
         ? "https://openrouter.ai/api/v1/chat/completions"
         : "https://api.openai.com/v1/chat/completions";
     const res = await fetch(endpoint, {
@@ -409,27 +429,27 @@
   function offlineNovaForgeAI(q) {
     const s = q.toLowerCase();
     if (/^(hi|hello|hey|namaste)\b/.test(s)) {
-      return "NovaForge assistant ready. Ask about Float AI Agent, Float for Finance, our founders, security, or pricing.";
+      return "Hello from NovaForge! You found the secret shell. Ask me anything about Float, our founders, plans, or security.";
     }
     if (/(founder|founded|team|who made|who built|who runs|owner|ceo|developer|designer|shiva|prabhjot|yatharth)/.test(s)) {
       return "NovaForge is founded and run by Prabhjot (Co-Founder & CEO), Shiva (Co-Founder & Lead Developer), and Yatharth (Co-Founder & Head of Product & Design).";
     }
-    if (/(price|cost|buy|license|quote|how much|subscription)/.test(s)) {
-      return `We offer tailored company licensing and full buyout packages. Please email ${EMAIL} with your team size and workflow for a quote.`;
+    if (/(price|cost|buy|license|quote|how much|plan|basic|plus|pro|enterprise|subscription)/.test(s)) {
+      return `Float editions (one-time, unlimited staff): Basic ₹6 Lakh (25 cars) · Plus ₹9 Lakh (60 cars) · Pro ₹12 Lakh (150 cars, Recommended) · Enterprise ₹15 Lakh (500 cars, 5 branches) · Enterprise Max ₹18 Lakh (Unlimited). Email ${EMAIL} for a walkthrough.`;
     }
     if (/(contact|email|reach|demo|pilot|talk)/.test(s)) {
       return `Reach our founders directly at ${EMAIL}, or use the inquiry form at the bottom of this page.`;
     }
     if (/(finance|gst|payroll|fleet|driver|dpdp|exif|approval|tier)/.test(s)) {
-      return "Float for Finance is built for car rental & fleet teams: immutable GST invoices, PF/ESI/PT/TDS driver payroll, 3-tier owner approvals, DPDP consent & EXIF scrubbing, and 30/60/90-day expiry alerts.";
+      return "Float for Finance is built for car rental & fleet teams: locked GST invoices, PF/ESI/PT/TDS driver payroll, 3-tier owner approvals, DPDP consent & photo location removal, and 30/60/90-day expiry alerts.";
     }
     if (/(float|sheet|excel|xlsx|pdf|workspace|agent)/.test(s)) {
-      return "Float AI Agent is a local-first AI workspace with Float Sheets (a 1,000 × 1,000 spreadsheet grid with formulas, charts, .xlsx and .pdf export) and zero external runtime dependencies.";
+      return "Float AI Agent is a local-first AI workspace with Float Sheets (a 1,000 × 1,000 spreadsheet grid with formulas, charts, .xlsx and .pdf export) and zero extra software required.";
     }
     if (/(privacy|security|key|encrypt|cloud|offline|local|mac|windows)/.test(s)) {
-      return "Everything runs natively on Mac or Windows with your own API key encrypted via AES-256-GCM and a local SQLite WAL database — your files never live on third-party clouds.";
+      return "Everything runs natively on Mac or Windows with advanced data encryption (AES-256-GCM) and reliable local data storage (SQLite WAL) — your files never live on third-party clouds.";
     }
-    return `NovaForge builds local-first AI software (Float AI Agent & Float for Finance) with zero external dependencies. Type 'help' for commands or email ${EMAIL} to speak with our founders.`;
+    return `NovaForge builds local-first AI software (Float AI Agent & Float for Finance) with zero external dependencies. Type 'help' for shell commands or email ${EMAIL} to speak with our founders.`;
   }
 
   async function handleTerminalCommand(raw) {
@@ -464,8 +484,8 @@
 
     if (lower === "help" || lower === "?") {
       await typeText(
-        "Commands: products · float · finance · founders · pricing · contact · replay · clear\n" +
-        "Tip: Ask any question in plain English, or run `setkey <api-key>` to use your live AI key.",
+        "Commands: ls · whoami · neofetch · cat founders.txt · cat pricing.txt · replay · clear\n" +
+        "Or ask any question directly — this terminal is alive.",
         "term-info",
         alive,
         8
@@ -487,7 +507,7 @@
         sessionStorage.setItem(SESSION_KEY_STORAGE, key);
         sessionStorage.setItem(SESSION_PROV_STORAGE, prov);
       } catch { /* ignore */ }
-      await typeText(`✓ Session API key saved for ${prov}. Ask a question.`, "term-ok", alive, 10);
+      await typeText(`✓ Session API key saved for ${prov}.`, "term-ok", alive, 10);
       busy = false;
       mountPrompt(true);
       return;
@@ -498,27 +518,70 @@
         sessionStorage.removeItem(SESSION_KEY_STORAGE);
         sessionStorage.removeItem(SESSION_PROV_STORAGE);
       } catch { /* ignore */ }
-      await typeText("✓ Cleared session API key (using built-in NovaForge assistant).", "term-ok", alive, 10);
+      await typeText("✓ Cleared session API key.", "term-ok", alive, 10);
       busy = false;
       mountPrompt(true);
       return;
     }
 
     if (lower === "whoami") {
-      await typeText("guest@novaforge — ready. Ask about our products.", "term-info", alive, 10);
+      await typeText("curious-visitor@novaforge (nice find.)", "term-info", alive, 10);
       busy = false;
       mountPrompt(true);
       return;
     }
 
-    if (lower === "ls") {
+    if (lower === "ls" || lower === "ls -la") {
       await typeText("float-ai-agent/   float-for-finance/   founders.txt   pricing.txt", "term-info", alive, 10);
       busy = false;
       mountPrompt(true);
       return;
     }
 
-    // AI Response (uses live API key if configured, otherwise NovaForge assistant)
+    if (lower === "cat founders.txt") {
+      await typeText(
+        "Prabhjot  — Co-Founder & CEO\nShiva     — Co-Founder & Lead Developer\nYatharth  — Co-Founder & Head of Product & Design",
+        "term-info",
+        alive,
+        9
+      );
+      busy = false;
+      mountPrompt(true);
+      return;
+    }
+
+    if (lower === "cat pricing.txt") {
+      await typeText(
+        "Float Basic          ₹6 Lakh   (Up to 25 cars · 1 branch)\n" +
+        "Float Plus           ₹9 Lakh   (Up to 60 cars · 1 branch)\n" +
+        "Float Pro            ₹12 Lakh  (Up to 150 cars · Recommended)\n" +
+        "Float Enterprise     ₹15 Lakh  (Up to 500 cars · 5 branches)\n" +
+        "Float Enterprise Max ₹18 Lakh  (Unlimited cars & branches)",
+        "term-info",
+        alive,
+        7
+      );
+      busy = false;
+      mountPrompt(true);
+      return;
+    }
+
+    if (lower === "neofetch" || lower === "novaforge") {
+      await typeText(
+        "NovaForge OS · Local-First Edition\n" +
+        "Products: Float AI Agent + Float for Finance\n" +
+        "Runtime:  Zero external dependencies (macOS & Windows)\n" +
+        "Contact:  " + EMAIL,
+        "term-ok",
+        alive,
+        9
+      );
+      busy = false;
+      mountPrompt(true);
+      return;
+    }
+
+    // Secret AI response (live API key if configured, otherwise built-in NovaForge assistant)
     setStatus("Thinking…", false);
     const spinSpan = el("span", "term-spin", `${SPIN[0]} Thinking…`);
     const spinLine = appendLine([spinSpan]);
@@ -550,7 +613,7 @@
     }
 
     await typeText(answer.trim() || offlineNovaForgeAI(text), "term-ai", alive, 11);
-    setStatus("Interactive · type a question below", true);
+    setStatus("Ready on Mac & Windows", true);
     busy = false;
     mountPrompt(true);
   }
@@ -567,8 +630,7 @@
         appendLine([el("span", step.type === "ok" ? "term-ok" : "term-info", step.text)]);
       }
     });
-    appendLine([el("span", "term-hint", "Easter egg unlocked: type a question or 'help' below.")]);
-    setStatus("Interactive · type a question below", true);
+    setStatus("Ready on Mac & Windows", true);
     mountPrompt(false);
   }
 
@@ -586,6 +648,7 @@
     }
 
     terminalBody.innerHTML = "";
+    terminalBody.classList.remove("term-awake");
     setStatus("Running…", false);
     await sleep(160);
 
@@ -625,8 +688,7 @@
     }
 
     if (!alive()) return;
-    appendLine([el("span", "term-hint", "Easter egg unlocked: type any question or 'help' below.")]);
-    setStatus("Interactive · type a question below", true);
+    setStatus("Ready on Mac & Windows", true);
     mountPrompt(false);
   }
 
