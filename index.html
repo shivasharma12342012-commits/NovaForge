@@ -14,46 +14,6 @@
   <script>document.documentElement.classList.add("js");</script>
 </head>
 <body>
-  <!-- Colored ASCII Float Logo Background -->
-  <div class="ascii-float-bg" id="asciiFloatBg" aria-hidden="true">
-    <pre class="ascii-float-art" id="asciiFloatArt">                                      <span class="af-7">......</span><span class="af-8">...::::::::</span><span class="af-9">:::::::::::::::::</span>
-                              <span class="af-6">.:</span><span class="af-0">+*</span><span class="af-8">@</span><span class="af-7">%</span><span class="af-8">#</span><span class="af-7">@</span><span class="af-8">@%#@@%#@@</span><span class="af-9">%#@@%#@@%#@@%#@@%#@@%#@@%.</span>
-                          <span class="af-6">:</span><span class="af-0">*</span><span class="af-3">%</span><span class="af-7">#@@%#@@%#@@</span><span class="af-8">%</span><span class="af-7">#</span><span class="af-8">@@%#@@%#@@</span><span class="af-9">%#@@%#@@%#@@%#@@%#@@</span>
-                       <span class="af-5">:</span><span class="af-3">@</span><span class="af-6">%#@@%</span><span class="af-7">#@@%#@@%#@@%</span><span class="af-8">#@@%#@@%#@@</span><span class="af-9">%#@@%#@@%#@@%#@@%#</span><span class="af-0">*</span>
-                    <span class="af-5">:</span><span class="af-2">@</span><span class="af-5">%</span><span class="af-6">#@@%#@@%#</span><span class="af-7">@@%#@@%#@@%#</span><span class="af-8">@@%#@@%#@@%#</span><span class="af-9">@@%#@@%#@@%#@@%</span>
-                  <span class="af-0">+</span><span class="af-4">%</span><span class="af-6">#@</span><span class="af-5">@%#@</span><span class="af-6">@%#@@%#@@</span><span class="af-7">%#@@%#@@%#@</span><span class="af-8">@%#@@%#@@%#@</span><span class="af-9">@%#@@%#@@%#@:</span>
-                <span class="af-0">+</span><span class="af-4">#</span><span class="af-5">@@</span><span class="af-4">%</span><span class="af-5">#@@%#@@</span><span class="af-6">%#@@%#@@%</span><span class="af-7">#@@%#@@%#@</span><span class="af-8">@%#@@%#@@%#@@</span><span class="af-9">%#@@%#@@%</span><span class="af-0">*</span>
-              <span class="af-4">:</span><span class="af-3">@</span><span class="af-4">@%#@@%#</span><span class="af-5">@@%#@@%</span><span class="af-6">#@@%#@@%</span><span class="af-7">#@@%#@@%#@@</span><span class="af-8">%#@@%#@@%#@@</span><span class="af-9">%#@@%#@</span><span class="af-0">*</span>
-             <span class="af-0">@</span><span class="af-4">%#@@%#@@%#</span><span class="af-5">@@%#@@%#</span><span class="af-6">@@%#@@%#</span><span class="af-7">@@%#@@%#@@%</span><span class="af-8">#@@%#@@%#@@</span><span class="af-9">%#@@%</span><span class="af-8">+</span>
-           <span class="af-3">.</span><span class="af-2">#</span><span class="af-4">@</span><span class="af-3">@%</span><span class="af-4">#@@%#@@%#@@%</span><span class="af-5">#@@%#@</span><span class="af-6">@%#@@%#@</span><span class="af-7">@%#@@%#@@%#</span><span class="af-8">@@%#@@%#@@</span><span class="af-9">%#</span><span class="af-8">@.</span>
-          <span class="af-3">.@%#@@%#@</span><span class="af-4">@%#@@%#@@%</span><span class="af-5">#@@%#@</span><span class="af-6">@%#@@%#@</span><span class="af-7">@%#@@%#@@%#</span><span class="af-8">@@%#@@%#</span><span class="af-9">@</span><span class="af-8">@</span><span class="af-0">+</span>
-         <span class="af-3">.#@@%#@@%#@@</span><span class="af-4">%#@@%#@@%#@</span><span class="af-5">@%#@@</span><span class="af-6">%#@@%#@@%#@</span><span class="af-7">@%#@@%#</span><span class="af-8">@@%#@@%</span><span class="af-0">+</span>
-        <span class="af-3">.</span><span class="af-2">@%#@</span><span class="af-3">@%#@@%#@@</span><span class="af-4">%#@@%#@@%#@</span><span class="af-5">@%#@@%</span><span class="af-6">#@@%#@@%#@</span><span class="af-7">@%#@@%#@</span><span class="af-8">@%</span><span class="af-0">#</span><span class="af-7">:</span>
-        <span class="af-1">#</span><span class="af-2">@@%#@@</span><span class="af-3">%#@@%#@@%#</span><span class="af-4">@@%#@@</span><span class="af-5">%#@@%</span><span class="af-6">#@@%#@@%#@@%#@@</span><span class="af-7">%#@@</span><span class="af-3">%</span><span class="af-0">+</span><span class="af-7">:</span>
-       <span class="af-0">+</span><span class="af-2">%#@@%#@@%</span><span class="af-3">#@@%#@</span><span class="af-4">@%#@</span><span class="af-3">@%#@</span><span class="af-2">@%#@</span><span class="af-3">@%#@@%#@@%#@@</span><span class="af-2">%</span><span class="af-0">#*+</span><span class="af-6">:.</span>
-      <span class="af-2">.</span><span class="af-1">@@%</span><span class="af-2">#@@%#@@%</span><span class="af-3">#@@</span><span class="af-2">%</span><span class="af-1">#</span><span class="af-0">*</span><span class="af-4">+..</span>
-      <span class="af-0">+</span><span class="af-1">#@@%#</span><span class="af-2">@@%#@@</span><span class="af-1">%</span><span class="af-3">+.</span>
-      <span class="af-1">@%#@@%#</span><span class="af-2">@@</span><span class="af-0">%</span><span class="af-3">:</span>             <span class="af-4">..:::::</span><span class="af-5">::::::::++++</span><span class="af-6">+:+.</span>
-     <span class="af-2">.</span><span class="af-1">@@%#@@%</span><span class="af-0">*</span><span class="af-2">.</span>         <span class="af-3">.:</span><span class="af-0">+</span><span class="af-1">@</span><span class="af-3">%</span><span class="af-4">#</span><span class="af-5">@@%#</span><span class="af-6">@@%#@@%</span><span class="af-7">#@@%#@@%</span><span class="af-8">#@@</span><span class="af-6">.</span>
-     <span class="af-1">+</span><span class="af-0">#@@%</span><span class="af-1">#</span><span class="af-0">*</span><span class="af-2">.</span>       <span class="af-3">.</span><span class="af-0">+</span><span class="af-1">#</span><span class="af-3">@</span><span class="af-4">@%#@@%#@@%#</span><span class="af-5">@@%#</span><span class="af-6">@@%#</span><span class="af-7">@@%#@@%#</span><span class="af-8">@</span>
-     <span class="af-0">*%#@@</span><span class="af-2">.</span>      <span class="af-2">:</span><span class="af-0">%</span><span class="af-2">#</span><span class="af-3">@</span><span class="af-4">@%</span><span class="af-3">#@@%#</span><span class="af-4">@@%#@@%#@@</span><span class="af-5">%#@</span><span class="af-6">@%#</span><span class="af-7">@@%#@@%</span><span class="af-5">:</span>
-     <span class="af-0">**%+</span>     <span class="af-2">:</span><span class="af-0">%</span><span class="af-2">#</span><span class="af-3">@@%#@@%#@@%#@@%#@</span><span class="af-4">@%#@@%</span><span class="af-5">#@@</span><span class="af-6">%#</span><span class="af-7">@@%#@</span><span class="af-0">*</span>
-    <span class="af-1">.</span><span class="af-0">**</span><span class="af-1">:</span>    <span class="af-2">+</span><span class="af-1">#</span><span class="af-2">@@%#@@%</span><span class="af-3">#@@%#@@%#@@%#@@%#</span><span class="af-4">@@%#@</span><span class="af-5">@%</span><span class="af-6">#@</span><span class="af-7">@%</span><span class="af-3">#</span>
-    <span class="af-1">.</span><span class="af-0">*</span><span class="af-1">.</span>   <span class="af-1">+@</span><span class="af-2">@%#@@%#@@%#@@%#@@%#@</span><span class="af-3">@%#@@%#@@</span><span class="af-4">%#@@%</span><span class="af-5">#</span><span class="af-6">@</span><span class="af-0">*</span>
-    <span class="af-1">::</span>  <span class="af-1">:@</span><span class="af-2">%</span><span class="af-1">#@@%#</span><span class="af-2">@@%#@@%#@@%#@@%#@@%#@</span><span class="af-3">@%#@@%#</span><span class="af-4">@@</span><span class="af-3">%</span><span class="af-4">:</span>
-    <span class="af-0">.</span>  <span class="af-0">+</span><span class="af-1">#@@%#@@%#@@%#@@%#@@%#</span><span class="af-2">@@%#@@%#@@%#</span><span class="af-3">@@%#</span><span class="af-0">+</span>
-      <span class="af-0">@</span><span class="af-1">@</span><span class="af-0">%</span><span class="af-1">#@@%#@@%#@@%#@@%#@@%#@@%#@</span><span class="af-2">@%#@@%#</span><span class="af-0">*</span><span class="af-4">:</span>
-     <span class="af-0">%</span><span class="af-1">#</span><span class="af-0">@@%#</span><span class="af-1">@@%#@@%#@@%#@@%#@@%#@@%#@@</span><span class="af-0">%*</span><span class="af-3">:.</span>
-    <span class="af-0">*@%#@@%#@@</span><span class="af-1">%#@@%#@@%#</span><span class="af-0">@*</span><span class="af-2">:...</span>
-   <span class="af-0">:#@@%#@@%#@@%#@@</span><span class="af-1">%#</span><span class="af-0">@+</span><span class="af-2">.</span>
-   <span class="af-0">@%#@@%#@@%#@@%#</span><span class="af-1">@</span><span class="af-0">@</span><span class="af-1">:</span>
-  <span class="af-0">:@***@@%#@@%#@@*</span><span class="af-1">:</span>
-  <span class="af-0">+*******%#@@%+.</span>
-  <span class="af-0">*******@@**:.</span>
- <span class="af-0">.*++++++:.</span>
-  <span class="af-0">...</span></pre>
-  </div>
-
   <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 
   <!-- Quiet floating back-to-top button -->
@@ -214,21 +174,6 @@
           <span>Automatic Photo Location Removal</span>
           <span class="dot">&#9670;</span>
           <span>Automated Daily Local Backups</span>
-          <span class="dot">&#9670;</span>
-        </div>
-        <div class="marquee-group">
-          <span>Zero Extra Software Required</span>
-          <span class="dot">&#9670;</span>
-          <span>Advanced Data Encryption</span>
-          <span class="dot">&#9670;</span>
-          <span>1,000 &times; 1,000 Spreadsheet Studio</span>
-          <span class="dot">&#9670;</span>
-          <span>Issued Invoices Cannot Be Silently Altered</span>
-          <span class="dot">&#9670;</span>
-          <span>Automatic Photo Location Removal</span>
-          <span class="dot">&#9670;</span>
-          <span>Automated Daily Local Backups</span>
-          <span class="dot">&#9670;</span>
         </div>
       </div>
     </div>
