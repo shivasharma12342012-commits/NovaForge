@@ -36,7 +36,7 @@ This repository hosts the official **NovaForge** company website showcasing our 
 - **Pricing:** Float Editions start at **₹6 Lakh (One-Time)**.
 
 ### 2. Float for Finance
-**Best for:** Car rental agencies, multi-branch fleet operators, and finance teams requiring strict GST billing, driver payroll, and owner approvals.
+**Best for:** Car rental agencies, commercial fleet operators, and finance teams requiring strict GST billing, driver payroll, and owner approvals.
 
 - **Locked GST Billing:** Sequential GST invoices and credit notes that cannot be silently altered (immutable database-level triggers).
 - **Accurate GST Math & Driver Payroll:** Exact `Decimal` `ROUND_HALF_UP` tax calculations with complete PF, ESI, PT, and TDS payroll reconciliation.
@@ -50,13 +50,13 @@ This repository hosts the official **NovaForge** company website showcasing our 
 
 Every Float edition is a **one-time company purchase** with **unlimited staff and shift-worker logins** — no recurring per-seat monthly fees. Companies can upgrade later by paying only the difference.
 
-| Edition | One-Time Price | Vehicle Capacity | Branches | Key Highlights |
+| Edition | One-Time Price | Vehicle Capacity | Deployment | Key Highlights |
 | :--- | :---: | :---: | :---: | :--- |
-| **1. Float Basic** | **₹6 Lakh** | Up to 25 cars | 1 branch | Unlimited staff, Express Clean-to-Ready wash queue, instant GST quotes & agreements, Counter PIN lock, English & Hindi |
-| **2. Float Plus** | **₹9 Lakh** | Up to 60 cars | 1 branch | Everything in Basic + 1-click wave batch dispatch, 1-click mid-trip extensions, FASTag/e-challan auto-matcher, 360° checklists, all 13 Indian languages, Google Drive backup |
-| **3. Float Pro (Recommended)** | **₹13.5 Lakh** | Up to 150 cars | 1 branch | Everything in Plus + **Tough-grade privacy & high-level cyber-attack security**, all 19 AI workflows, locked GST invoices & credit notes, corporate B2B accounts, workshop job cards, RevPAC yield analytics |
-| **4. Float Enterprise** | **₹16.5 Lakh** | Up to 500 cars | Up to 5 branches | Everything in Pro + **Tough-grade privacy & high-level cyber-attack security**, multi-PC office LAN server, 5 employee permission roles (RBAC), cash drawer reconciliation, driver roster, India DPDP Act 2023 compliance, bulk Excel/CSV importer |
-| **5. Float Enterprise Max** | **₹21 Lakh** | **Unlimited** | **Unlimited** | Everything in Enterprise + **Maximum cyber-attack security**, inter-branch vehicle transfers, complete before/after JSON field-level audit trail, MCP integrations (GPS/CRM/ERP), operator-confirmed desktop automation, 100% offline local AI (Ollama) |
+| **1. Float Basic** | **₹6 Lakh** | Up to 25 cars | Single counter PC | Unlimited staff, Express Clean-to-Ready wash queue, instant GST quotes & agreements, Counter PIN lock, English & Hindi |
+| **2. Float Plus** | **₹9 Lakh** | Up to 60 cars | Single counter PC | Everything in Basic + 1-click wave batch dispatch, 1-click mid-trip extensions, FASTag/e-challan auto-matcher, 360° checklists, all 13 Indian languages, Google Drive backup |
+| **3. Float Pro (Recommended)** | **₹13.5 Lakh** | Up to 150 cars | Single counter PC | Everything in Plus + **Tough-grade privacy & high-level cyber-attack security**, all 19 AI workflows, locked GST invoices & credit notes, corporate B2B accounts, workshop job cards, RevPAC yield analytics |
+| **4. Float Enterprise** | **₹16.5 Lakh** | Up to 500 cars | Multi-PC Office LAN | Everything in Pro + **Tough-grade privacy & high-level cyber-attack security**, multi-PC office LAN server, 5 employee permission roles (RBAC), cash drawer reconciliation, driver roster, India DPDP Act 2023 compliance, bulk Excel/CSV importer |
+| **5. Float Enterprise Max** | **₹21 Lakh** | **Unlimited** | Multi-PC Office LAN | Everything in Enterprise + **Maximum cyber-attack security**, complete before/after JSON field-level audit trail, MCP integrations (GPS/CRM/ERP), operator-confirmed desktop automation, 100% offline local AI (Ollama) |
 
 ### Included With Every Edition
 - **Guided Installation:** Live setup support on macOS and Windows (15–30 minutes for a single counter PC; 1–2 hours for a multi-computer office LAN).
