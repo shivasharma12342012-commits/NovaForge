@@ -2,21 +2,8 @@
   "use strict";
 
   const EMAIL = "info.novaforge.2026@gmail.com";
-
-  /* ── Terminal AI Easter Egg Configuration ──────────────────────────────
-     Paste your API key below to power live AI answers inside the Mac terminal.
-     Supported providers: "openai" | "openrouter" | "anthropic" | "gemini"
-     Leave apiKey blank ("") to use the built-in NovaForge assistant, or type
-     `setkey <your-api-key>` directly inside the terminal to test a key live. */
-  const TERMINAL_AI = {
-    provider: "openai",
-    model: "gpt-oss-120b",
-    apiKey: "", // Leave blank; set a session key in the terminal via `setkey <your-api-key>`
-  };
-
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const $ = (id) => document.getElementById(id);
-  const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
   /* ── Persistent sticky header + active section highlighting ────────────── */
   const header = $("siteHeader");
@@ -30,16 +17,12 @@
     .filter(Boolean);
 
   let ticking = false;
-
   function setActiveNav(activeId) {
     trackedNavLinks.forEach((link) => {
       const match = link.dataset.section === activeId;
       link.classList.toggle("active", match);
-      if (match) {
-        link.setAttribute("aria-current", "location");
-      } else {
-        link.removeAttribute("aria-current");
-      }
+      if (match) link.setAttribute("aria-current", "location");
+      else link.removeAttribute("aria-current");
     });
   }
 
@@ -53,9 +36,7 @@
     }
     let current = "";
     for (const sec of trackedSections) {
-      if (sec.offsetTop <= scrollPos) {
-        current = sec.id;
-      }
+      if (sec.offsetTop <= scrollPos) current = sec.id;
     }
     setActiveNav(current);
   }
@@ -64,17 +45,12 @@
     const y = window.scrollY;
     const doc = document.documentElement;
     const max = doc.scrollHeight - doc.clientHeight;
-
-    if (progressBar) {
-      progressBar.style.width = (max > 0 ? Math.min(100, (y / max) * 100) : 0) + "%";
-    }
+    if (progressBar) progressBar.style.width = (max > 0 ? Math.min(100, (y / max) * 100) : 0) + "%";
     if (header) {
       header.classList.toggle("scrolled", y > 12);
       header.classList.toggle("compact", y > 80);
     }
-    if (backToTop) {
-      backToTop.hidden = y < 500;
-    }
+    if (backToTop) backToTop.hidden = y < 500;
     updateActiveSection();
     ticking = false;
   }
@@ -111,27 +87,12 @@
     });
     mobileNav.querySelectorAll("a").forEach((link) => link.addEventListener("click", closeMenu));
     document.addEventListener("click", (e) => {
-      if (!mobileNav.hidden && !mobileNav.contains(e.target) && !menuToggle.contains(e.target)) {
-        closeMenu();
-      }
+      if (!mobileNav.hidden && !mobileNav.contains(e.target) && !menuToggle.contains(e.target)) closeMenu();
     });
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") closeMenu();
     });
-    window.matchMedia("(min-width: 961px)").addEventListener("change", (e) => {
-      if (e.matches) closeMenu();
-    });
   }
-
-  /* ── SVG line drawing: measure each path so every shape draws fully ──── */
-  document.querySelectorAll(".draw-path").forEach((path) => {
-    try {
-      const len = Math.ceil(path.getTotalLength()) + 2;
-      path.style.setProperty("--len", String(len));
-    } catch {
-      path.style.setProperty("--len", "400");
-    }
-  });
 
   /* ── Scroll reveal ───────────────────────────────────────────────────── */
   const reveals = document.querySelectorAll(".reveal");
@@ -149,783 +110,147 @@
     reveals.forEach((el) => el.classList.add("visible"));
   }
 
-  /* ── Card light that follows the pointer ─────────────────────────────── */
-  if (window.matchMedia("(hover: hover)").matches) {
-    document.querySelectorAll(".sheen-card").forEach((card) => {
-      card.addEventListener("pointermove", (e) => {
-        const r = card.getBoundingClientRect();
-        card.style.setProperty("--mx", (((e.clientX - r.left) / r.width) * 100).toFixed(1) + "%");
-        card.style.setProperty("--my", (((e.clientY - r.top) / r.height) * 100).toFixed(1) + "%");
+  /* ── Interactive Hero Live Counter Showcase (4 Tabs) ─────────────────── */
+  const counterBody = $("counterBody");
+  const counterTabs = document.querySelectorAll(".counter-tab");
+  let waveDispatched = false;
+  let challanPosted = false;
+
+  function renderCounterView(view) {
+    if (!counterBody) return;
+    if (view === "wave") {
+      counterBody.innerHTML = `
+        <div class="cv-kpis">
+          <div class="cv-kpi"><span>Pickups Due</span><strong>${waveDispatched ? "0 pending" : "14 cars"}</strong></div>
+          <div class="cv-kpi"><span>Overdue Alerts</span><strong class="cv-warn">2 returns</strong></div>
+          <div class="cv-kpi"><span>Wash-Bay TAT</span><strong class="cv-good">18 min avg</strong></div>
+        </div>
+        <div class="cv-list">
+          <div class="cv-row"><span><strong>MH-02-HV-4589</strong> · Innova Hycross</span><span class="cv-tag ${waveDispatched ? "cv-tag-good" : ""}">${waveDispatched ? "Dispatched" : "Ready · Bay 2"}</span></div>
+          <div class="cv-row"><span><strong>DL-01-CD-8821</strong> · Dzire AT</span><span class="cv-tag ${waveDispatched ? "cv-tag-good" : ""}">${waveDispatched ? "Dispatched" : "Ready · Bay 4"}</span></div>
+          <div class="cv-row"><span><strong>MH-01-EF-1904</strong> · Ertiga ZXi</span><span class="cv-tag">Wash 14m · Mark Ready</span></div>
+        </div>
+        <button type="button" class="cv-action-btn" id="cvDispatchBtn">
+          ${waveDispatched ? "✓ 14 Conflict-Free Cars Dispatched (0.21s)" : "1-Click Dispatch 14 Conflict-Free Cars"}
+        </button>`;
+      const btn = $("cvDispatchBtn");
+      if (btn) btn.addEventListener("click", () => { waveDispatched = !waveDispatched; renderCounterView("wave"); });
+    } else if (view === "fastag") {
+      counterBody.innerHTML = `
+        <div class="cv-input-bar">
+          <span class="cv-chip">Plate: <strong>MH-02-HV-4589</strong></span>
+          <span class="cv-chip">Toll/Challan Time: <strong>14 Oct, 16:42</strong></span>
+        </div>
+        <div class="cv-match-card">
+          <div class="cv-match-head"><span>Instant Match · 0.04s</span><strong>Booking #FLT-2841 (Rohan K.)</strong></div>
+          <p class="cv-match-sub">Trip Window: 14 Oct 09:00 → 16 Oct 18:00 · Security Deposit Held: ₹5,000</p>
+        </div>
+        <button type="button" class="cv-action-btn" id="cvPostChallanBtn">
+          ${challanPosted ? "✓ ₹1,200 Challan Posted to Booking #FLT-2841 Ledger" : "Post ₹1,200 Challan to Ledger"}
+        </button>`;
+      const btn = $("cvPostChallanBtn");
+      if (btn) btn.addEventListener("click", () => { challanPosted = !challanPosted; renderCounterView("fastag"); });
+    } else if (view === "gst") {
+      counterBody.innerHTML = `
+        <div class="cv-inv-head">
+          <div><strong>FLT/2026-27/00419</strong><span>SQLite-Locked · Immutable Trigger Active</span></div>
+          <span class="cv-tag cv-tag-good">Corporate Net-30 B2B</span>
+        </div>
+        <div class="cv-list">
+          <div class="cv-row"><span>Base Rental + Prorated 6h Extension</span><strong>₹18,450.00</strong></div>
+          <div class="cv-row"><span>CGST (2.5%) + SGST (2.5%) · Decimal ROUND_HALF_UP</span><strong>₹922.50</strong></div>
+          <div class="cv-row cv-row-total"><span>Locked Grand Total (B2B Ledger)</span><strong>₹19,372.50</strong></div>
+        </div>
+        <div class="cv-foot-note">Corrections require sequential Credit Note CN/2026-27/00018.</div>`;
+    } else {
+      counterBody.innerHTML = `
+        <div class="cv-list">
+          <div class="cv-row"><span><strong>192.168.1.14</strong> → Counter Desk 2</span><span class="cv-tag cv-tag-good">IP Session Bound</span></div>
+          <div class="cv-row"><span>4-Digit Quick PIN Lock</span><span class="cv-tag">Auto-lock 120s</span></div>
+          <div class="cv-row"><span>5-Role RBAC Active</span><span class="cv-tag">Owner · Mgr · Desk · Acct · Auditor</span></div>
+          <div class="cv-row"><span>DPDP Act 2023 Compliance</span><span class="cv-tag cv-tag-good">GPS/EXIF Scrubbed</span></div>
+        </div>
+        <div class="cv-foot-note">Multi-Desk Hub LAN Server · Unlimited counter PCs per hub.</div>`;
+    }
+  }
+
+  renderCounterView("wave");
+  counterTabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      counterTabs.forEach((t) => {
+        const on = t === tab;
+        t.classList.toggle("active", on);
+        t.setAttribute("aria-selected", String(on));
       });
-    });
-  }
-
-  /* ── Counters ────────────────────────────────────────────────────────── */
-  function animateCounter(el) {
-    const target = Number(el.dataset.target || 0);
-    const suffix = el.dataset.suffix || "";
-    if (!target || reduceMotion) {
-      el.textContent = target.toLocaleString("en-IN") + suffix;
-      return;
-    }
-    const start = performance.now();
-    const duration = 1000;
-    const step = (now) => {
-      const t = Math.min(1, (now - start) / duration);
-      const eased = 1 - Math.pow(1 - t, 3);
-      el.textContent = Math.round(target * eased).toLocaleString("en-IN") + suffix;
-      if (t < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  }
-
-  const counters = document.querySelectorAll(".counter");
-  if ("IntersectionObserver" in window) {
-    const co = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          animateCounter(entry.target);
-          co.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.6 });
-    counters.forEach((c) => co.observe(c));
-  } else {
-    counters.forEach(animateCounter);
-  }
-
-  /* ── Mac terminal animation ──────────────────────────────────────────── */
-  const terminalBody = $("terminalBody");
-  const replayBtn = $("termReplay");
-  const statusDot = $("termStatusDot");
-  const statusText = $("termStatusText");
-  const termTabs = document.querySelectorAll(".term-tab");
-
-  const SCENES = {
-    float: [
-      { type: "cmd", text: "float start --workspace \"NovaForge\"" },
-      { type: "progress", label: "Opening encrypted vault", done: "Vault ready · 0 external dependencies" },
-      { type: "cmd", text: "float sheets new budget_2027.xlsx" },
-      { type: "out", text: "  1,000 × 1,000 grid · formulas and charts on" },
-      { type: "cmd", text: "float export --pdf --xlsx" },
-      { type: "ok", text: "✓ Saved locally · keys sealed with AES-256-GCM" }
-    ],
-    finance: [
-      { type: "cmd", text: "float-finance check --gst --payroll" },
-      { type: "progress", label: "Verifying GST ledgers", done: "Invoices locked · PF, ESI, PT, TDS correct" },
-      { type: "cmd", text: "float-finance expiries --within 30d" },
-      { type: "out", text: "  2 renewals due: insurance (MH-12), PUC (DL-01)" },
-      { type: "cmd", text: "float-finance approvals" },
-      { type: "ok", text: "✓ Salary run waiting for owner sign-off" }
-    ]
-  };
-
-  const PROMPT = "novaforge@mac ~ % ";
-  const SPIN = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"];
-  const SESSION_KEY_STORAGE = "novaforge.term.key";
-  const SESSION_PROV_STORAGE = "novaforge.term.provider";
-  let currentScene = "float";
-  let runId = 0;
-  let busy = false;
-  const cmdHistory = [];
-  let histIdx = -1;
-
-  const SYSTEM_PROMPT =
-    "You are the NovaForge Mac Terminal AI assistant. NovaForge builds local-first AI software " +
-    "for companies with zero external runtime dependencies. Products: (1) Float AI Agent — private AI workspace " +
-    "with a 1,000x1,000 spreadsheet studio (Float Sheets), .xlsx/.pdf export, BYO API key, AES-256-GCM transport; " +
-    "(2) Float for Finance — fleet & car rental finance suite with immutable GST invoices, driver payroll (PF/ESI/PT/TDS), " +
-    "3-tier owner approval policy, DPDP consent & GPS/EXIF photo scrubbing, and 30/60/90-day expiry alerts. " +
-    "Float Plans (all include unlimited staff & shift workers): Basic (₹6 Lakh, up to 25 cars, 1 branch), " +
-    "Plus (₹9 Lakh, up to 60 cars, batch dispatch & FASTag/e-challan matcher), Pro (₹13.5 Lakh, up to 150 cars, 19 AI workflows, GST invoices, RevPAC & tough-grade privacy/cyber-attack security), " +
-    "Enterprise (₹16.5 Lakh, up to 500 cars, 5 branches, LAN server, RBAC, DPDP & tough-grade privacy/cyber-attack security), Enterprise Max (₹21 Lakh, unlimited cars/branches, MCP, desktop AI, offline AI & maximum cyber-attack security). " +
-    "Founders: Prabhjot (Co-Founder & CEO), Shiva (Co-Founder & Lead Developer), Yatharth (Co-Founder & Head of Product & Design). " +
-    "For licensing or buyout inquiries, direct users to info.novaforge.2026@gmail.com. Answer concisely in 2-4 crisp plain-text sentences suitable for a terminal.";
-
-  function el(tag, cls, text) {
-    const node = document.createElement(tag);
-    if (cls) node.className = cls;
-    if (text !== undefined) node.textContent = text;
-    return node;
-  }
-
-  function scrollTerminal() {
-    if (terminalBody) terminalBody.scrollTop = terminalBody.scrollHeight;
-  }
-
-  function setStatus(text, done) {
-    if (statusText) statusText.textContent = text;
-    if (statusDot) statusDot.classList.toggle("done", !!done);
-  }
-
-  function appendLine(children) {
-    const line = el("div", "term-line");
-    children.forEach((c) => line.append(c));
-    terminalBody.append(line);
-    scrollTerminal();
-    return line;
-  }
-
-  function getActiveAI() {
-    let sessKey = "";
-    let sessProv = "";
-    try {
-      sessKey = sessionStorage.getItem(SESSION_KEY_STORAGE) || "";
-      sessProv = sessionStorage.getItem(SESSION_PROV_STORAGE) || "";
-    } catch { /* ignore */ }
-    const apiKey = (TERMINAL_AI.apiKey || sessKey || "").trim();
-    const provider = (sessProv || TERMINAL_AI.provider || "openai").toLowerCase();
-    return { apiKey, provider, model: TERMINAL_AI.model || "gpt-4o-mini" };
-  }
-
-  async function typeText(text, cls, alive, speed = 12) {
-    const lines = String(text || "").split("\n");
-    for (const part of lines) {
-      if (!alive()) return;
-      const span = el("span", cls);
-      appendLine([span]);
-      if (reduceMotion) {
-        span.textContent = part;
-      } else {
-        for (const ch of part) {
-          if (!alive()) return;
-          span.textContent += ch;
-          scrollTerminal();
-          await sleep(ch === " " ? speed + 6 : speed + Math.random() * 10);
-        }
-      }
-      await sleep(60);
-    }
-  }
-
-  function mountPrompt(focusInput = false) {
-    if (!terminalBody) return;
-    const old = terminalBody.querySelector(".term-input-line");
-    if (old) old.remove();
-
-    const row = el("div", "term-input-line");
-    const promptSpan = el("span", "term-prompt term-prompt-fixed", PROMPT);
-    const wrap = el("div", "term-input-wrap");
-    const idleCursor = el("span", "term-cursor term-idle-cursor");
-    const input = document.createElement("input");
-    input.type = "text";
-    input.className = "term-input";
-    input.id = "termInput";
-    input.autocomplete = "off";
-    input.spellcheck = false;
-    input.setAttribute("aria-label", "Terminal command prompt");
-
-    const syncCursor = () => {
-      const active = document.activeElement === input || input.value.length > 0;
-      wrap.classList.toggle("typing", active);
-      if (active) terminalBody.classList.add("term-awake");
-    };
-
-    input.addEventListener("focus", syncCursor);
-    input.addEventListener("blur", syncCursor);
-    input.addEventListener("input", syncCursor);
-
-    input.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        const val = input.value;
-        handleTerminalCommand(val);
-      } else if (e.key === "ArrowUp") {
-        if (!cmdHistory.length) return;
-        e.preventDefault();
-        histIdx = histIdx < 0 ? cmdHistory.length - 1 : Math.max(0, histIdx - 1);
-        input.value = cmdHistory[histIdx] || "";
-        syncCursor();
-      } else if (e.key === "ArrowDown") {
-        if (histIdx < 0) return;
-        e.preventDefault();
-        histIdx += 1;
-        if (histIdx >= cmdHistory.length) {
-          histIdx = -1;
-          input.value = "";
-        } else {
-          input.value = cmdHistory[histIdx] || "";
-        }
-        syncCursor();
-      }
-    });
-
-    wrap.append(input, idleCursor);
-    row.append(promptSpan, wrap);
-    terminalBody.append(row);
-    scrollTerminal();
-    if (focusInput) {
-      input.focus({ preventScroll: true });
-      syncCursor();
-    }
-  }
-
-  async function callProviderAI(question, cfg) {
-    const { apiKey, provider, model } = cfg;
-    const isOpenRouterKey = apiKey.startsWith("sk-or-v1-");
-    const effectiveProvider = isOpenRouterKey && provider === "openai" ? "openrouter" : provider;
-
-    if (effectiveProvider === "anthropic") {
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": apiKey,
-          "anthropic-version": "2023-06-01",
-          "anthropic-dangerous-direct-browser-access": "true",
-        },
-        body: JSON.stringify({
-          model: model.includes("claude") ? model : "claude-3-5-haiku-latest",
-          max_tokens: 220,
-          system: SYSTEM_PROMPT,
-          messages: [{ role: "user", content: question }],
-        }),
-      });
-      if (!res.ok) throw new Error("API " + res.status);
-      const data = await res.json();
-      return (data.content && data.content[0] && data.content[0].text) || "";
-    }
-
-    if (effectiveProvider === "gemini") {
-      const gModel = model.includes("gemini") ? model : "gemini-2.0-flash";
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(gModel)}:generateContent?key=${encodeURIComponent(apiKey)}`;
-      const res = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
-          contents: [{ role: "user", parts: [{ text: question }] }],
-        }),
-      });
-      if (!res.ok) throw new Error("API " + res.status);
-      const data = await res.json();
-      return data.candidates?.[0]?.content?.parts?.[0]?.text || "";
-    }
-
-    const endpoint =
-      effectiveProvider === "openrouter"
-        ? "https://openrouter.ai/api/v1/chat/completions"
-        : "https://api.openai.com/v1/chat/completions";
-    const res = await fetch(endpoint, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify({
-        model,
-        max_tokens: 220,
-        messages: [
-          { role: "system", content: SYSTEM_PROMPT },
-          { role: "user", content: question },
-        ],
-      }),
-    });
-    if (!res.ok) throw new Error("API " + res.status);
-    const data = await res.json();
-    return data.choices?.[0]?.message?.content || "";
-  }
-
-  function offlineNovaForgeAI(q) {
-    const s = q.toLowerCase();
-    if (/^(hi|hello|hey|namaste)\b/.test(s)) {
-      return "Hello from NovaForge! You found the secret shell. Ask me anything about Float, our founders, plans, or security.";
-    }
-    if (/(founder|founded|team|who made|who built|who runs|owner|ceo|developer|designer|shiva|prabhjot|yatharth)/.test(s)) {
-      return "NovaForge is founded and run by Prabhjot (Co-Founder & CEO), Shiva (Co-Founder & Lead Developer), and Yatharth (Co-Founder & Head of Product & Design).";
-    }
-    if (/(price|cost|buy|license|quote|how much|plan|basic|plus|pro|enterprise|subscription)/.test(s)) {
-      return `Float editions (one-time, unlimited staff): Basic ₹6 Lakh (25 cars) · Plus ₹9 Lakh (60 cars) · Pro ₹13.5 Lakh (150 cars, Recommended) · Enterprise ₹16.5 Lakh (500 cars, 5 branches) · Enterprise Max ₹21 Lakh (Unlimited). Pro, Enterprise & Enterprise Max all include tough-grade privacy and high-level security against cyber attacks. Email ${EMAIL} for a walkthrough.`;
-    }
-    if (/(contact|email|reach|demo|pilot|talk)/.test(s)) {
-      return `Reach our founders directly at ${EMAIL}, or use the inquiry form at the bottom of this page.`;
-    }
-    if (/(finance|gst|payroll|fleet|driver|dpdp|exif|approval|tier)/.test(s)) {
-      return "Float for Finance is built for car rental & fleet teams: locked GST invoices, PF/ESI/PT/TDS driver payroll, 3-tier owner approvals, DPDP consent & photo location removal, and 30/60/90-day expiry alerts.";
-    }
-    if (/(float|sheet|excel|xlsx|pdf|workspace|agent)/.test(s)) {
-      return "Float AI Agent is a local-first AI workspace with Float Sheets (a 1,000 × 1,000 spreadsheet grid with formulas, charts, .xlsx and .pdf export) and zero extra software required.";
-    }
-    if (/(privacy|security|key|encrypt|cloud|offline|local|mac|windows)/.test(s)) {
-      return "Everything runs natively on Mac or Windows with advanced data encryption (AES-256-GCM) and reliable local data storage (SQLite WAL) — your files never live on third-party clouds.";
-    }
-    return `NovaForge builds local-first AI software (Float AI Agent & Float for Finance) with zero external dependencies. Type 'help' for shell commands or email ${EMAIL} to speak with our founders.`;
-  }
-
-  async function handleTerminalCommand(raw) {
-    const text = raw.trim();
-    if (!text || busy) return;
-
-    cmdHistory.push(text);
-    histIdx = -1;
-    busy = true;
-
-    const id = ++runId;
-    const alive = () => id === runId;
-
-    const inputRow = terminalBody.querySelector(".term-input-line");
-    if (inputRow) inputRow.remove();
-    appendLine([el("span", "term-prompt", PROMPT), el("span", "term-cmd", text)]);
-
-    const lower = text.toLowerCase();
-
-    if (lower === "clear") {
-      terminalBody.innerHTML = "";
-      busy = false;
-      mountPrompt(true);
-      return;
-    }
-
-    if (lower === "replay") {
-      busy = false;
-      runTerminal(currentScene);
-      return;
-    }
-
-    if (lower === "help" || lower === "?") {
-      await typeText(
-        "Commands: ls · whoami · neofetch · cat founders.txt · cat pricing.txt · replay · clear\n" +
-        "Or ask any question directly — this terminal is alive.",
-        "term-info",
-        alive,
-        8
-      );
-      busy = false;
-      mountPrompt(true);
-      return;
-    }
-
-    if (lower.startsWith("setkey ")) {
-      const parts = text.slice(7).trim().split(/\s+/);
-      let prov = TERMINAL_AI.provider;
-      let key = parts[0] || "";
-      if (parts.length >= 2 && ["openai", "openrouter", "anthropic", "gemini"].includes(parts[0].toLowerCase())) {
-        prov = parts[0].toLowerCase();
-        key = parts[1];
-      }
-      try {
-        sessionStorage.setItem(SESSION_KEY_STORAGE, key);
-        sessionStorage.setItem(SESSION_PROV_STORAGE, prov);
-      } catch { /* ignore */ }
-      await typeText(`✓ Session API key saved for ${prov}.`, "term-ok", alive, 10);
-      busy = false;
-      mountPrompt(true);
-      return;
-    }
-
-    if (lower === "clearkey") {
-      try {
-        sessionStorage.removeItem(SESSION_KEY_STORAGE);
-        sessionStorage.removeItem(SESSION_PROV_STORAGE);
-      } catch { /* ignore */ }
-      await typeText("✓ Cleared session API key.", "term-ok", alive, 10);
-      busy = false;
-      mountPrompt(true);
-      return;
-    }
-
-    if (lower === "whoami") {
-      await typeText("curious-visitor@novaforge (nice find.)", "term-info", alive, 10);
-      busy = false;
-      mountPrompt(true);
-      return;
-    }
-
-    if (lower === "ls" || lower === "ls -la") {
-      await typeText("float-ai-agent/   float-for-finance/   founders.txt   pricing.txt", "term-info", alive, 10);
-      busy = false;
-      mountPrompt(true);
-      return;
-    }
-
-    if (lower === "cat founders.txt") {
-      await typeText(
-        "Prabhjot  — Co-Founder & CEO\nShiva     — Co-Founder & Lead Developer\nYatharth  — Co-Founder & Head of Product & Design",
-        "term-info",
-        alive,
-        9
-      );
-      busy = false;
-      mountPrompt(true);
-      return;
-    }
-
-    if (lower === "cat pricing.txt") {
-      await typeText(
-        "Float Basic          ₹6 Lakh   (Up to 25 cars · 1 branch)\n" +
-        "Float Plus           ₹9 Lakh   (Up to 60 cars · 1 branch)\n" +
-        "Float Pro            ₹13.5 Lakh (Up to 150 cars · Recommended · Tough-grade cyber security)\n" +
-        "Float Enterprise     ₹16.5 Lakh (Up to 500 cars · 5 branches · Tough-grade cyber security)\n" +
-        "Float Enterprise Max ₹21 Lakh   (Unlimited cars & branches · Maximum cyber security)",
-        "term-info",
-        alive,
-        7
-      );
-      busy = false;
-      mountPrompt(true);
-      return;
-    }
-
-    if (lower === "neofetch" || lower === "novaforge") {
-      await typeText(
-        "NovaForge OS · Local-First Edition\n" +
-        "Products: Float AI Agent + Float for Finance\n" +
-        "Runtime:  Zero external dependencies (macOS & Windows)\n" +
-        "Contact:  " + EMAIL,
-        "term-ok",
-        alive,
-        9
-      );
-      busy = false;
-      mountPrompt(true);
-      return;
-    }
-
-    // Secret AI response (live API key if configured, otherwise built-in NovaForge assistant)
-    setStatus("Thinking…", false);
-    const spinSpan = el("span", "term-spin", `${SPIN[0]} Thinking…`);
-    const spinLine = appendLine([spinSpan]);
-    let spinIdx = 0;
-    const spinTimer = setInterval(() => {
-      spinIdx = (spinIdx + 1) % SPIN.length;
-      spinSpan.textContent = `${SPIN[spinIdx]} Thinking…`;
-    }, 80);
-
-    let answer = "";
-    const cfg = getActiveAI();
-    try {
-      if (cfg.apiKey) {
-        answer = await callProviderAI(text, cfg);
-      } else {
-        await sleep(320);
-        answer = offlineNovaForgeAI(text);
-      }
-    } catch {
-      answer = offlineNovaForgeAI(text);
-    } finally {
-      clearInterval(spinTimer);
-      spinLine.remove();
-    }
-
-    if (!alive()) {
-      busy = false;
-      return;
-    }
-
-    await typeText(answer.trim() || offlineNovaForgeAI(text), "term-ai", alive, 11);
-    setStatus("Ready on Mac & Windows", true);
-    busy = false;
-    mountPrompt(true);
-  }
-
-  // Render everything at once (reduced motion, or a finished state).
-  function renderStatic(script) {
-    terminalBody.innerHTML = "";
-    script.forEach((step) => {
-      if (step.type === "cmd") {
-        appendLine([el("span", "term-prompt", PROMPT), el("span", "term-cmd", step.text)]);
-      } else if (step.type === "progress") {
-        appendLine([el("span", "term-ok", "✓ " + step.done)]);
-      } else {
-        appendLine([el("span", step.type === "ok" ? "term-ok" : "term-info", step.text)]);
-      }
-    });
-    setStatus("Ready on Mac & Windows", true);
-    mountPrompt(false);
-  }
-
-  async function runTerminal(sceneKey) {
-    if (!terminalBody) return;
-    currentScene = sceneKey || currentScene;
-    busy = false;
-    const id = ++runId;
-    const alive = () => id === runId;
-    const script = SCENES[currentScene] || SCENES.float;
-
-    if (reduceMotion) {
-      renderStatic(script);
-      return;
-    }
-
-    terminalBody.innerHTML = "";
-    terminalBody.classList.remove("term-awake");
-    setStatus("Running…", false);
-    await sleep(160);
-
-    for (const step of script) {
-      if (!alive()) return;
-
-      if (step.type === "cmd") {
-        const cmd = el("span", "term-cmd");
-        const cursor = el("span", "term-cursor");
-        appendLine([el("span", "term-prompt", PROMPT), cmd, cursor]);
-        await sleep(180);
-        for (const ch of step.text) {
-          if (!alive()) return;
-          cmd.textContent += ch;
-          await sleep(ch === " " ? 38 : 18 + Math.random() * 20);
-        }
-        await sleep(150);
-        cursor.remove();
-      } else if (step.type === "progress") {
-        const span = el("span", "term-spin");
-        appendLine([span]);
-        for (let i = 0; i <= 20; i++) {
-          if (!alive()) return;
-          const filled = Math.round(i / 2);
-          span.textContent =
-            `${SPIN[i % SPIN.length]} ${step.label} ` +
-            `[${"█".repeat(filled)}${"░".repeat(10 - filled)}] ${i * 5}%`;
-          await sleep(35);
-        }
-        span.className = "term-ok";
-        span.textContent = "✓ " + step.done;
-        await sleep(180);
-      } else {
-        appendLine([el("span", step.type === "ok" ? "term-ok" : "term-info", step.text)]);
-        await sleep(220);
-      }
-    }
-
-    if (!alive()) return;
-    setStatus("Ready on Mac & Windows", true);
-    mountPrompt(false);
-  }
-
-  if (terminalBody) {
-    terminalBody.addEventListener("click", () => {
-      const inp = $("termInput");
-      if (inp) inp.focus();
-    });
-  }
-
-  function selectScene(tab) {
-    termTabs.forEach((t) => {
-      const on = t === tab;
-      t.classList.toggle("active", on);
-      t.setAttribute("aria-selected", String(on));
-      t.tabIndex = on ? 0 : -1;
-    });
-    runTerminal(tab.dataset.scene || "float");
-  }
-
-  termTabs.forEach((tab, i) => {
-    tab.addEventListener("click", () => selectScene(tab));
-    tab.addEventListener("keydown", (e) => {
-      if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
-      const next = termTabs[(i + (e.key === "ArrowRight" ? 1 : -1) + termTabs.length) % termTabs.length];
-      next.focus();
-      selectScene(next);
+      renderCounterView(tab.dataset.view || "wave");
     });
   });
 
-  if (replayBtn) {
-    replayBtn.addEventListener("click", () => runTerminal(currentScene));
+  /* ── Interactive Fleet Leakage & SaaS-Tax Calculator ─────────────────── */
+  const fleetSlider = $("fleetSlider");
+  const staffSlider = $("staffSlider");
+  const fmtINR = (n) => "₹" + Math.round(n).toLocaleString("en-IN");
+
+  function updateROI() {
+    if (!fleetSlider || !staffSlider) return;
+    const cars = Number(fleetSlider.value);
+    const staff = Number(staffSlider.value);
+    $("fleetVal").textContent = cars >= 500 ? "500+ cars" : `${cars} cars`;
+    $("staffVal").textContent = staff >= 100 ? "100+ staff" : `${staff} staff`;
+
+    const monthlyTolls = cars * 850;
+    const monthlyHours = Math.round(cars * 3.5);
+    const saas3Yr = (staff * 1200 + cars * 350) * 36;
+
+    let edition = "Float Basic", price = 600000;
+    if (cars > 150 && cars <= 500) { edition = "Float Enterprise"; price = 1650000; }
+    else if (cars > 500 || cars === 500) { edition = "Float Enterprise Max"; price = 2100000; }
+    else if (cars > 60) { edition = "Float Pro"; price = 1350000; }
+    else if (cars > 25) { edition = "Float Plus"; price = 900000; }
+
+    const monthlyBenefit = monthlyTolls + (saas3Yr / 36);
+    const paybackMonths = Math.max(2, Math.round(price / Math.max(1, monthlyBenefit)));
+
+    $("roiTolls").textContent = fmtINR(monthlyTolls);
+    $("roiHours").textContent = `${monthlyHours.toLocaleString("en-IN")} hrs`;
+    $("roiSaas").textContent = fmtINR(saas3Yr);
+    $("roiRec").textContent = `${edition} (₹${price / 100000}L) · ~${paybackMonths} months`;
   }
 
-  if (terminalBody) {
-    runTerminal("float");
-  }
-
-  /* ── Product capability switchers (with spring pill glider) ──────────── */
-  const DETAILS = {
-    "agent-sheets": "Built-in 1,000 × 1,000 spreadsheet grid supporting Excel (.xlsx) import and export, PDF reports, live charts, and formulas without leaving the app.",
-    "agent-security": "Advanced data encryption locks your API key directly to your office computer so staff never see the raw key. (Technical: AES-256-GCM sealed key transport & local encryption.)",
-    "agent-admin": "Role-based employee permissions let admins set model access, monthly spend caps per person, workspace notices, and automated daily backups from one panel.",
-    "fin-tax": "Accurate GST rounding and issued invoices that cannot be silently altered, paired with complete driver payroll covering PF, ESI, PT, and TDS. (Technical: Exact Decimal ROUND_HALF_UP math.)",
-    "fin-risk": "Clear manager and owner approval checkpoints let desk staff prepare routine drafts while owners sign off on bank updates, salary runs, and payout changes.",
-    "fin-dpdp": "Recorded consent for bank details and driver photos, automatic removal of hidden photo location information (GPS & EXIF scrubbing), and 30 / 60 / 90-day renewal alerts."
-  };
-
-  const gliderUpdaters = [];
-
-  document.querySelectorAll(".pill-switcher").forEach((group) => {
-    const box = $("detail-" + group.dataset.card);
-    const glider = group.querySelector(".pill-glider");
-    let token = 0;
-
-    function moveGlider(activeBtn, instant = false) {
-      if (!glider || !activeBtn) return;
-      group.classList.add("has-glider");
-      if (instant) glider.style.transition = "none";
-      glider.style.width = activeBtn.offsetWidth + "px";
-      glider.style.height = activeBtn.offsetHeight + "px";
-      glider.style.transform = `translate3d(${activeBtn.offsetLeft}px, ${activeBtn.offsetTop - 5}px, 0)`;
-      glider.classList.add("ready");
-      if (instant) {
-        void glider.offsetWidth;
-        glider.style.transition = "";
-      }
-    }
-
-    const initialActive = group.querySelector(".pill-btn.active");
-    if (initialActive) {
-      requestAnimationFrame(() => moveGlider(initialActive, true));
-      gliderUpdaters.push(() => {
-        const cur = group.querySelector(".pill-btn.active");
-        if (cur) moveGlider(cur, true);
-      });
-    }
-
-    group.querySelectorAll(".pill-btn").forEach((btn) => {
-      btn.setAttribute("aria-pressed", String(btn.classList.contains("active")));
-      btn.addEventListener("click", () => {
-        if (btn.classList.contains("active")) return;
-        group.querySelectorAll(".pill-btn").forEach((b) => {
-          b.classList.toggle("active", b === btn);
-          b.setAttribute("aria-pressed", String(b === btn));
-        });
-        moveGlider(btn, false);
-        if (!box) return;
-        const mine = ++token;
-        box.classList.add("swapping");
-        setTimeout(() => {
-          if (mine !== token) return;
-          box.textContent = DETAILS[btn.dataset.detail] || "";
-          box.classList.remove("swapping");
-        }, 170);
-      });
-    });
-  });
-
-  if (gliderUpdaters.length) {
-    window.addEventListener("resize", () => gliderUpdaters.forEach((fn) => fn()), { passive: true });
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(() => gliderUpdaters.forEach((fn) => fn()));
-    }
-  }
-
-  /* ── Signature Float Aura: 3D Spring Tilt, Magnetic CTAs & Orb Depth ─── */
-  if (!reduceMotion && window.matchMedia("(hover: hover)").matches) {
-    document.querySelectorAll(".float-aura-card").forEach((card) => {
-      let tx = 0, ty = 0, tLift = 0;
-      let cx = 0, cy = 0, cLift = 0;
-      let rafId = 0;
-
-      function step() {
-        cx += (tx - cx) * 0.12;
-        cy += (ty - cy) * 0.12;
-        cLift += (tLift - cLift) * 0.14;
-        card.style.setProperty("--rx", cx.toFixed(2) + "deg");
-        card.style.setProperty("--ry", cy.toFixed(2) + "deg");
-        card.style.setProperty("--lift", cLift.toFixed(2) + "px");
-
-        if (Math.abs(tx - cx) > 0.02 || Math.abs(ty - cy) > 0.02 || Math.abs(tLift - cLift) > 0.04) {
-          rafId = requestAnimationFrame(step);
-        } else {
-          card.style.setProperty("--rx", tx + "deg");
-          card.style.setProperty("--ry", ty + "deg");
-          card.style.setProperty("--lift", tLift + "px");
-          rafId = 0;
-        }
-      }
-
-      function kick() {
-        if (!rafId) rafId = requestAnimationFrame(step);
-      }
-
-      card.addEventListener("pointermove", (e) => {
-        const r = card.getBoundingClientRect();
-        const px = (e.clientX - r.left) / r.width;
-        const py = (e.clientY - r.top) / r.height;
-        card.style.setProperty("--mx", (px * 100).toFixed(1) + "%");
-        card.style.setProperty("--my", (py * 100).toFixed(1) + "%");
-        tx = (0.5 - py) * 5.2;
-        ty = (px - 0.5) * 5.6;
-        tLift = -7;
-        kick();
-      });
-
-      card.addEventListener("pointerleave", () => {
-        tx = 0;
-        ty = 0;
-        tLift = 0;
-        kick();
-      });
-    });
-
-    /* Subtle magnetic pull on Float section CTA buttons */
-    document.querySelectorAll(".btn-aura-cta").forEach((btn) => {
-      btn.addEventListener("pointermove", (e) => {
-        const r = btn.getBoundingClientRect();
-        const dx = ((e.clientX - r.left) / r.width - 0.5) * 10;
-        const dy = ((e.clientY - r.top) / r.height - 0.5) * 7;
-        btn.style.setProperty("--mag-x", dx.toFixed(1) + "px");
-        btn.style.setProperty("--mag-y", dy.toFixed(1) + "px");
-      });
-      btn.addEventListener("pointerleave", () => {
-        btn.style.setProperty("--mag-x", "0px");
-        btn.style.setProperty("--mag-y", "0px");
-      });
-    });
-  }
-
-  /* Scroll-linked depth drift on Float Aura background orbs */
-  const productsSection = $("products");
-  const orbAgent = $("auraOrbAgent");
-  const orbFinance = $("auraOrbFinance");
-  if (!reduceMotion && productsSection && orbAgent && orbFinance) {
-    let orbTick = false;
-    const updateOrbs = () => {
-      const rect = productsSection.getBoundingClientRect();
-      const vh = window.innerHeight || 800;
-      if (rect.bottom > -120 && rect.top < vh + 120) {
-        const progress = (vh - rect.top) / (vh + rect.height) - 0.5;
-        const shift = progress * 48;
-        orbAgent.style.marginTop = shift.toFixed(1) + "px";
-        orbFinance.style.marginBottom = shift.toFixed(1) + "px";
-      }
-      orbTick = false;
-    };
-    window.addEventListener("scroll", () => {
-      if (!orbTick) {
-        orbTick = true;
-        requestAnimationFrame(updateOrbs);
-      }
-    }, { passive: true });
-    updateOrbs();
+  if (fleetSlider && staffSlider) {
+    fleetSlider.addEventListener("input", updateROI);
+    staffSlider.addEventListener("input", updateROI);
+    updateROI();
   }
 
   /* ── "How it fits your office" preview with real screenshots ─────────── */
   const WF_DATA = [
     {
-      address: "Float · Local Workspace (Step 1 of 3)",
-      tag: "Step 01 · ~5 minutes",
+      address: "Float · Local Counter Workspace (Step 1 of 3)",
+      tag: "Step 01 · 15–30 minutes",
       image: "assets/step-1-launch.png",
-      alt: "Screenshot of Float running locally with the Express Clean-to-Ready turnaround queue and local backup status",
+      alt: "Float running locally with the Express Clean-to-Ready turnaround queue and local backup status",
       title: "Opens straight away on Mac or Windows",
-      desc: "Run Float on one counter PC or share it across your office network. Reliable local data storage sets itself up automatically beside the app.",
-      rows: [
-        ["Extra software needed", "None"],
-        ["Where data lives", "Your own office PC"],
-        ["Daily backups", "Automatic & verified"]
-      ]
+      desc: "Run Float on one counter PC or share it across your Multi-Desk Hub LAN. Crash-safe SQLite WAL storage sets itself up automatically beside the app.",
+      rows: [["Extra software needed", "None"], ["Response speed", "< 0.3s local"], ["Daily backups", "Automatic & verified"]]
     },
     {
-      address: "Float Settings · Company AI Key (Step 2 of 3)",
-      tag: "Step 02 · ~3 minutes",
+      address: "Float Settings · Fleet & AI Key (Step 2 of 3)",
+      tag: "Step 02 · ~5 minutes",
       image: "assets/step-2-apikey.png",
-      alt: "Screenshot of Float API key settings showing masked company key and monthly per-employee spend caps",
-      title: "Connect OpenAI, Anthropic, Google, or Offline AI",
-      desc: "Paste your company key once. Advanced data encryption protects it on disk, and desk staff only ever see the last four characters.",
-      rows: [
-        ["Key protection", "Advanced encryption"],
-        ["Visible to staff", "Last 4 characters"],
-        ["Budget control", "Monthly cap per user"]
-      ]
+      alt: "Float API key settings showing encrypted company key and monthly per-employee spend caps",
+      title: "Import rate cards & connect your AI key",
+      desc: "Import your vehicle list and corporate GST rate cards. AES-256-GCM protects your company AI key on disk so counter staff never see the raw key.",
+      rows: [["Key protection", "AES-256-GCM"], ["Visible to staff", "Last 4 characters"], ["Budget control", "Monthly cap per user"]]
     },
     {
-      address: "Float for Finance · Owner Approvals (Step 3 of 3)",
+      address: "Float · Locked GST & Approvals (Step 3 of 3)",
       tag: "Step 03 · Ready on Day 1",
       image: "assets/step-3-approvals.png",
-      alt: "Screenshot of Float for Finance Owner Approval Queue showing driver salary run and locked GST invoice",
-      title: "Float prepares the work. Your owners decide.",
-      desc: "Payroll runs, deposit adjustments, bank edits, and final GST invoices wait for a named owner to approve — and issued invoices cannot be silently altered.",
-      rows: [
-        ["Driver salary run", "Owner sign-off"],
-        ["Issued GST invoices", "Locked permanently"],
-        ["Activity history", "Every change logged"]
-      ]
+      alt: "Float Owner Approval Queue showing locked GST invoices and audit history",
+      title: "Dispatch waves, match tolls & lock GST",
+      desc: "Counter staff dispatch morning waves and recover FASTag/e-challans in seconds while issued sequential GST invoices remain locked permanently.",
+      rows: [["FASTag & E-Challan", "1-second match"], ["Issued GST invoices", "SQLite-locked"], ["Activity history", "Every change logged"]]
     }
   ];
 
@@ -935,26 +260,26 @@
   let wfToken = 0;
 
   function buildPreview(data) {
+    if (!previewContent) return;
     previewContent.innerHTML = "";
-
-    const frame = el("div", "pv-shot-frame");
+    const frame = document.createElement("div");
+    frame.className = "pv-shot-frame";
     const img = document.createElement("img");
-    img.src = data.image;
-    img.alt = data.alt;
-    img.className = "pv-shot";
-    img.loading = "lazy";
+    img.src = data.image; img.alt = data.alt; img.className = "pv-shot"; img.loading = "lazy";
     frame.append(img);
 
-    const caption = el("div", "pv-caption-bar");
-    caption.append(el("div", "pv-tag", data.tag), el("h4", null, data.title), el("p", null, data.desc));
+    const caption = document.createElement("div");
+    caption.className = "pv-caption-bar";
+    caption.innerHTML = `<div class="pv-tag">${data.tag}</div><h4>${data.title}</h4><p>${data.desc}</p>`;
 
-    const rows = el("div", "pv-rows");
+    const rows = document.createElement("div");
+    rows.className = "pv-rows";
     data.rows.forEach(([k, v]) => {
-      const row = el("div", "pv-row");
-      row.append(el("strong", null, k), el("span", "pv-pill", v));
+      const row = document.createElement("div");
+      row.className = "pv-row";
+      row.innerHTML = `<strong>${k}</strong><span class="pv-pill">${v}</span>`;
       rows.append(row);
     });
-
     previewContent.append(frame, caption, rows);
     if (previewTitle) previewTitle.textContent = data.address;
   }
@@ -962,10 +287,7 @@
   function renderWorkflowStep(idx, animate) {
     if (!previewContent) return;
     const data = WF_DATA[idx] || WF_DATA[0];
-    if (!animate || reduceMotion) {
-      buildPreview(data);
-      return;
-    }
+    if (!animate || reduceMotion) { buildPreview(data); return; }
     const mine = ++wfToken;
     previewContent.classList.add("switching");
     setTimeout(() => {
@@ -1006,13 +328,13 @@
     });
   });
 
-  /* ── Toast ───────────────────────────────────────────────────────────── */
+  /* ── Toast & Clipboard ───────────────────────────────────────────────── */
   const toastEl = $("toast");
   let toastTimer = null;
   function showToast(msg) {
     if (!toastEl) return;
     toastEl.hidden = true;
-    void toastEl.offsetWidth; // restart the pop animation
+    void toastEl.offsetWidth;
     toastEl.textContent = msg;
     toastEl.hidden = false;
     clearTimeout(toastTimer);
@@ -1024,7 +346,6 @@
       await navigator.clipboard.writeText(text);
       return;
     }
-    // Fallback for non-HTTPS pages and older browsers
     const area = document.createElement("textarea");
     area.value = text;
     area.setAttribute("readonly", "");
@@ -1032,21 +353,16 @@
     area.style.opacity = "0";
     document.body.append(area);
     area.select();
-    const ok = document.execCommand("copy");
+    document.execCommand("copy");
     area.remove();
-    if (!ok) throw new Error("copy failed");
   }
 
-  /* ── Contact ─────────────────────────────────────────────────────────── */
+  /* ── B2B Contact Flow (Email + WhatsApp + Copy Brief) ────────────────── */
   const copyEmailBtn = $("copyEmailBtn");
   if (copyEmailBtn) {
     copyEmailBtn.addEventListener("click", async () => {
-      try {
-        await copyText(EMAIL);
-        showToast("Email address copied");
-      } catch {
-        showToast(EMAIL);
-      }
+      try { await copyText(EMAIL); showToast("Email address copied"); }
+      catch { showToast(EMAIL); }
     });
   }
 
@@ -1060,29 +376,42 @@
     });
   });
 
-  function inquiry() {
-    const company = ($("companyName")?.value || "").trim();
-    const product = productSelect?.value || "Float AI Agent";
-    const message = ($("messageInput")?.value || "").trim();
-    const subject = `NovaForge inquiry: ${product}${company ? " (" + company + ")" : ""}`;
+  function buildBrief() {
+    const company = ($("companyName")?.value || "").trim() || "-";
+    const city = ($("cityHub")?.value || "").trim() || "-";
+    const fleet = ($("fleetSize")?.value || "").trim() || "-";
+    const setup = ($("currentSetup")?.value || "Tally + Excel").trim();
+    const phone = ($("phoneWhatsapp")?.value || "").trim() || "-";
+    const product = productSelect?.value || "Free 48-Hour Leakage Audit + 14-Day Office Pilot (₹0)";
+    const notes = ($("messageInput")?.value || "").trim();
+    const subject = `Float Pilot / Inquiry: ${company} (${fleet} cars, ${city})`;
     const body =
-      "Hello NovaForge team,\n\n" +
-      `Name / company: ${company || "-"}\n` +
-      `Product: ${product}\n\n` +
-      `${message || "We would like to know more about pricing and licensing for our team."}\n`;
+      `Hello NovaForge Founders (Prabhjot, Shiva & Yatharth),\n\n` +
+      `Interest: ${product}\n` +
+      `Company / Agency: ${company}\n` +
+      `City / Airport Hub: ${city}\n` +
+      `Fleet Size: ${fleet} cars\n` +
+      `Current Setup: ${setup}\n` +
+      `Phone / WhatsApp: ${phone}\n` +
+      (notes ? `\nNotes: ${notes}\n` : "");
     return { subject, body };
   }
 
   const copyDraftBtn = $("copyDraftBtn");
   if (copyDraftBtn) {
     copyDraftBtn.addEventListener("click", async () => {
-      const { subject, body } = inquiry();
-      try {
-        await copyText(`To: ${EMAIL}\nSubject: ${subject}\n\n${body}`);
-        showToast("Message copied. Paste it into any email app.");
-      } catch {
-        showToast("Please write to " + EMAIL);
-      }
+      const { subject, body } = buildBrief();
+      try { await copyText(`To: ${EMAIL}\nSubject: ${subject}\n\n${body}`); showToast("Pilot brief copied."); }
+      catch { showToast("Please write to " + EMAIL); }
+    });
+  }
+
+  const whatsappBtn = $("whatsappBtn");
+  if (whatsappBtn) {
+    whatsappBtn.addEventListener("click", () => {
+      const { body } = buildBrief();
+      window.open(`https://wa.me/?text=${encodeURIComponent(body)}`, "_blank", "noopener,noreferrer");
+      showToast("Opening WhatsApp with pre-filled brief…");
     });
   }
 
@@ -1091,9 +420,8 @@
     contactForm.addEventListener("submit", (e) => {
       e.preventDefault();
       if (!contactForm.reportValidity()) return;
-      const { subject, body } = inquiry();
-      window.location.href =
-        `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      const { subject, body } = buildBrief();
+      window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
       showToast("Opening your email app…");
     });
   }

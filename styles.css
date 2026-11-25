@@ -3031,3 +3031,296 @@ main[id] {
     transition: none;
   }
 }
+
+
+/* ── Interactive Counter UI Showcase, ROI Calculator, Pilot Wedge & AMC ─── */
+.counter-window {
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+.counter-chrome {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: var(--surface-alt);
+  border-bottom: 1px solid var(--line);
+  gap: 10px;
+}
+.counter-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.counter-latency {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--sage);
+  background: var(--sage-soft);
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+.counter-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  padding: 8px 12px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+}
+.counter-tab {
+  padding: 7px 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.counter-tab:hover { color: var(--ink); }
+.counter-tab.active {
+  background: var(--surface);
+  color: var(--ink);
+  border-color: var(--line-strong);
+}
+.counter-body {
+  padding: 18px 16px;
+  min-height: 236px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+}
+.cv-kpis {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.cv-kpi {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px;
+}
+.cv-kpi span { display: block; font-size: 11.5px; color: var(--muted); }
+.cv-kpi strong { font-size: 16px; color: var(--ink); font-variant-numeric: tabular-nums; }
+.cv-warn { color: var(--accent) !important; }
+.cv-good { color: var(--sage) !important; }
+.cv-list { display: flex; flex-direction: column; gap: 8px; }
+.cv-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 10px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-size: 13px;
+}
+.cv-row-total { background: var(--sage-soft); border-color: var(--sage); }
+.cv-tag {
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: var(--surface-alt);
+  color: var(--walnut);
+}
+.cv-tag-good { background: var(--sage-soft); color: var(--sage); }
+.cv-action-btn {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #fff;
+  border: 0;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.cv-action-btn:hover { background: var(--accent-hover); }
+.cv-input-bar { display: flex; flex-wrap: wrap; gap: 8px; }
+.cv-chip {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 6px 10px;
+  background: var(--bg);
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
+}
+.cv-match-card {
+  padding: 12px;
+  background: var(--sage-soft);
+  border: 1px solid var(--sage);
+  border-radius: 8px;
+}
+.cv-match-head { display: flex; justify-content: space-between; gap: 8px; font-size: 13px; color: var(--sage); }
+.cv-match-sub { margin: 6px 0 0; font-size: 12.5px; color: var(--walnut); }
+.cv-inv-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.cv-inv-head span { display: block; font-size: 11.5px; color: var(--muted); }
+.cv-foot-note { font-size: 12px; color: var(--muted); font-family: var(--font-mono); }
+.counter-statusbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 9px 16px;
+  background: var(--espresso);
+  color: #E5DFD5;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+}
+.cs-dot { width: 7px; height: 7px; border-radius: 50%; background: #64A86B; flex-shrink: 0; }
+.cs-right { color: #B8AFA3; }
+
+/* 4 Operational Leaks & ROI Calculator */
+.leaks-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-bottom: 36px;
+}
+.leak-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+.leak-num {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.leak-card h3 { font-size: 21px; margin-bottom: 8px; }
+
+.roi-panel {
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+}
+.roi-head h3 { margin: 6px 0 8px; }
+.roi-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  margin-top: 20px;
+  align-items: start;
+}
+.slider-group { margin-bottom: 20px; }
+.slider-label-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 15px; }
+.slider-group input[type="range"] { width: 100%; accent-color: var(--accent); cursor: pointer; }
+.slider-scale { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-top: 4px; }
+.roi-assumptions { font-size: 13px; color: var(--muted); margin-top: 8px; }
+.roi-results { display: flex; flex-direction: column; gap: 12px; }
+.roi-stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+.roi-stat span { font-size: 14px; color: var(--walnut); }
+.roi-stat strong { font-size: 18px; color: var(--ink); font-variant-numeric: tabular-nums; }
+.roi-stat-accent { background: var(--sage-soft); border-color: var(--sage); }
+.roi-stat-accent strong { color: var(--sage); }
+
+/* Zero-Risk Pilot Wedge (#pilot) */
+.pilot-section {
+  padding: 76px 0;
+  background: var(--surface-alt);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.pilot-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-top: 28px;
+}
+.pilot-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 28px;
+}
+.pilot-card-highlight { border-color: var(--sage); }
+.pilot-badge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+.pilot-badge-sage { background: var(--sage-soft); color: var(--sage); }
+.pilot-card h3 { margin-bottom: 10px; }
+.pilot-list { margin: 14px 0 0; padding-left: 18px; color: var(--walnut); font-size: 14.5px; }
+.pilot-list li { margin-bottom: 6px; }
+.pilot-capacity {
+  margin-top: 24px;
+  padding: 20px 24px;
+  background: var(--espresso);
+  color: #FAF7F1;
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.capacity-text strong { display: block; font-size: 16px; margin-bottom: 4px; color: #FAF7F1; }
+.capacity-text span { font-size: 14px; color: #CFC7BC; }
+
+/* Transparent Post-Year-1 AMC Banner */
+.amc-banner {
+  margin-top: 32px;
+  display: grid;
+  grid-template-columns: 1fr 1.35fr;
+  gap: 24px;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+}
+.amc-col-border { border-left: 1px solid var(--line); padding-left: 24px; }
+.amc-tag {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 6px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.amc-tag-sage { background: var(--sage-soft); color: var(--sage); }
+.amc-banner h4 { margin-bottom: 6px; font-size: 19px; }
+.amc-banner p { margin: 0; font-size: 14.5px; }
+
+/* B2B Contact Grid */
+.form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form-actions-b2b { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+
+@media (max-width: 860px) {
+  .leaks-grid, .roi-grid, .pilot-grid, .amc-banner, .form-grid-2 { grid-template-columns: 1fr; }
+  .amc-col-border { border-left: 0; border-top: 1px solid var(--line); padding-left: 0; padding-top: 18px; }
+  .counter-tabs { grid-template-columns: repeat(2, 1fr); }
+}
