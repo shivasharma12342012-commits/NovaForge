@@ -5,7 +5,7 @@
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const $ = (id) => document.getElementById(id);
 
-  /* ── Persistent sticky header + active section highlighting ────────────── */
+  /* ── Sticky header shadow, scroll progress (GPU scaleX) & active nav ──── */
   const header = $("siteHeader");
   const progressBar = $("scrollProgress");
   const backToTop = $("backToTop");
@@ -28,7 +28,7 @@
 
   function updateActiveSection() {
     if (!trackedSections.length) return;
-    const scrollPos = window.scrollY + (header ? header.offsetHeight : 70) + 120;
+    const scrollPos = window.scrollY + (header ? header.offsetHeight : 64) + 120;
     const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 40;
     if (atBottom) {
       setActiveNav(trackedSections[trackedSections.length - 1].id);
@@ -45,12 +45,12 @@
     const y = window.scrollY;
     const doc = document.documentElement;
     const max = doc.scrollHeight - doc.clientHeight;
-    if (progressBar) progressBar.style.width = (max > 0 ? Math.min(100, (y / max) * 100) : 0) + "%";
-    if (header) {
-      header.classList.toggle("scrolled", y > 12);
-      header.classList.toggle("compact", y > 80);
+    if (progressBar) {
+      const ratio = max > 0 ? Math.min(1, Math.max(0, y / max)) : 0;
+      progressBar.style.transform = `scaleX(${ratio.toFixed(4)})`;
     }
-    if (backToTop) backToTop.hidden = y < 500;
+    if (header) header.classList.toggle("scrolled", y > 8);
+    if (backToTop) backToTop.hidden = y < 480;
     updateActiveSection();
     ticking = false;
   }
@@ -94,7 +94,7 @@
     });
   }
 
-  /* ── Scroll reveal ───────────────────────────────────────────────────── */
+  /* ── Scroll reveal (guaranteed visible fallback) ─────────────────────── */
   const reveals = document.querySelectorAll(".reveal");
   if ("IntersectionObserver" in window && !reduceMotion) {
     const io = new IntersectionObserver((entries) => {
@@ -104,7 +104,7 @@
           io.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.04, rootMargin: "0px 0px -20px 0px" });
+    }, { threshold: 0.02, rootMargin: "0px 0px -12px 0px" });
     reveals.forEach((el) => io.observe(el));
   } else {
     reveals.forEach((el) => el.classList.add("visible"));
@@ -121,17 +121,17 @@
     if (view === "wave") {
       counterBody.innerHTML = `
         <div class="cv-kpis">
-          <div class="cv-kpi"><span>Pickups Due</span><strong>${waveDispatched ? "0 pending" : "14 cars"}</strong></div>
-          <div class="cv-kpi"><span>Overdue Alerts</span><strong class="cv-warn">2 returns</strong></div>
-          <div class="cv-kpi"><span>Wash-Bay TAT</span><strong class="cv-good">18 min avg</strong></div>
+          <div class="cv-kpi"><span>Pickups due</span><strong>${waveDispatched ? "0 pending" : "14 cars"}</strong></div>
+          <div class="cv-kpi"><span>Overdue alerts</span><strong class="cv-warn">2 returns</strong></div>
+          <div class="cv-kpi"><span>Wash-bay TAT</span><strong class="cv-good">18 min avg</strong></div>
         </div>
         <div class="cv-list">
           <div class="cv-row"><span><strong>MH-02-HV-4589</strong> · Innova Hycross</span><span class="cv-tag ${waveDispatched ? "cv-tag-good" : ""}">${waveDispatched ? "Dispatched" : "Ready · Bay 2"}</span></div>
           <div class="cv-row"><span><strong>DL-01-CD-8821</strong> · Dzire AT</span><span class="cv-tag ${waveDispatched ? "cv-tag-good" : ""}">${waveDispatched ? "Dispatched" : "Ready · Bay 4"}</span></div>
           <div class="cv-row"><span><strong>MH-01-EF-1904</strong> · Ertiga ZXi</span><span class="cv-tag">Wash 14m · Mark Ready</span></div>
         </div>
-        <button type="button" class="cv-action-btn" id="cvDispatchBtn">
-          ${waveDispatched ? "✓ 14 Conflict-Free Cars Dispatched (0.21s)" : "1-Click Dispatch 14 Conflict-Free Cars"}
+        <button type="button" class="cv-action-btn ${waveDispatched ? "done" : ""}" id="cvDispatchBtn">
+          ${waveDispatched ? "✓ 14 conflict-free cars dispatched (0.21s)" : "1-click dispatch 14 conflict-free cars"}
         </button>`;
       const btn = $("cvDispatchBtn");
       if (btn) btn.addEventListener("click", () => { waveDispatched = !waveDispatched; renderCounterView("wave"); });
@@ -139,38 +139,38 @@
       counterBody.innerHTML = `
         <div class="cv-input-bar">
           <span class="cv-chip">Plate: <strong>MH-02-HV-4589</strong></span>
-          <span class="cv-chip">Toll/Challan Time: <strong>14 Oct, 16:42</strong></span>
+          <span class="cv-chip">Timestamp: <strong>14 Oct, 16:42</strong></span>
         </div>
         <div class="cv-match-card">
-          <div class="cv-match-head"><span>Instant Match · 0.04s</span><strong>Booking #FLT-2841 (Rohan K.)</strong></div>
-          <p class="cv-match-sub">Trip Window: 14 Oct 09:00 → 16 Oct 18:00 · Security Deposit Held: ₹5,000</p>
+          <div class="cv-match-head"><span>Instant match · 0.04s</span><strong>Booking #FLT-2841 (Rohan K.)</strong></div>
+          <p class="cv-match-sub">Trip window: 14 Oct 09:00 → 16 Oct 18:00 · Deposit held: ₹5,000</p>
         </div>
-        <button type="button" class="cv-action-btn" id="cvPostChallanBtn">
-          ${challanPosted ? "✓ ₹1,200 Challan Posted to Booking #FLT-2841 Ledger" : "Post ₹1,200 Challan to Ledger"}
+        <button type="button" class="cv-action-btn ${challanPosted ? "done" : ""}" id="cvPostChallanBtn">
+          ${challanPosted ? "✓ ₹1,200 challan posted to Booking #FLT-2841 ledger" : "Post ₹1,200 challan to ledger"}
         </button>`;
       const btn = $("cvPostChallanBtn");
       if (btn) btn.addEventListener("click", () => { challanPosted = !challanPosted; renderCounterView("fastag"); });
     } else if (view === "gst") {
       counterBody.innerHTML = `
         <div class="cv-inv-head">
-          <div><strong>FLT/2026-27/00419</strong><span>SQLite-Locked · Immutable Trigger Active</span></div>
-          <span class="cv-tag cv-tag-good">Corporate Net-30 B2B</span>
+          <div><strong>FLT/2026-27/00419</strong><span>SQLite-locked · Immutable trigger active</span></div>
+          <span class="cv-tag cv-tag-good">Corporate Net-30</span>
         </div>
         <div class="cv-list">
-          <div class="cv-row"><span>Base Rental + Prorated 6h Extension</span><strong>₹18,450.00</strong></div>
+          <div class="cv-row"><span>Base rental + prorated 6h extension</span><strong>₹18,450.00</strong></div>
           <div class="cv-row"><span>CGST (2.5%) + SGST (2.5%) · Decimal ROUND_HALF_UP</span><strong>₹922.50</strong></div>
-          <div class="cv-row cv-row-total"><span>Locked Grand Total (B2B Ledger)</span><strong>₹19,372.50</strong></div>
+          <div class="cv-row cv-row-total"><span>Locked grand total (B2B ledger)</span><strong>₹19,372.50</strong></div>
         </div>
-        <div class="cv-foot-note">Corrections require sequential Credit Note CN/2026-27/00018.</div>`;
+        <div class="cv-foot-note">Corrections require sequential Credit Note CN/2026-27/00018</div>`;
     } else {
       counterBody.innerHTML = `
         <div class="cv-list">
-          <div class="cv-row"><span><strong>192.168.1.14</strong> → Counter Desk 2</span><span class="cv-tag cv-tag-good">IP Session Bound</span></div>
-          <div class="cv-row"><span>4-Digit Quick PIN Lock</span><span class="cv-tag">Auto-lock 120s</span></div>
-          <div class="cv-row"><span>5-Role RBAC Active</span><span class="cv-tag">Owner · Mgr · Desk · Acct · Auditor</span></div>
-          <div class="cv-row"><span>DPDP Act 2023 Compliance</span><span class="cv-tag cv-tag-good">GPS/EXIF Scrubbed</span></div>
+          <div class="cv-row"><span><strong>192.168.1.14</strong> → Counter Desk 2</span><span class="cv-tag cv-tag-good">IP bound</span></div>
+          <div class="cv-row"><span>4-digit Quick PIN lock</span><span class="cv-tag">Auto-lock 120s</span></div>
+          <div class="cv-row"><span>5-role RBAC active</span><span class="cv-tag">Owner · Mgr · Desk · Acct · Auditor</span></div>
+          <div class="cv-row"><span>DPDP Act 2023 compliance</span><span class="cv-tag cv-tag-good">GPS/EXIF scrubbed</span></div>
         </div>
-        <div class="cv-foot-note">Multi-Desk Hub LAN Server · Unlimited counter PCs per hub.</div>`;
+        <div class="cv-foot-note">Multi-Desk Hub LAN Server · Unlimited counter PCs per hub</div>`;
     }
   }
 
@@ -186,7 +186,7 @@
     });
   });
 
-  /* ── Interactive Fleet Leakage & SaaS-Tax Calculator ─────────────────── */
+  /* ── Interactive Fleet Leakage & SaaS-Tax Calculator (bug-fixed 500+) ── */
   const fleetSlider = $("fleetSlider");
   const staffSlider = $("staffSlider");
   const fmtINR = (n) => "₹" + Math.round(n).toLocaleString("en-IN");
@@ -203,18 +203,19 @@
     const saas3Yr = (staff * 1200 + cars * 350) * 36;
 
     let edition = "Float Basic", price = 600000;
-    if (cars > 150 && cars <= 500) { edition = "Float Enterprise"; price = 1650000; }
-    else if (cars > 500 || cars === 500) { edition = "Float Enterprise Max"; price = 2100000; }
+    if (cars >= 500) { edition = "Float Enterprise Max"; price = 2100000; }
+    else if (cars > 150) { edition = "Float Enterprise"; price = 1650000; }
     else if (cars > 60) { edition = "Float Pro"; price = 1350000; }
     else if (cars > 25) { edition = "Float Plus"; price = 900000; }
 
     const monthlyBenefit = monthlyTolls + (saas3Yr / 36);
     const paybackMonths = Math.max(2, Math.round(price / Math.max(1, monthlyBenefit)));
+    const lakhLabel = (price / 100000).toString().replace(/\.0$/, "");
 
     $("roiTolls").textContent = fmtINR(monthlyTolls);
     $("roiHours").textContent = `${monthlyHours.toLocaleString("en-IN")} hrs`;
     $("roiSaas").textContent = fmtINR(saas3Yr);
-    $("roiRec").textContent = `${edition} (₹${price / 100000}L) · ~${paybackMonths} months`;
+    $("roiRec").textContent = `${edition} (₹${lakhLabel}L) · ~${paybackMonths} mo`;
   }
 
   if (fleetSlider && staffSlider) {
@@ -232,7 +233,7 @@
       alt: "Float running locally with the Express Clean-to-Ready turnaround queue and local backup status",
       title: "Opens straight away on Mac or Windows",
       desc: "Run Float on one counter PC or share it across your Multi-Desk Hub LAN. Crash-safe SQLite WAL storage sets itself up automatically beside the app.",
-      rows: [["Extra software needed", "None"], ["Response speed", "< 0.3s local"], ["Daily backups", "Automatic & verified"]]
+      rows: [["Extra software", "None"], ["Response speed", "< 0.3s local"], ["Daily backups", "Automatic"]]
     },
     {
       address: "Float Settings · Fleet & AI Key (Step 2 of 3)",
@@ -241,16 +242,16 @@
       alt: "Float API key settings showing encrypted company key and monthly per-employee spend caps",
       title: "Import rate cards & connect your AI key",
       desc: "Import your vehicle list and corporate GST rate cards. AES-256-GCM protects your company AI key on disk so counter staff never see the raw key.",
-      rows: [["Key protection", "AES-256-GCM"], ["Visible to staff", "Last 4 characters"], ["Budget control", "Monthly cap per user"]]
+      rows: [["Key protection", "AES-256-GCM"], ["Staff visibility", "Last 4 chars"], ["Budget control", "Per-user cap"]]
     },
     {
       address: "Float · Locked GST & Approvals (Step 3 of 3)",
-      tag: "Step 03 · Ready on Day 1",
+      tag: "Step 03 · Ready on day 1",
       image: "assets/step-3-approvals.png",
       alt: "Float Owner Approval Queue showing locked GST invoices and audit history",
       title: "Dispatch waves, match tolls & lock GST",
       desc: "Counter staff dispatch morning waves and recover FASTag/e-challans in seconds while issued sequential GST invoices remain locked permanently.",
-      rows: [["FASTag & E-Challan", "1-second match"], ["Issued GST invoices", "SQLite-locked"], ["Activity history", "Every change logged"]]
+      rows: [["FASTag match", "1 second"], ["GST invoices", "SQLite-locked"], ["Audit trail", "Every edit"]]
     }
   ];
 
@@ -294,7 +295,7 @@
       if (mine !== wfToken) return;
       buildPreview(data);
       previewContent.classList.remove("switching");
-    }, 180);
+    }, 150);
   }
 
   renderWorkflowStep(0, false);
@@ -338,7 +339,7 @@
     toastEl.textContent = msg;
     toastEl.hidden = false;
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => { toastEl.hidden = true; }, 2800);
+    toastTimer = setTimeout(() => { toastEl.hidden = true; }, 2600);
   }
 
   async function copyText(text) {
@@ -401,7 +402,7 @@
   if (copyDraftBtn) {
     copyDraftBtn.addEventListener("click", async () => {
       const { subject, body } = buildBrief();
-      try { await copyText(`To: ${EMAIL}\nSubject: ${subject}\n\n${body}`); showToast("Pilot brief copied."); }
+      try { await copyText(`To: ${EMAIL}\nSubject: ${subject}\n\n${body}`); showToast("Pilot brief copied"); }
       catch { showToast("Please write to " + EMAIL); }
     });
   }
@@ -411,7 +412,7 @@
     whatsappBtn.addEventListener("click", () => {
       const { body } = buildBrief();
       window.open(`https://wa.me/?text=${encodeURIComponent(body)}`, "_blank", "noopener,noreferrer");
-      showToast("Opening WhatsApp with pre-filled brief…");
+      showToast("Opening WhatsApp with pre-filled brief");
     });
   }
 
@@ -422,7 +423,7 @@
       if (!contactForm.reportValidity()) return;
       const { subject, body } = buildBrief();
       window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      showToast("Opening your email app…");
+      showToast("Opening your email app");
     });
   }
 })();
