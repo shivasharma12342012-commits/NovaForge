@@ -5,7 +5,39 @@
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const $ = (id) => document.getElementById(id);
 
-  /* ── Sticky header shadow, scroll progress (GPU scaleX) & active nav ──── */
+  /* ── Light / Dark Theme Toggle ───────────────────────────────────────── */
+  const themeToggle = $("themeToggle");
+  const themeMeta = $("themeColorMeta");
+
+  function applyTheme(theme, persist) {
+    const next = theme === "dark" ? "dark" : "light";
+    document.documentElement.setAttribute("data-theme", next);
+    if (themeMeta) {
+      themeMeta.setAttribute("content", next === "dark" ? "#0B0F17" : "#F5F7FA");
+    }
+    if (themeToggle) {
+      themeToggle.setAttribute(
+        "aria-label",
+        next === "dark" ? "Switch to light mode" : "Switch to dark mode"
+      );
+    }
+    if (persist) {
+      try {
+        localStorage.setItem("novaforge.theme", next);
+      } catch (e) {}
+    }
+  }
+
+  applyTheme(document.documentElement.getAttribute("data-theme") || "light", false);
+
+  if (themeToggle) {
+    themeToggle.addEventListener("click", () => {
+      const cur = document.documentElement.getAttribute("data-theme");
+      applyTheme(cur === "dark" ? "light" : "dark", true);
+    });
+  }
+
+  /* ── Sticky header shadow, scroll progress & active nav ──────────────── */
   const header = $("siteHeader");
   const progressBar = $("scrollProgress");
   const backToTop = $("backToTop");
@@ -94,7 +126,7 @@
     });
   }
 
-  /* ── Scroll reveal (guaranteed visible fallback) ─────────────────────── */
+  /* ── Scroll reveal ───────────────────────────────────────────────────── */
   const reveals = document.querySelectorAll(".reveal");
   if ("IntersectionObserver" in window && !reduceMotion) {
     const io = new IntersectionObserver((entries) => {
@@ -110,7 +142,7 @@
     reveals.forEach((el) => el.classList.add("visible"));
   }
 
-  /* ── Interactive Hero Live Counter Showcase (4 Tabs) ─────────────────── */
+  /* ── Interactive Hero Counter Screen (4 Simple Views) ────────────────── */
   const counterBody = $("counterBody");
   const counterTabs = document.querySelectorAll(".counter-tab");
   let waveDispatched = false;
@@ -121,14 +153,14 @@
     if (view === "wave") {
       counterBody.innerHTML = `
         <div class="cv-kpis">
-          <div class="cv-kpi"><span>Pickups due</span><strong>${waveDispatched ? "0 pending" : "14 cars"}</strong></div>
-          <div class="cv-kpi"><span>Overdue alerts</span><strong class="cv-warn">2 returns</strong></div>
-          <div class="cv-kpi"><span>Wash-bay TAT</span><strong class="cv-good">18 min avg</strong></div>
+          <div class="cv-kpi"><span>Pickups ready</span><strong>${waveDispatched ? "0 waiting" : "14 cars"}</strong></div>
+          <div class="cv-kpi"><span>Late returns</span><strong class="cv-warn">2 cars</strong></div>
+          <div class="cv-kpi"><span>Avg wash time</span><strong class="cv-good">18 mins</strong></div>
         </div>
         <div class="cv-list">
-          <div class="cv-row"><span><strong>MH-02-HV-4589</strong> · Innova Hycross</span><span class="cv-tag ${waveDispatched ? "cv-tag-good" : ""}">${waveDispatched ? "Dispatched" : "Ready · Bay 2"}</span></div>
-          <div class="cv-row"><span><strong>DL-01-CD-8821</strong> · Dzire AT</span><span class="cv-tag ${waveDispatched ? "cv-tag-good" : ""}">${waveDispatched ? "Dispatched" : "Ready · Bay 4"}</span></div>
-          <div class="cv-row"><span><strong>MH-01-EF-1904</strong> · Ertiga ZXi</span><span class="cv-tag">Wash 14m · Mark Ready</span></div>
+          <div class="cv-row"><span><strong>MH-02-HV-4589</strong> · Innova Hycross</span><span class="cv-tag ${waveDispatched ? "cv-tag-good" : ""}">${waveDispatched ? "Sent out" : "Ready · Bay 2"}</span></div>
+          <div class="cv-row"><span><strong>DL-01-CD-8821</strong> · Dzire AT</span><span class="cv-tag ${waveDispatched ? "cv-tag-good" : ""}">${waveDispatched ? "Sent out" : "Ready · Bay 4"}</span></div>
+          <div class="cv-row"><span><strong>MH-01-EF-1904</strong> · Ertiga ZXi</span><span class="cv-tag">Washing · 14m</span></div>
         </div>
         <button
           type="button"
@@ -140,7 +172,7 @@
           data-width="full"
         >
           <span class="astryx-button-content">
-            <span class="astryx-button-label">${waveDispatched ? "✓ 14 conflict-free cars dispatched (0.21s)" : "1-click dispatch 14 conflict-free cars"}</span>
+            <span class="astryx-button-label">${waveDispatched ? "✓ All 14 cars sent out (0.2s)" : "Send out 14 ready cars in 1 click"}</span>
           </span>
         </button>`;
       const btn = $("cvDispatchBtn");
@@ -148,12 +180,12 @@
     } else if (view === "fastag") {
       counterBody.innerHTML = `
         <div class="cv-input-bar">
-          <span class="cv-chip">Plate: <strong>MH-02-HV-4589</strong></span>
-          <span class="cv-chip">Timestamp: <strong>14 Oct, 16:42</strong></span>
+          <span class="cv-chip">Car: <strong>MH-02-HV-4589</strong></span>
+          <span class="cv-chip">Time: <strong>14 Oct, 4:42 PM</strong></span>
         </div>
         <div class="cv-match-card">
-          <div class="cv-match-head"><span>Instant match · 0.04s</span><strong>Booking #FLT-2841 (Rohan K.)</strong></div>
-          <p class="cv-match-sub">Trip window: 14 Oct 09:00 → 16 Oct 18:00 · Deposit held: ₹5,000</p>
+          <div class="cv-match-head"><span>Found in 0.04s</span><strong>Booking #FLT-2841 (Rohan K.)</strong></div>
+          <p class="cv-match-sub">Trip time: 14 Oct 9:00 AM → 16 Oct 6:00 PM · Deposit held: ₹5,000</p>
         </div>
         <button
           type="button"
@@ -165,7 +197,7 @@
           data-width="full"
         >
           <span class="astryx-button-content">
-            <span class="astryx-button-label">${challanPosted ? "✓ ₹1,200 challan posted to Booking #FLT-2841 ledger" : "Post ₹1,200 challan to ledger"}</span>
+            <span class="astryx-button-label">${challanPosted ? "✓ ₹1,200 fine added to Rohan K.'s bill" : "Add ₹1,200 fine to customer bill"}</span>
           </span>
         </button>`;
       const btn = $("cvPostChallanBtn");
@@ -173,24 +205,24 @@
     } else if (view === "gst") {
       counterBody.innerHTML = `
         <div class="cv-inv-head">
-          <div><strong>FLT/2026-27/00419</strong><span>SQLite-locked · Immutable trigger active</span></div>
-          <span class="cv-tag cv-tag-good">Corporate Net-30</span>
+          <div><strong>FLT/2026-27/00419</strong><span>Locked GST bill · Cannot be secretly edited</span></div>
+          <span class="cv-tag cv-tag-good">Company 30-day bill</span>
         </div>
         <div class="cv-list">
-          <div class="cv-row"><span>Base rental + prorated 6h extension</span><strong>₹18,450.00</strong></div>
-          <div class="cv-row"><span>CGST (2.5%) + SGST (2.5%) · Decimal ROUND_HALF_UP</span><strong>₹922.50</strong></div>
-          <div class="cv-row cv-row-total"><span>Locked grand total (B2B ledger)</span><strong>₹19,372.50</strong></div>
+          <div class="cv-row"><span>Base trip + 6 extra hours</span><strong>₹18,450.00</strong></div>
+          <div class="cv-row"><span>CGST (2.5%) + SGST (2.5%) · Exact math</span><strong>₹922.50</strong></div>
+          <div class="cv-row cv-row-total"><span>Final locked total</span><strong>₹19,372.50</strong></div>
         </div>
-        <div class="cv-foot-note">Corrections require sequential Credit Note CN/2026-27/00018</div>`;
+        <div class="cv-foot-note">Any later change creates a clean Credit Note for your CA</div>`;
     } else {
       counterBody.innerHTML = `
         <div class="cv-list">
-          <div class="cv-row"><span><strong>192.168.1.14</strong> → Counter Desk 2</span><span class="cv-tag cv-tag-good">IP bound</span></div>
-          <div class="cv-row"><span>4-digit Quick PIN lock</span><span class="cv-tag">Auto-lock 120s</span></div>
-          <div class="cv-row"><span>5-role RBAC active</span><span class="cv-tag">Owner · Mgr · Desk · Acct · Auditor</span></div>
-          <div class="cv-row"><span>DPDP Act 2023 compliance</span><span class="cv-tag cv-tag-good">GPS/EXIF scrubbed</span></div>
+          <div class="cv-row"><span><strong>192.168.1.14</strong> → Counter Desk 2</span><span class="cv-tag cv-tag-good">Desk locked</span></div>
+          <div class="cv-row"><span>4-digit staff PIN lock</span><span class="cv-tag">Auto-locks in 2m</span></div>
+          <div class="cv-row"><span>5 staff access levels</span><span class="cv-tag">Owner · Mgr · Desk · Acct · Auditor</span></div>
+          <div class="cv-row"><span>Customer photo privacy</span><span class="cv-tag cv-tag-good">Location cleaned</span></div>
         </div>
-        <div class="cv-foot-note">Multi-Desk Hub LAN Server · Unlimited counter PCs per hub</div>`;
+        <div class="cv-foot-note">Connect unlimited counter PCs inside your office</div>`;
     }
   }
 
@@ -207,7 +239,7 @@
     });
   });
 
-  /* ── Interactive Fleet Leakage & SaaS-Tax Calculator (bug-fixed 500+) ── */
+  /* ── Simple Savings Calculator ───────────────────────────────────────── */
   const fleetSlider = $("fleetSlider");
   const staffSlider = $("staffSlider");
   const fmtINR = (n) => "₹" + Math.round(n).toLocaleString("en-IN");
@@ -245,34 +277,34 @@
     updateROI();
   }
 
-  /* ── "How it fits your office" preview with real screenshots ─────────── */
+  /* ── 3-Step Setup Screen Preview ─────────────────────────────────────── */
   const WF_DATA = [
     {
-      address: "Float · Local Counter Workspace (Step 1 of 3)",
+      address: "Float · Counter Screen (Step 1 of 3)",
       tag: "Step 01 · 15–30 minutes",
       image: "assets/step-1-launch.png",
-      alt: "Float running locally with the Express Clean-to-Ready turnaround queue and local backup status",
-      title: "Opens straight away on Mac or Windows",
-      desc: "Run Float on one counter PC or share it across your Multi-Desk Hub LAN. Crash-safe SQLite WAL storage sets itself up automatically beside the app.",
-      rows: [["Extra software", "None"], ["Response speed", "< 0.3s local"], ["Daily backups", "Automatic"]]
+      alt: "Float running on an office PC showing the car wash list and daily backup status",
+      title: "Opens right away on Windows or Mac",
+      desc: "Run Float on one counter PC or share it across every counter desk in your office. Everything saves safely on your own computer.",
+      rows: [["Extra apps needed", "None"], ["Screen speed", "< 0.3s"], ["Daily backups", "Automatic"]]
     },
     {
-      address: "Float Settings · Fleet & AI Key (Step 2 of 3)",
+      address: "Float Settings · Cars & AI Key (Step 2 of 3)",
       tag: "Step 02 · ~5 minutes",
       image: "assets/step-2-apikey.png",
-      alt: "Float API key settings showing encrypted company key and monthly per-employee spend caps",
-      title: "Import rate cards & connect your AI key",
-      desc: "Import your vehicle list and corporate GST rate cards. AES-256-GCM protects your company AI key on disk so counter staff never see the raw key.",
-      rows: [["Key protection", "AES-256-GCM"], ["Staff visibility", "Last 4 chars"], ["Budget control", "Per-user cap"]]
+      alt: "Float settings showing locked company AI key and monthly staff spending limits",
+      title: "Load your cars, GST rates & AI key",
+      desc: "Import your car list from Excel and paste your company AI key once. Your key stays locked on disk so counter staff cannot copy it.",
+      rows: [["AI key safety", "Locked on PC"], ["Staff can see", "Last 4 digits"], ["Spend control", "Monthly limit"]]
     },
     {
-      address: "Float · Locked GST & Approvals (Step 3 of 3)",
+      address: "Float · Locked GST Bills & History (Step 3 of 3)",
       tag: "Step 03 · Ready on day 1",
       image: "assets/step-3-approvals.png",
-      alt: "Float Owner Approval Queue showing locked GST invoices and audit history",
-      title: "Dispatch waves, match tolls & lock GST",
-      desc: "Counter staff dispatch morning waves and recover FASTag/e-challans in seconds while issued sequential GST invoices remain locked permanently.",
-      rows: [["FASTag match", "1 second"], ["GST invoices", "SQLite-locked"], ["Audit trail", "Every edit"]]
+      alt: "Float approval screen showing locked GST bills and change log",
+      title: "Send cars, catch tolls & lock GST bills",
+      desc: "Staff send out morning cars and match FASTag tolls in seconds, while every printed GST bill stays locked against quiet changes.",
+      rows: [["Toll finder", "1 second"], ["GST bills", "Locked"], ["Change log", "Every edit"]]
     }
   ];
 
@@ -338,7 +370,7 @@
       const group = tab.dataset.labGroup;
       const targetId = tab.dataset.labPanel;
       if (!group || !targetId) return;
-      document.querySelectorAll(`.lab-tab[data-lab-group="${group}"]`).forEach(( sibling ) => {
+      document.querySelectorAll(`.lab-tab[data-lab-group="${group}"]`).forEach((sibling) => {
         const on = sibling === tab;
         sibling.classList.toggle("active", on);
         sibling.setAttribute("aria-selected", String(on));
@@ -396,7 +428,7 @@
     area.remove();
   }
 
-  /* ── B2B Contact Flow (Email + WhatsApp + Copy Brief) ────────────────── */
+  /* ── Contact Actions (Email + WhatsApp + Copy Message) ───────────────── */
   const copyEmailBtn = $("copyEmailBtn");
   if (copyEmailBtn) {
     copyEmailBtn.addEventListener("click", async () => {
@@ -421,15 +453,15 @@
     const fleet = ($("fleetSize")?.value || "").trim() || "-";
     const setup = ($("currentSetup")?.value || "Tally + Excel").trim();
     const phone = ($("phoneWhatsapp")?.value || "").trim() || "-";
-    const product = productSelect?.value || "Free 48-Hour Leakage Audit + 14-Day Office Pilot (₹0)";
+    const product = productSelect?.value || "Free 48-Hour Check + 14-Day Office Trial (₹0)";
     const notes = ($("messageInput")?.value || "").trim();
-    const subject = `Float Pilot / Inquiry: ${company} (${fleet} cars, ${city})`;
+    const subject = `Float Free Trial / Inquiry: ${company} (${fleet} cars, ${city})`;
     const body =
       `Hello NovaForge Founders (Prabhjot, Shiva & Yatharth),\n\n` +
-      `Interest: ${product}\n` +
-      `Company / Agency: ${company}\n` +
-      `City / Airport Hub: ${city}\n` +
-      `Fleet Size: ${fleet} cars\n` +
+      `Interested in: ${product}\n` +
+      `Company: ${company}\n` +
+      `City / Airport: ${city}\n` +
+      `Cars: ${fleet}\n` +
       `Current Setup: ${setup}\n` +
       `Phone / WhatsApp: ${phone}\n` +
       (notes ? `\nNotes: ${notes}\n` : "");
@@ -440,8 +472,8 @@
   if (copyDraftBtn) {
     copyDraftBtn.addEventListener("click", async () => {
       const { subject, body } = buildBrief();
-      try { await copyText(`To: ${EMAIL}\nSubject: ${subject}\n\n${body}`); showToast("Pilot brief copied"); }
-      catch { showToast("Please write to " + EMAIL); }
+      try { await copyText(`To: ${EMAIL}\nSubject: ${subject}\n\n${body}`); showToast("Message copied"); }
+      catch { showToast("Please email " + EMAIL); }
     });
   }
 
@@ -450,7 +482,7 @@
     whatsappBtn.addEventListener("click", () => {
       const { body } = buildBrief();
       window.open(`https://wa.me/?text=${encodeURIComponent(body)}`, "_blank", "noopener,noreferrer");
-      showToast("Opening WhatsApp with pre-filled brief");
+      showToast("Opening WhatsApp");
     });
   }
 

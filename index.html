@@ -1,18 +1,29 @@
 <!DOCTYPE html>
-<html lang="en" data-astryx-theme="atelier">
+<html lang="en" data-astryx-theme="slate" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Float by NovaForge — Local-First Car Rental Counter &amp; Fleet Operations</title>
-  <meta name="description" content="Float by NovaForge is the local-first AI and counter operations command center for high-volume Indian car rental fleets (25 to 500+ cars). Zero per-seat fees, 1-second FASTag & e-challan matching, locked GST invoices, and 100% data ownership." />
-  <meta name="theme-color" content="#F7F4EE" />
+  <title>Float by NovaForge — Simple Car Rental Software for Indian Fleets</title>
+  <meta name="description" content="Float by NovaForge helps Indian car rental companies (25 to 500+ cars) send out cars fast, catch unpaid FASTag tolls and fines in 1 second, print clean GST bills, and buy once with zero monthly seat fees." />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#F5F7FA" id="themeColorMeta" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self';" />
   <link rel="icon" type="image/png" sizes="256x256" href="assets/float-logo.png" />
   <link rel="icon" href="favicon.ico" />
   <link rel="stylesheet" href="astryx.css" />
   <link rel="stylesheet" href="styles.css" />
-  <script>document.documentElement.classList.add("js");</script>
+  <script>
+    (function () {
+      document.documentElement.classList.add("js");
+      try {
+        var saved = localStorage.getItem("novaforge.theme");
+        var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+        var theme = saved === "dark" || saved === "light" ? saved : (prefersDark ? "dark" : "light");
+        document.documentElement.setAttribute("data-theme", theme);
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body>
   <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
@@ -44,32 +55,59 @@
         <span class="brand-mark" aria-hidden="true">NF</span>
         <span class="brand-text">
           <span class="brand-name">NovaForge</span>
-          <span class="brand-sub">Software atelier</span>
+          <span class="brand-sub">Software for fleets</span>
         </span>
       </a>
+
       <nav class="nav-links" aria-label="Primary">
-        <a href="#products" data-section="products">ROI &amp; leaks</a>
-        <a href="#pilot" data-section="pilot">14-day pilot</a>
-        <a href="#plans" data-section="plans">Editions</a>
-        <a href="#workflow" data-section="workflow">How it works</a>
+        <a href="#products" data-section="products">Savings</a>
+        <a href="#pilot" data-section="pilot">Free trial</a>
+        <a href="#plans" data-section="plans">Pricing</a>
+        <a href="#workflow" data-section="workflow">Setup</a>
         <a href="#labs" data-section="labs">Labs</a>
-        <a href="#founders" data-section="founders">Founders</a>
+        <a href="#founders" data-section="founders">Team</a>
         <a href="#faq" data-section="faq">FAQ</a>
-        <a
-          href="#contact"
-          class="astryx-button nav-cta"
-          data-astryx-component="button"
-          data-variant="dark"
+      </nav>
+
+      <div class="header-right">
+        <button
+          type="button"
+          class="astryx-button theme-toggle"
+          id="themeToggle"
+          data-astryx-component="icon-button"
+          data-variant="ghost"
           data-size="md"
-          data-section="contact"
-          data-product="Free 48-Hour Leakage Audit + 14-Day Office Pilot (₹0)"
+          data-icon-only="true"
+          aria-label="Switch color theme"
+          title="Switch light or dark mode"
         >
           <span class="astryx-button-content">
-            <span class="astryx-button-label">Book free pilot</span>
+            <span class="astryx-button-icon" aria-hidden="true">
+              <svg class="icon-moon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M13.2 9.8A5.5 5.5 0 0 1 6.2 2.8a5.5 5.5 0 1 0 7 7Z"/>
+              </svg>
+              <svg class="icon-sun" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="8" cy="8" r="3.2"/>
+                <path d="M8 1.8v1.5M8 12.7v1.5M1.8 8h1.5M12.7 8h1.5M3.6 3.6l1.1 1.1M11.3 11.3l1.1 1.1M12.4 3.6l-1.1 1.1M4.7 11.3l-1.1 1.1"/>
+              </svg>
+            </span>
+          </span>
+        </button>
+
+        <a
+          href="#contact"
+          class="astryx-button nav-cta desktop-only-cta"
+          data-astryx-component="button"
+          data-variant="primary"
+          data-size="md"
+          data-section="contact"
+          data-product="Free 48-Hour Check + 14-Day Office Trial (₹0)"
+        >
+          <span class="astryx-button-content">
+            <span class="astryx-button-label">Book free trial</span>
           </span>
         </a>
-      </nav>
-      <div class="header-actions">
+
         <a
           href="#pilot"
           class="astryx-button mobile-quick-cta"
@@ -78,9 +116,10 @@
           data-size="md"
         >
           <span class="astryx-button-content">
-            <span class="astryx-button-label">Free pilot</span>
+            <span class="astryx-button-label">Free trial</span>
           </span>
         </a>
+
         <button
           class="astryx-button menu-toggle"
           id="menuToggle"
@@ -99,26 +138,27 @@
         </button>
       </div>
     </div>
+
     <nav class="mobile-nav" id="mobileNav" aria-label="Mobile Navigation" hidden>
-      <a href="#products" data-section="products">ROI &amp; leaks</a>
-      <a href="#pilot" data-section="pilot">Free 14-day pilot</a>
-      <a href="#plans" data-section="plans">Editions &amp; pricing</a>
-      <a href="#workflow" data-section="workflow">How it works</a>
-      <a href="#labs" data-section="labs">Personal &amp; voice labs</a>
+      <a href="#products" data-section="products">Savings calculator</a>
+      <a href="#pilot" data-section="pilot">Free 14-day trial</a>
+      <a href="#plans" data-section="plans">Plans &amp; pricing</a>
+      <a href="#workflow" data-section="workflow">Easy setup</a>
+      <a href="#labs" data-section="labs">Labs (Personal &amp; Hear)</a>
       <a href="#founders" data-section="founders">Founders</a>
-      <a href="#faq" data-section="faq">FAQ</a>
+      <a href="#faq" data-section="faq">Questions</a>
       <a
         href="#contact"
         class="astryx-button mobile-nav-cta"
         data-astryx-component="button"
-        data-variant="dark"
+        data-variant="primary"
         data-size="lg"
         data-width="full"
         data-section="contact"
-        data-product="Free 48-Hour Leakage Audit + 14-Day Office Pilot (₹0)"
+        data-product="Free 48-Hour Check + 14-Day Office Trial (₹0)"
       >
         <span class="astryx-button-content">
-          <span class="astryx-button-label">Book free pilot</span>
+          <span class="astryx-button-label">Book free 14-day trial</span>
         </span>
       </a>
     </nav>
@@ -129,14 +169,14 @@
     <section class="hero">
       <div class="container hero-grid">
         <div class="hero-copy">
-          <div class="eyebrow">NovaForge · Local-first fleet operations · Windows &amp; macOS</div>
+          <div class="eyebrow">NovaForge · Runs on Windows &amp; Mac · Works without internet</div>
 
           <h1 class="hero-headline">
-            Local-first AI software<br />Built to stay inside <span class="accent-ink">your company machines</span>
+            Smart car rental software that stays on <span class="accent-ink">your own office computers</span>
           </h1>
 
           <p class="hero-desc">
-            Dispatch morning airport waves in 1 click, match delayed FASTag tolls and traffic e-challans to exact renters in 1 second, track wash-bay turnaround timers, and lock gap-free GST invoices—running 100% on your own counter machines in&nbsp;&lt;&nbsp;0.3s.
+            Send out morning airport cars in 1 click, match late FASTag tolls and traffic fines to the right customer in 1 second, track car wash time, and print clean GST bills—opening in under half a second on your desk PC.
           </p>
 
           <div class="hero-actions">
@@ -146,10 +186,10 @@
               data-astryx-component="button"
               data-variant="primary"
               data-size="lg"
-              data-product="Free 48-Hour Leakage Audit + 14-Day Office Pilot (₹0)"
+              data-product="Free 48-Hour Check + 14-Day Office Trial (₹0)"
             >
               <span class="astryx-button-content">
-                <span class="astryx-button-label">Book free 14-day office pilot</span>
+                <span class="astryx-button-label">Start free 14-day office trial</span>
                 <span class="astryx-button-end" aria-hidden="true">
                   <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M3 8h10M9 4l4 4-4 4"/>
@@ -165,7 +205,7 @@
               data-size="lg"
             >
               <span class="astryx-button-content">
-                <span class="astryx-button-label">Compare 5 editions (₹6L–₹21L)</span>
+                <span class="astryx-button-label">See all 5 plans (₹6L–₹21L)</span>
               </span>
             </a>
           </div>
@@ -173,22 +213,22 @@
           <div class="hero-metrics">
             <div class="metric">
               <strong>₹0</strong>
-              <span>Per-seat fees · unlimited staff</span>
+              <span>Monthly fee per staff member</span>
             </div>
             <div class="metric">
               <strong>&lt; 0.3s</strong>
-              <span>Local speed · zero cloud lag</span>
+              <span>Instant speed · no internet lag</span>
             </div>
             <div class="metric">
               <strong>100%</strong>
-              <span>Perpetual data ownership</span>
+              <span>Buy once · keep your data forever</span>
             </div>
           </div>
         </div>
 
-        <!-- Interactive Live Counter UI Showcase -->
+        <!-- Interactive Counter Screen Preview -->
         <div class="hero-visual" id="counter-showcase">
-          <div class="counter-window" role="region" aria-label="Interactive Float Counter Command Center Preview">
+          <div class="counter-window" role="region" aria-label="Interactive Float Counter Screen Preview">
             <div class="counter-chrome">
               <div class="traffic-lights" aria-hidden="true">
                 <span class="tl"></span>
@@ -197,106 +237,106 @@
               </div>
               <div class="counter-title">
                 <img src="assets/float-logo.png" alt="" width="16" height="16" />
-                <span>Float Counter · 127.0.0.1:8766</span>
+                <span>Float Counter Desk</span>
               </div>
-              <span class="counter-latency">0.18s local</span>
+              <span class="counter-latency">Instant · Offline OK</span>
             </div>
 
             <div class="counter-tabs" role="tablist" aria-label="Counter views">
               <button class="astryx-button astryx-toggle-button counter-tab active" data-astryx-component="toggle-button" data-variant="ghost" data-size="sm" data-is-pressed="true" data-view="wave" type="button" role="tab" aria-selected="true">
-                <span class="astryx-button-content"><span class="astryx-button-label">Morning wave</span></span>
+                <span class="astryx-button-content"><span class="astryx-button-label">Morning cars</span></span>
               </button>
               <button class="astryx-button astryx-toggle-button counter-tab" data-astryx-component="toggle-button" data-variant="ghost" data-size="sm" data-is-pressed="false" data-view="fastag" type="button" role="tab" aria-selected="false">
-                <span class="astryx-button-content"><span class="astryx-button-label">FASTag match</span></span>
+                <span class="astryx-button-content"><span class="astryx-button-label">Toll &amp; fine finder</span></span>
               </button>
               <button class="astryx-button astryx-toggle-button counter-tab" data-astryx-component="toggle-button" data-variant="ghost" data-size="sm" data-is-pressed="false" data-view="gst" type="button" role="tab" aria-selected="false">
-                <span class="astryx-button-content"><span class="astryx-button-label">Locked GST</span></span>
+                <span class="astryx-button-content"><span class="astryx-button-label">Locked GST bill</span></span>
               </button>
               <button class="astryx-button astryx-toggle-button counter-tab" data-astryx-component="toggle-button" data-variant="ghost" data-size="sm" data-is-pressed="false" data-view="lan" type="button" role="tab" aria-selected="false">
-                <span class="astryx-button-content"><span class="astryx-button-label">LAN &amp; 5-role</span></span>
+                <span class="astryx-button-content"><span class="astryx-button-label">Staff &amp; office PCs</span></span>
               </button>
             </div>
 
             <div class="counter-body" id="counterBody" aria-live="polite"></div>
 
             <div class="counter-statusbar">
-              <span class="cs-left"><span class="cs-dot"></span><span>SQLite WAL · AES-256-GCM · Daily backup OK</span></span>
-              <span class="cs-right">Windows &amp; macOS</span>
+              <span class="cs-left"><span class="cs-dot"></span><span>Saved on this PC · Automatic daily backup</span></span>
+              <span class="cs-right">Windows &amp; Mac</span>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Quiet Centered Specification Strip -->
+    <!-- Simple Summary Strip -->
     <div class="spec-strip">
       <div class="container spec-strip-inner">
-        <span>1-click morning wave dispatch</span>
+        <span>1-click morning car dispatch</span>
         <span class="spec-dot" aria-hidden="true">·</span>
-        <span>1-second FASTag &amp; e-challan matcher</span>
+        <span>1-second FASTag &amp; fine finder</span>
         <span class="spec-dot" aria-hidden="true">·</span>
-        <span>Wash-bay turnaround timers</span>
+        <span>Live car wash timers</span>
         <span class="spec-dot" aria-hidden="true">·</span>
-        <span>SQLite-locked sequential GST invoices</span>
+        <span>Tamper-proof GST bills</span>
         <span class="spec-dot" aria-hidden="true">·</span>
-        <span>Multi-desk Hub LAN &amp; 5-role RBAC</span>
+        <span>Unlimited counter staff</span>
       </div>
     </div>
 
-    <!-- 4 Operational Leaks + Interactive ROI & SaaS-Tax Calculator -->
+    <!-- 4 Problems Solved + Simple Savings Calculator -->
     <section class="products" id="products">
       <div class="container">
         <div class="section-head reveal">
-          <div class="section-label">Operational recovery</div>
-          <h2>The 4 operational leaks Float eliminates on day 1</h2>
+          <div class="section-label">Where money gets lost</div>
+          <h2>4 daily problems Float fixes on day 1</h2>
           <p class="section-sub">
-            High-volume Indian rental desks lose lakhs every year to unbilled tolls, slow wash bays, manual GST re-entry, and recurring per-car SaaS rent.
+            Busy rental desks lose lakhs every year to unpaid tolls, slow car washing, Excel billing mistakes, and monthly cloud software rent.
           </p>
         </div>
 
         <div class="leaks-grid reveal">
           <article class="leak-card">
             <span class="leak-num">01</span>
-            <h3>Morning airport wave bottlenecks</h3>
-            <p>Replace WhatsApp scramble and double-bookings with 1-click conflict-free wave dispatch and live wash-bay clean-to-ready turnaround timers.</p>
-            <span class="tech-spec">Saves 18–35 idle minutes per vehicle handover across morning rushes</span>
+            <h3>Morning airport rush &amp; double bookings</h3>
+            <p>Stop chasing cars on WhatsApp. See which cars are washed and ready, avoid double bookings, and send out the whole morning batch in 1 click.</p>
+            <span class="tech-spec">Saves 18–35 wasted minutes per car handover</span>
           </article>
 
           <article class="leak-card">
             <span class="leak-num">02</span>
-            <h3>Unrecovered FASTag tolls &amp; e-challans</h3>
-            <p>Delayed toll deductions and traffic challans arrive days after deposit refund. Match vehicle plate and timestamp to the exact renter in 1 second.</p>
-            <span class="tech-spec">Instant booking lookup and 1-click ledger posting before settlement closes</span>
+            <h3>Late FASTag tolls &amp; traffic fines</h3>
+            <p>Tolls and traffic fines often show up days after you return a customer's deposit. Enter the car number and time to find the exact customer in 1 second.</p>
+            <span class="tech-spec">Add tolls and fines to the customer's bill in 1 click</span>
           </article>
 
           <article class="leak-card">
             <span class="leak-num">03</span>
-            <h3>GST rounding errors &amp; silent edits</h3>
-            <p>Eliminate Excel formula drift and unapproved back-dated edits with exact Decimal ROUND_HALF_UP GST math and SQLite-locked sequential invoices.</p>
-            <span class="tech-spec">Gap-free FLT/YYYY-YY/NNNNN invoices and CN credit notes ready for your CA</span>
+            <h3>GST math mistakes &amp; secret bill edits</h3>
+            <p>Stop broken Excel formulas and quiet bill changes. Float calculates exact 5% and 18% GST and locks every printed bill so nobody can secretly alter it later.</p>
+            <span class="tech-spec">Clean bill numbers and credit notes ready for your CA</span>
           </article>
 
           <article class="leak-card">
             <span class="leak-num">04</span>
-            <h3>Per-seat cloud rent &amp; internet outages</h3>
-            <p>Stop paying monthly per-car or per-user SaaS taxes that penalize growth. Float runs locally on your counter PC or Hub LAN in &lt; 0.3s—even when broadband drops.</p>
-            <span class="tech-spec">Unlimited counter, wash-bay, and accounting staff · Perpetual company ownership</span>
+            <h3>Monthly per-user fees &amp; internet cuts</h3>
+            <p>Stop paying monthly rent for every new car or staff member. Float runs right on your counter PC or office network—even when office internet goes down.</p>
+            <span class="tech-spec">Add unlimited counter, wash-bay, and billing staff at ₹0 extra</span>
           </article>
         </div>
 
-        <!-- Interactive Fleet Leakage & SaaS-Tax Calculator -->
+        <!-- Simple Savings Calculator -->
         <div class="roi-panel reveal" id="roiCalculator">
           <div class="roi-head">
-            <div class="section-label">Interactive ROI estimator</div>
-            <h3>Fleet leakage &amp; 3-year SaaS-tax calculator</h3>
-            <p>Slide your fleet size and team headcount to estimate monthly rupee recovery and payback period against recurring cloud SaaS fees.</p>
+            <div class="section-label">Savings calculator</div>
+            <h3>See how much your fleet can save</h3>
+            <p>Move the sliders for your car count and staff size to see estimated monthly savings and how fast Float pays for itself.</p>
           </div>
 
           <div class="roi-grid">
             <div class="roi-controls">
               <div class="slider-group">
                 <div class="slider-label-row">
-                  <label for="fleetSlider">Active fleet size</label>
+                  <label for="fleetSlider">Number of cars</label>
                   <strong id="fleetVal">60 cars</strong>
                 </div>
                 <input type="range" id="fleetSlider" min="15" max="500" step="5" value="60" />
@@ -305,7 +345,7 @@
 
               <div class="slider-group">
                 <div class="slider-label-row">
-                  <label for="staffSlider">Counter, wash-bay &amp; finance staff</label>
+                  <label for="staffSlider">Counter, wash &amp; accounts staff</label>
                   <strong id="staffVal">15 staff</strong>
                 </div>
                 <input type="range" id="staffSlider" min="5" max="100" step="1" value="15" />
@@ -313,25 +353,25 @@
               </div>
 
               <p class="roi-assumptions">
-                Conservative baseline: ₹850/car/month average unrecovered FASTag/e-challan leakage, 3.5 idle wash-bay hours/car/month recovered, and ₹1,200/staff + ₹350/car monthly cloud SaaS benchmark.
+                Based on average Indian rental savings: ₹850/car/month in recovered tolls and fines, 3.5 wash-bay hours saved per car, and ₹1,200/staff + ₹350/car saved vs. monthly cloud apps.
               </p>
             </div>
 
             <div class="roi-results">
               <div class="roi-stat">
-                <span>Est. FASTag &amp; e-challan recovery / mo</span>
+                <span>Unpaid tolls &amp; fines recovered / month</span>
                 <strong id="roiTolls">₹51,000</strong>
               </div>
               <div class="roi-stat">
-                <span>Idle wash-bay hours recovered / mo</span>
+                <span>Car wash waiting time saved / month</span>
                 <strong id="roiHours">210 hrs</strong>
               </div>
               <div class="roi-stat">
-                <span>3-year cloud SaaS fees avoided</span>
+                <span>3-year monthly software rent saved</span>
                 <strong id="roiSaas">₹14,04,000</strong>
               </div>
               <div class="roi-stat roi-stat-accent">
-                <span>Recommended edition &amp; est. payback</span>
+                <span>Best plan &amp; payback time</span>
                 <strong id="roiRec">Float Plus (₹9L) · ~10 months</strong>
               </div>
               <a
@@ -342,10 +382,10 @@
                 data-variant="primary"
                 data-size="lg"
                 data-width="full"
-                data-product="Free 48-Hour Leakage Audit + 14-Day Office Pilot (₹0)"
+                data-product="Free 48-Hour Check + 14-Day Office Trial (₹0)"
               >
                 <span class="astryx-button-content">
-                  <span class="astryx-button-label">Verify with a free 48-hour leakage audit</span>
+                  <span class="astryx-button-label">Check your own past sheets for free</span>
                 </span>
               </a>
             </div>
@@ -354,47 +394,47 @@
       </div>
     </section>
 
-    <!-- Zero-Risk Proof Wedge & Guarantee (#pilot) -->
+    <!-- Free Proof & 14-Day Trial (#pilot) -->
     <section class="pilot-section" id="pilot">
       <div class="container">
         <div class="section-head reveal">
-          <div class="section-label">Zero-risk enterprise proof path</div>
-          <h2>Verify exact rupee recovery before spending&nbsp;₹1</h2>
+          <div class="section-label">Try before you pay</div>
+          <h2>See real money saved before spending ₹1</h2>
           <p class="section-sub">
-            Run Float on your own past toll and booking CSVs first, then test it live on your office counter before committing to a license.
+            First, let Float find missed tolls in your old sheets for free. Then run it live at your counter for 14 days before you buy.
           </p>
         </div>
 
         <div class="pilot-grid reveal">
           <article class="pilot-card">
-            <div class="pilot-badge">Step 1 · ₹0 · Zero disruption</div>
-            <h3>Free 48-hour past leakage audit</h3>
+            <div class="pilot-badge">Step 1 · Free · 48 hours</div>
+            <h3>Free check of your last 30 days</h3>
             <p>
-              Send us 30 days of your past booking sheet and FASTag/e-challan CSVs (or run it locally on screen-share with us). Float matches every unbilled toll, challan, and overlap gap in minutes so you see exact rupee recovery before spending ₹1.
+              Share 30 days of your old booking sheet and FASTag/fine list (or run it with us on screen-share). Float spots every missed toll, fine, and booking clash in minutes so you see the exact rupees you missed.
             </p>
             <ul class="pilot-list">
-              <li>Runs on anonymized or local screen-share CSVs—zero cloud upload required</li>
-              <li>Delivered as a line-by-line unbilled toll and challan recovery sheet</li>
+              <li>Works on screen-share—no need to upload private files anywhere</li>
+              <li>You get a clear list of every unpaid toll and fine found</li>
             </ul>
           </article>
 
           <article class="pilot-card pilot-card-highlight">
-            <div class="pilot-badge pilot-badge-good">Step 2 · Live counter proof</div>
-            <h3>14-day guided live counter pilot on your office PC</h3>
+            <div class="pilot-badge pilot-badge-good">Step 2 · Free · 14 days at your desk</div>
+            <h3>14-day live trial on your office PC</h3>
             <p>
-              We set up Float on your counter PC or Branch LAN in under 60 minutes, import your fleet and corporate GST rate cards for you, and train your shift staff live. Only pay for your perpetual license once your counter team verifies faster handovers and 100% exact GST math.
+              We set up Float on your counter PC or office network in under 60 minutes, load your car list and GST rates for you, and train your team live. Pay only after your staff sees faster handovers and clean GST bills.
             </p>
             <ul class="pilot-list">
-              <li>Live Windows/macOS install and existing fleet CSV migration included</li>
-              <li>Zero obligation—walk away cleanly if your counter team isn't faster</li>
+              <li>Full Windows or Mac setup and car list import done for you</li>
+              <li>Zero pressure—walk away free if your team does not love it</li>
             </ul>
           </article>
         </div>
 
         <div class="pilot-capacity reveal">
           <div class="capacity-text">
-            <strong>Direct founder onboarding · Maximum 3 new fleets per month</strong>
-            <span>To guarantee sub-hour setup and live shift support, Prabhjot, Shiva, and Yatharth onboard a maximum of 3 new rental fleets per month.</span>
+            <strong>Direct setup by the founders · Up to 3 new fleets a month</strong>
+            <span>Prabhjot, Shiva, and Yatharth personally set up and train every fleet, so we take at most 3 new fleets each month.</span>
           </div>
           <a
             href="#contact"
@@ -402,10 +442,10 @@
             data-astryx-component="button"
             data-variant="primary"
             data-size="lg"
-            data-product="Free 48-Hour Leakage Audit + 14-Day Office Pilot (₹0)"
+            data-product="Free 48-Hour Check + 14-Day Office Trial (₹0)"
           >
             <span class="astryx-button-content">
-              <span class="astryx-button-label">Reserve a pilot slot</span>
+              <span class="astryx-button-label">Book your free trial slot</span>
               <span class="astryx-button-end" aria-hidden="true">
                 <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M3 8h10M9 4l4 4-4 4"/>
@@ -417,14 +457,14 @@
       </div>
     </section>
 
-    <!-- Float Editions & Pricing (#plans) -->
+    <!-- Float Plans & Pricing (#plans) -->
     <section class="plans" id="plans">
       <div class="container">
         <div class="section-head reveal">
-          <div class="section-label">Float editions &amp; pricing</div>
-          <h2>Five clear editions with perpetual ownership</h2>
+          <div class="section-label">Simple one-time pricing</div>
+          <h2>Five clear plans you buy once and own forever</h2>
           <p class="section-sub">
-            Every Float edition is a <strong>one-time purchase</strong> with <strong>unlimited staff and shift workers</strong>. Pay only the price difference to upgrade anytime as your fleet grows.
+            Every plan is a <strong>one-time payment</strong> with <strong>unlimited staff logins</strong>. When your fleet grows, pay only the price difference to move up.
           </p>
         </div>
 
@@ -441,15 +481,15 @@
                 <strong class="plan-price">₹6 Lakh</strong>
                 <span class="plan-price-note">One-time</span>
               </div>
-              <div class="plan-capacity-bar">Up to 25 cars · 1 hub · Unlimited staff</div>
+              <div class="plan-capacity-bar">Up to 25 cars · 1 office · Unlimited staff</div>
             </div>
-            <div class="plan-diff">Foundation edition: bookings, sequential GST invoices, express wash turnaround, and unlimited shift logins.</div>
+            <div class="plan-diff">Great for smaller desks: bookings, clean GST bills, car wash timer, and unlimited staff logins.</div>
             <ul class="feature-list">
-              <li><strong>Unlimited staff &amp; shift workers</strong><span class="tech-spec">Zero per-seat limits · &lt; 0.3s local counter speed</span></li>
-              <li><strong>Bookings &amp; sequential GST invoices</strong><span class="tech-spec">Exact Decimal 5% / 18% CGST + SGST / IGST invoices and agreements</span></li>
-              <li><strong>Express clean-to-ready wash queue</strong><span class="tech-spec">1-click Wash Done → Mark Ready with live turnaround timer</span></li>
-              <li><strong>Daily shift radar &amp; quick PIN lock</strong><span class="tech-spec">4-digit instant staff lock screen · English &amp; Hindi</span></li>
-              <li><strong>AI operations assistant &amp; daily backups</strong><span class="tech-spec">Bring your own AI key · Automated daily SQLite backups</span></li>
+              <li><strong>Unlimited staff logins</strong><span class="tech-spec">No per-person charges · opens in under 0.3 seconds</span></li>
+              <li><strong>Bookings &amp; clean GST bills</strong><span class="tech-spec">Exact 5% and 18% GST bills and print-ready rental agreements</span></li>
+              <li><strong>Car wash ready list</strong><span class="tech-spec">1-click Wash Done → Ready to Go with live waiting timer</span></li>
+              <li><strong>Daily shift screen &amp; 4-digit PIN lock</strong><span class="tech-spec">Quick staff screen lock · works in English and Hindi</span></li>
+              <li><strong>Built-in AI helper &amp; daily backups</strong><span class="tech-spec">Use your own AI key · automatic daily backup on your PC</span></li>
             </ul>
             <div class="plan-footer">
               <a href="#contact" class="astryx-button" data-astryx-component="button" data-variant="outline" data-size="lg" data-width="full" data-product="Float Basic (₹6 Lakh)">
@@ -460,7 +500,7 @@
 
           <article class="plan-card reveal">
             <div class="plan-top">
-              <span class="plan-tier">02 · High-volume</span>
+              <span class="plan-tier">02 · Busy desk</span>
               <span class="plan-branch-pill">1 counter PC</span>
             </div>
             <h3>Float Plus</h3>
@@ -469,15 +509,15 @@
                 <strong class="plan-price">₹9 Lakh</strong>
                 <span class="plan-price-note">One-time</span>
               </div>
-              <div class="plan-capacity-bar">Up to 60 cars · 1 hub · Unlimited staff</div>
+              <div class="plan-capacity-bar">Up to 60 cars · 1 office · Unlimited staff</div>
             </div>
-            <div class="plan-diff">Upgrade over Basic: +35 cars, 1-click wave dispatch, prorated extensions, 1-second FASTag/e-challan matcher, and 13 Indian languages.</div>
-            <div class="plan-block-title">Everything in Basic (incl. Bookings &amp; Sequential GST Invoices), plus:</div>
+            <div class="plan-diff">Adds +35 cars, 1-click morning dispatch, easy trip extensions, 1-second toll/fine finder, and 13 Indian languages.</div>
+            <div class="plan-block-title">Everything in Basic, plus:</div>
             <ul class="feature-list">
-              <li><strong>1-click peak wave auto-dispatcher</strong><span class="tech-spec">Launch conflict-free morning airport and city waves in 1 click</span></li>
-              <li><strong>1-click mid-trip prorated extensions</strong><span class="tech-spec">Automatic booking overlap checks and exact prorated GST math</span></li>
-              <li><strong>1-second FASTag &amp; e-challan matcher</strong><span class="tech-spec">Plate + timestamp lookup to recover post-trip tolls and challans</span></li>
-              <li><strong>360° handover checklists &amp; KYC blocker</strong><span class="tech-spec">Insurance/PUC expiry alerts, 13 Indian languages &amp; Google Drive backup</span></li>
+              <li><strong>1-click morning batch dispatch</strong><span class="tech-spec">Send out morning airport and city cars fast with zero clashes</span></li>
+              <li><strong>Easy extra hours &amp; trip extensions</strong><span class="tech-spec">Checks next bookings automatically and calculates exact extra GST</span></li>
+              <li><strong>1-second FASTag &amp; fine finder</strong><span class="tech-spec">Type plate + time to find who drove the car and bill them</span></li>
+              <li><strong>Car check sheets &amp; ID reminders</strong><span class="tech-spec">Insurance/PUC alerts, 13 Indian languages &amp; Google Drive backup</span></li>
             </ul>
             <div class="plan-footer">
               <a href="#contact" class="astryx-button" data-astryx-component="button" data-variant="outline" data-size="lg" data-width="full" data-product="Float Plus (₹9 Lakh)">
@@ -487,7 +527,7 @@
           </article>
 
           <article class="plan-card recommended reveal">
-            <div class="recommended-banner">Recommended · Best value for growing fleets</div>
+            <div class="recommended-banner">Most popular · Best for growing agencies</div>
             <div class="plan-top">
               <span class="plan-tier tier-good">03 · Full agency</span>
               <span class="plan-branch-pill">1 counter PC</span>
@@ -498,15 +538,15 @@
                 <strong class="plan-price">₹13.5 Lakh</strong>
                 <span class="plan-price-note">One-time</span>
               </div>
-              <div class="plan-capacity-bar">Up to 150 cars · 1 hub · Unlimited staff</div>
+              <div class="plan-capacity-bar">Up to 150 cars · 1 office · Unlimited staff</div>
             </div>
-            <div class="plan-diff plan-diff-rec">Upgrade over Plus: +90 cars, Corporate B2B credit accounts, RevPAC yield advisories, workshop job cards, all 19 AI workflows, and locked credit notes.</div>
+            <div class="plan-diff plan-diff-rec">Adds +90 cars, corporate monthly billing, profit-per-car reports, workshop repair cards, and all 19 AI tools.</div>
             <div class="plan-block-title">Everything in Plus, plus:</div>
             <ul class="feature-list">
-              <li><strong>Corporate B2B credit accounts</strong><span class="tech-spec">Negotiated corporate rate cards, company GSTIN, and Net-30 ledgers</span></li>
-              <li><strong>Per-car yield advisories (RevPAC / ADR)</strong><span class="tech-spec">Live utilization, Avg Clean-to-Ready TAT, and 30-day profitability</span></li>
-              <li><strong>Workshop job cards &amp; SHA-256 signatures</strong><span class="tech-spec">Service reminders, damage photo canvas, and tamper-proof handovers</span></li>
-              <li><strong>All 19 AI workflows &amp; hardened security</strong><span class="tech-spec">AES-256-GCM vault, CSRF/Host defenses &amp; SQLite-locked credit notes</span></li>
+              <li><strong>Corporate monthly accounts</strong><span class="tech-spec">Custom company rate cards, GSTIN billing, and 30-day credit tracking</span></li>
+              <li><strong>Profit per car reports</strong><span class="tech-spec">See which cars earn the most, idle days, and average wash time</span></li>
+              <li><strong>Workshop job cards &amp; digital sign-off</strong><span class="tech-spec">Service alerts, scratch photos, and signed handover receipts</span></li>
+              <li><strong>All 19 AI tools &amp; locked credit notes</strong><span class="tech-spec">Extra-safe key storage and locked GST credit notes for changes</span></li>
             </ul>
             <div class="plan-footer">
               <a href="#contact" class="astryx-button" data-astryx-component="button" data-variant="success" data-size="lg" data-width="full" data-product="Float Pro (₹13.5 Lakh)">
@@ -520,8 +560,8 @@
         <div class="plans-grid plans-grid-enterprise">
           <article class="plan-card reveal">
             <div class="plan-top">
-              <span class="plan-tier">04 · Multi-desk hub</span>
-              <span class="plan-branch-pill">Multi-desk Hub LAN</span>
+              <span class="plan-tier">04 · Multi-desk office</span>
+              <span class="plan-branch-pill">All office PCs</span>
             </div>
             <h3>Float Enterprise</h3>
             <div class="plan-price-block">
@@ -529,15 +569,15 @@
                 <strong class="plan-price">₹16.5 Lakh</strong>
                 <span class="plan-price-note">One-time</span>
               </div>
-              <div class="plan-capacity-bar">Up to 500 cars · Multi-Desk Hub LAN Server · Unlimited counter PCs per hub</div>
+              <div class="plan-capacity-bar">Up to 500 cars · Connects unlimited counter PCs in 1 office</div>
             </div>
-            <div class="plan-diff">Upgrade over Pro: +350 cars, Multi-Desk Hub LAN Server (unlimited counter PCs per hub), 5-role RBAC, cash drawer reconciliation, chauffeur roster, and DPDP Act 2023 tools.</div>
+            <div class="plan-diff">Adds +350 cars, office network mode for unlimited counter PCs, 5 staff access levels, shift cash tally, and driver duty list.</div>
             <div class="plan-block-title">Everything in Pro, plus:</div>
             <ul class="feature-list">
-              <li><strong>Multi-Desk Hub LAN Server (unlimited PCs per hub)</strong><span class="tech-spec">Fixed-desk IP session binding across office PCs (additional hubs licensed per location)</span></li>
-              <li><strong>5-role employee permissions (RBAC)</strong><span class="tech-spec">Owner, Manager, Desk Agent, Accountant, and Read-Only Auditor</span></li>
-              <li><strong>Cash drawer reconciliation &amp; chauffeur roster</strong><span class="tech-spec">End-of-shift collection variance reports and driver conflict prevention</span></li>
-              <li><strong>India DPDP Act 2023 compliance &amp; bulk importer</strong><span class="tech-spec">Consent tracking, JSON export, safe erasure, GPS/EXIF scrubbing &amp; CSV/XLSX import</span></li>
+              <li><strong>Connect all counter PCs in your office</strong><span class="tech-spec">Every desk works together on your local office Wi-Fi or cable</span></li>
+              <li><strong>5 staff access levels</strong><span class="tech-spec">Separate views for Owner, Manager, Counter Staff, Accountant &amp; Auditor</span></li>
+              <li><strong>Shift cash tally &amp; driver schedule</strong><span class="tech-spec">Match cash drawer totals at shift end and prevent driver double-duty</span></li>
+              <li><strong>Customer privacy tools &amp; Excel import</strong><span class="tech-spec">India data-privacy tools, photo location cleanup &amp; fast Excel import</span></li>
             </ul>
             <div class="plan-footer">
               <a href="#contact" class="astryx-button" data-astryx-component="button" data-variant="outline" data-size="lg" data-width="full" data-product="Float Enterprise (₹16.5 Lakh)">
@@ -548,8 +588,8 @@
 
           <article class="plan-card flagship reveal">
             <div class="plan-top">
-              <span class="plan-tier tier-accent">05 · Flagship unlimited</span>
-              <span class="plan-branch-pill">Hub LAN + MCP/ERP</span>
+              <span class="plan-tier tier-accent">05 · Unlimited fleet</span>
+              <span class="plan-branch-pill">Office PCs + GPS/Tally</span>
             </div>
             <h3>Float Enterprise Max</h3>
             <div class="plan-price-block">
@@ -557,15 +597,15 @@
                 <strong class="plan-price">₹21 Lakh</strong>
                 <span class="plan-price-note">One-time</span>
               </div>
-              <div class="plan-capacity-bar">Unlimited cars · Multi-Desk Hub LAN + MCP/ERP pipelines · Unlimited staff</div>
+              <div class="plan-capacity-bar">Unlimited cars · Office network + GPS/Tally links · Unlimited staff</div>
             </div>
-            <div class="plan-diff plan-diff-flagship">Upgrade over Enterprise: uncapped fleet size, full JSON before/after audit trail, MCP telematics/ERP pipelines, operator-confirmed desktop AI, and 100% offline local AI.</div>
+            <div class="plan-diff plan-diff-flagship">Adds unlimited cars, full before-and-after change history, live GPS and Tally/ERP links, and 100% offline AI.</div>
             <div class="plan-block-title">Everything in Enterprise, plus:</div>
             <ul class="feature-list">
-              <li><strong>Unlimited vehicles &amp; multi-desk Hub LAN</strong><span class="tech-spec">Connect multiple hubs or corporate ERPs cleanly via MCP/ERP integration pipelines</span></li>
-              <li><strong>Full JSON before/after field-level audit trail</strong><span class="tech-spec">Forensic audit log recorded for every sensitive edit, override, and settlement</span></li>
-              <li><strong>MCP telematics, GPS &amp; ERP connectors</strong><span class="tech-spec">Model Context Protocol links for live GPS fleets, Tally/ERP exports, and CRMs</span></li>
-              <li><strong>100% offline local AI &amp; desktop automation</strong><span class="tech-spec">Runs air-gapped with Ollama (16GB+ Apple Silicon / GPU Host recommended)</span></li>
+              <li><strong>No limit on cars &amp; multi-hub links</strong><span class="tech-spec">Connect multiple city offices or company accounting tools cleanly</span></li>
+              <li><strong>Complete before &amp; after change log</strong><span class="tech-spec">See who changed what, when, and why across every record</span></li>
+              <li><strong>Live GPS &amp; Tally/ERP connections</strong><span class="tech-spec">Link fleet GPS trackers, Tally exports, and company CRMs</span></li>
+              <li><strong>100% offline local AI</strong><span class="tech-spec">Run AI with zero internet on a 16GB+ Mac or GPU computer</span></li>
             </ul>
             <div class="plan-footer">
               <a href="#contact" class="astryx-button" data-astryx-component="button" data-variant="primary" data-size="lg" data-width="full" data-product="Float Enterprise Max (₹21 Lakh)">
@@ -578,14 +618,14 @@
         <!-- Side-by-Side Comparison Table -->
         <div class="comparison-block reveal">
           <div class="comparison-head">
-            <h3>Side-by-side edition comparison</h3>
-            <p>Pay only the price difference to upgrade anytime as your fleet expands.</p>
+            <h3>Compare all 5 plans side by side</h3>
+            <p>Start with what fits today and pay only the difference to upgrade later.</p>
           </div>
-          <div class="table-scroll" role="region" aria-label="Float Edition Comparison Table" tabindex="0">
+          <div class="table-scroll" role="region" aria-label="Float Plan Comparison Table" tabindex="0">
             <table class="compare-table">
               <thead>
                 <tr>
-                  <th scope="col">Capability</th>
+                  <th scope="col">Feature</th>
                   <th scope="col">Basic<span class="th-price">₹6 Lakh</span></th>
                   <th scope="col">Plus<span class="th-price">₹9 Lakh</span></th>
                   <th scope="col" class="col-rec">Pro<span class="th-price">₹13.5 Lakh</span></th>
@@ -595,7 +635,7 @@
               </thead>
               <tbody>
                 <tr>
-                  <td><strong>Vehicle capacity</strong></td>
+                  <td><strong>Max cars</strong></td>
                   <td>Up to 25</td>
                   <td>Up to 60</td>
                   <td class="col-rec"><strong>Up to 150</strong></td>
@@ -603,15 +643,15 @@
                   <td><strong>Unlimited</strong></td>
                 </tr>
                 <tr>
-                  <td><strong>Deployment architecture</strong></td>
+                  <td><strong>How it runs</strong></td>
                   <td>1 counter PC</td>
                   <td>1 counter PC</td>
                   <td class="col-rec">1 counter PC</td>
-                  <td>Multi-Desk Hub LAN</td>
-                  <td><strong>Hub LAN + MCP/ERP</strong></td>
+                  <td>All office PCs</td>
+                  <td><strong>Office PCs + GPS/ERP</strong></td>
                 </tr>
                 <tr>
-                  <td><strong>Staff &amp; shift worker logins</strong></td>
+                  <td><strong>Staff accounts</strong></td>
                   <td>Unlimited</td>
                   <td>Unlimited</td>
                   <td class="col-rec">Unlimited</td>
@@ -619,7 +659,7 @@
                   <td>Unlimited</td>
                 </tr>
                 <tr>
-                  <td><strong>Bookings &amp; sequential GST invoices</strong></td>
+                  <td><strong>Bookings &amp; locked GST bills</strong></td>
                   <td><span class="tbl-yes">✓</span></td>
                   <td><span class="tbl-yes">✓</span></td>
                   <td class="col-rec"><span class="tbl-yes">✓</span></td>
@@ -627,7 +667,7 @@
                   <td><span class="tbl-yes">✓</span></td>
                 </tr>
                 <tr>
-                  <td><strong>Wash-bay TAT queue &amp; quick PIN lock</strong></td>
+                  <td><strong>Car wash timer &amp; 4-digit PIN lock</strong></td>
                   <td><span class="tbl-yes">✓</span></td>
                   <td><span class="tbl-yes">✓</span></td>
                   <td class="col-rec"><span class="tbl-yes">✓</span></td>
@@ -635,7 +675,7 @@
                   <td><span class="tbl-yes">✓</span></td>
                 </tr>
                 <tr>
-                  <td><strong>1-click wave dispatch, extensions &amp; FASTag matcher</strong></td>
+                  <td><strong>1-click morning dispatch &amp; toll/fine finder</strong></td>
                   <td><span class="tbl-no">—</span></td>
                   <td><span class="tbl-yes">✓</span></td>
                   <td class="col-rec"><span class="tbl-yes">✓</span></td>
@@ -643,7 +683,7 @@
                   <td><span class="tbl-yes">✓</span></td>
                 </tr>
                 <tr>
-                  <td><strong>Corporate B2B accounts, RevPAC &amp; workshop cards</strong></td>
+                  <td><strong>Corporate monthly billing, car profit &amp; workshop</strong></td>
                   <td><span class="tbl-no">—</span></td>
                   <td><span class="tbl-no">—</span></td>
                   <td class="col-rec"><span class="tbl-yes">✓</span></td>
@@ -651,7 +691,7 @@
                   <td><span class="tbl-yes">✓</span></td>
                 </tr>
                 <tr>
-                  <td><strong>Multi-Desk Hub LAN, 5-role RBAC, cash recon &amp; DPDP</strong></td>
+                  <td><strong>All office PCs, 5 staff roles &amp; cash tally</strong></td>
                   <td><span class="tbl-no">—</span></td>
                   <td><span class="tbl-no">—</span></td>
                   <td class="col-rec"><span class="tbl-no">—</span></td>
@@ -659,7 +699,7 @@
                   <td><span class="tbl-yes">✓</span></td>
                 </tr>
                 <tr>
-                  <td><strong>Full JSON audit trail, MCP telematics/ERP &amp; offline AI</strong></td>
+                  <td><strong>Full change history, GPS/Tally links &amp; offline AI</strong></td>
                   <td><span class="tbl-no">—</span></td>
                   <td><span class="tbl-no">—</span></td>
                   <td class="col-rec"><span class="tbl-no">—</span></td>
@@ -671,39 +711,39 @@
           </div>
         </div>
 
-        <!-- Transparent Post-Year-1 AMC Banner -->
+        <!-- Clear Support & Updates Promise -->
         <div class="amc-banner reveal">
           <div class="amc-col">
             <span class="amc-tag">Year 1 included · ₹0 extra</span>
-            <h4>12 months of updates &amp; founder support</h4>
-            <p>Year 1 includes 12 months of updates, GST/DPDP statutory rule updates, and founder support at ₹0 extra.</p>
+            <h4>12 months of free updates &amp; founder help</h4>
+            <p>Your first year includes all software updates, Indian GST/privacy rule updates, and direct founder support at ₹0 extra.</p>
           </div>
           <div class="amc-col amc-col-border">
             <span class="amc-tag amc-tag-good">Year 2+ optional · Flat 15% / year</span>
-            <h4>Annual Statutory &amp; Maintenance Coverage (AMC)</h4>
-            <p>From Year 2 onward, optional <strong>Annual Statutory &amp; Maintenance Coverage (AMC)</strong> is a flat <strong>15% per year</strong> for ongoing GST/DPDP compliance updates, new AI workflows, and priority shift support. Choose not to renew? Your installed Float software keeps running locally forever with <strong>zero lockouts</strong>.</p>
+            <h4>Optional yearly updates — never forced</h4>
+            <p>From Year 2 onward, optional yearly care is a flat <strong>15% per year</strong> for new tax rule updates, new AI tools, and priority shift help. Don't want to renew? Your Float app keeps working on your PC forever with <strong>zero lockouts</strong>.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- How It Works (#workflow) -->
+    <!-- Easy 3-Step Setup (#workflow) -->
     <section class="workflow" id="workflow">
       <div class="container">
         <div class="section-head reveal">
-          <div class="section-label">How it fits your office</div>
-          <h2>From download to live counter dispatch in under 60 minutes</h2>
-          <p class="section-sub">Select any step below to see real Float screens and how quickly your counter team goes live.</p>
+          <div class="section-label">Easy 60-minute setup</div>
+          <h2>From install to live counter work in under an hour</h2>
+          <p class="section-sub">Click any step below to see real Float screens and how fast your team gets started.</p>
         </div>
 
         <div class="workflow-grid reveal">
-          <div class="workflow-steps" role="tablist" aria-label="Deployment steps">
+          <div class="workflow-steps" role="tablist" aria-label="Setup steps">
             <button type="button" class="astryx-button wf-step active" data-astryx-component="button" data-variant="secondary" data-align="start" data-width="full" data-step="0" role="tab" aria-selected="true">
               <span class="wf-node">01</span>
               <span class="wf-text">
                 <span class="wf-meta">Step 1 · 15–30 minutes</span>
-                <strong>Install on your counter PC or Hub LAN</strong>
-                <span>Runs natively on Windows or macOS with zero external databases or cloud setup.</span>
+                <strong>Put Float on your counter PC</strong>
+                <span>Opens right away on Windows or Mac with no extra apps or cloud servers needed.</span>
               </span>
             </button>
 
@@ -711,8 +751,8 @@
               <span class="wf-node">02</span>
               <span class="wf-text">
                 <span class="wf-meta">Step 2 · ~5 minutes</span>
-                <strong>Import fleet &amp; corporate GST rate cards</strong>
-                <span>Bring your existing vehicle list and connect your own AI key (encrypted locally with AES-256-GCM).</span>
+                <strong>Load your car list &amp; GST rates</strong>
+                <span>Import your cars from Excel and add your own AI key (kept locked on your PC).</span>
               </span>
             </button>
 
@@ -720,8 +760,8 @@
               <span class="wf-node">03</span>
               <span class="wf-text">
                 <span class="wf-meta">Step 3 · Ready on day 1</span>
-                <strong>Dispatch waves, match tolls &amp; lock GST</strong>
-                <span>Desk staff handle handovers, wash queues, and extensions while owners keep full audit visibility.</span>
+                <strong>Send cars, catch tolls &amp; print GST bills</strong>
+                <span>Staff handle bookings, wash timers, and bills while owners see every change.</span>
               </span>
             </button>
           </div>
@@ -734,7 +774,7 @@
                   <span class="tl"></span>
                   <span class="tl"></span>
                 </div>
-                <span class="preview-address" id="previewTitle">Float · Local Counter Workspace (Step 1 of 3)</span>
+                <span class="preview-address" id="previewTitle">Float · Counter Screen (Step 1 of 3)</span>
               </div>
               <div class="preview-content" id="previewContent"></div>
             </div>
@@ -743,14 +783,14 @@
       </div>
     </section>
 
-    <!-- NovaForge Personal & Voice Labs (#labs) -->
+    <!-- NovaForge Labs: Float Personal (Beta · Not for sale) & Float Hear (#labs) -->
     <section class="labs" id="labs">
       <div class="container">
         <div class="section-head reveal">
-          <div class="section-label">NovaForge internal labs &amp; personal tools</div>
-          <h2>Personal desk instruments built alongside Float</h2>
+          <div class="section-label">NovaForge labs</div>
+          <h2>Personal &amp; voice tools we build in-house</h2>
           <p class="section-sub">
-            Alongside our commercial car-rental counter editions, we engineer private local-first workspaces and low-latency voice agents for everyday individual work.
+            Beside our car-rental software, we also build simple private tools for everyday personal work and voice typing on your computer.
           </p>
         </div>
 
@@ -758,7 +798,7 @@
           <!-- Project 1: Float Personal (Beta · Not for sale) -->
           <article class="lab-card reveal">
             <div class="lab-card-top">
-              <span class="lab-kicker">Personal AI &amp; spreadsheet workspace</span>
+              <span class="lab-kicker">Personal AI &amp; sheet app</span>
               <span class="not-for-sale-pill">Not for sale</span>
             </div>
 
@@ -768,7 +808,7 @@
             </div>
 
             <p class="lab-desc">
-              Our private, single-user AI assistant and built-in 1,000 × 1,000 spreadsheet studio for Windows and macOS. Draft reports, inspect local PDFs and workbooks, and run deterministic formulas in under 0.3 seconds—kept 100% on your personal machine and <strong>not for sale</strong>.
+              Our private personal AI helper and built-in 1,000 × 1,000 spreadsheet app for Windows and Mac. Write notes, read PDFs and Excel files, and run formulas in under half a second—kept 100% on your own PC and <strong>not for sale</strong>.
             </p>
 
             <div class="lab-tabs" role="tablist" aria-label="Float Personal views">
@@ -784,7 +824,7 @@
                 role="tab"
                 aria-selected="true"
               >
-                <span class="astryx-button-content"><span class="astryx-button-label">Workspace &amp; vault</span></span>
+                <span class="astryx-button-content"><span class="astryx-button-label">AI &amp; private files</span></span>
               </button>
               <button
                 type="button"
@@ -805,16 +845,16 @@
             <div class="lab-panel" id="personal-workspace">
               <ul class="feature-list lab-features">
                 <li>
-                  <strong>Zero-dependency local runtime (&lt; 0.3s launch)</strong>
-                  <span class="tech-spec">Runs directly on Windows &amp; macOS with crash-safe SQLite WAL history and daily snapshots</span>
+                  <strong>Opens in 0.3 seconds on Windows &amp; Mac</strong>
+                  <span class="tech-spec">Needs no extra setup and saves your chats and daily backups right on your PC</span>
                 </li>
                 <li>
-                  <strong>Bring your own AI key or offline local models</strong>
-                  <span class="tech-spec">Connect OpenAI, Anthropic, Gemini, or local Ollama with AES-256-GCM device-bound key sealing</span>
+                  <strong>Use your own AI key or offline AI</strong>
+                  <span class="tech-spec">Works with OpenAI, Claude, Gemini, or free offline Ollama models with locked key storage</span>
                 </li>
                 <li>
-                  <strong>Local document &amp; file library</strong>
-                  <span class="tech-spec">Analyze PDFs, CSVs, DOCX, and XLSX workbooks locally without uploading private files to third-party SaaS</span>
+                  <strong>Read PDFs, Word &amp; Excel files privately</strong>
+                  <span class="tech-spec">Ask questions about your own files without uploading them to random websites</span>
                 </li>
               </ul>
             </div>
@@ -822,23 +862,23 @@
             <div class="lab-panel" id="personal-sheets" hidden>
               <ul class="feature-list lab-features">
                 <li>
-                  <strong>Virtualised 1,000 × 1,000 spreadsheet grid</strong>
-                  <span class="tech-spec">One million smooth cells with 85+ zero-eval AST formulas (XLOOKUP, SUMIFS, INDEX/MATCH, NPV, IRR, EMI)</span>
+                  <strong>Fast 1,000 × 1,000 spreadsheet grid</strong>
+                  <span class="tech-spec">One million smooth cells with 85+ built-in Excel-style math and lookup formulas</span>
                 </li>
                 <li>
-                  <strong>Diff-previewed AI cell updates</strong>
-                  <span class="tech-spec">Review exact formula and value changes before applying edits, with full undo and change history</span>
+                  <strong>Check AI edits before saving</strong>
+                  <span class="tech-spec">See every cell change clearly before you accept it, with easy 1-click undo</span>
                 </li>
                 <li>
-                  <strong>Native Excel, PDF &amp; CSV exports</strong>
-                  <span class="tech-spec">Import and export clean .xlsx workbooks, formatted PDF briefs, and SVG charts offline</span>
+                  <strong>Save as Excel, PDF, or CSV</strong>
+                  <span class="tech-spec">Open and save clean .xlsx sheets, PDF reports, and simple charts offline</span>
                 </li>
               </ul>
             </div>
 
             <div class="lab-footer">
               <div class="lab-status-note">
-                <strong>Availability:</strong> Internal beta · Not for sale
+                <strong>Status:</strong> Beta · Not for sale
               </div>
               <button
                 type="button"
@@ -856,10 +896,10 @@
             </div>
           </article>
 
-          <!-- Project 2: Float Hear (Voice Dictation + Fast & Stable Desktop Agent) -->
+          <!-- Project 2: Float Hear (Voice Typing + Fast & Stable AI Agent) -->
           <article class="lab-card lab-card-hear reveal">
             <div class="lab-card-top">
-              <span class="lab-kicker lab-kicker-good">Voice dictation &amp; desktop agent</span>
+              <span class="lab-kicker lab-kicker-good">Voice typing &amp; talkable PC helper</span>
               <span class="lab-hotkey-pill">Right Alt · Right Ctrl</span>
             </div>
 
@@ -869,7 +909,7 @@
             </div>
 
             <p class="lab-desc">
-              A sub-second voice hearing, cursor typing, and agentic desktop engine (~45&nbsp;MB RAM). Hold <code>Right Alt</code> to dictate clean English, Hindi, or Hinglish into any app without stealing focus—or hold <code>Right Ctrl</code> for fast, verified desktop actions.
+              A fast, steady voice typing and PC action helper. Hold <code>Right Alt</code> to speak and type clean English, Hindi, or Hinglish into any app in 1 second—or hold <code>Right Ctrl</code> to tell your PC what task to get done.
             </p>
 
             <div class="lab-tabs" role="tablist" aria-label="Float Hear capabilities">
@@ -885,7 +925,7 @@
                 role="tab"
                 aria-selected="true"
               >
-                <span class="astryx-button-content"><span class="astryx-button-label">Hearing &amp; cursor typing</span></span>
+                <span class="astryx-button-content"><span class="astryx-button-label">Hear &amp; type anywhere</span></span>
               </button>
               <button
                 type="button"
@@ -899,23 +939,23 @@
                 role="tab"
                 aria-selected="false"
               >
-                <span class="astryx-button-content"><span class="astryx-button-label">Fast &amp; stable agentic work</span></span>
+                <span class="astryx-button-content"><span class="astryx-button-label">Fast &amp; steady tasks</span></span>
               </button>
             </div>
 
             <div class="lab-panel" id="hear-dictation">
               <ul class="feature-list lab-features">
                 <li>
-                  <strong>&lt; 1.2s push-to-talk hearing &amp; smart cleanup</strong>
-                  <span class="tech-spec">16 kHz WASAPI in-memory capture + VAD trims silence, removes spoken fillers, and resolves mid-sentence self-corrections</span>
+                  <strong>Types what you say in ~1 second</strong>
+                  <span class="tech-spec">Removes "um", "uh", and spoken mistakes ("5 pm, wait make it 6 pm" becomes "6 pm")</span>
                 </li>
                 <li>
-                  <strong>English, Hindi &amp; Roman Hinglish context adaptation</strong>
-                  <span class="tech-spec">Detects active IDE, email, chat, or document window in &lt; 0.2ms to preserve camelCase/snake_case code and natural tone</span>
+                  <strong>Understands English, Hindi &amp; Hinglish</strong>
+                  <span class="tech-spec">Knows if you are inside code, email, WhatsApp, or notes so formatting stays natural</span>
                 </li>
                 <li>
-                  <strong>No-focus-steal HUD &amp; Win+V stealth paste</strong>
-                  <span class="tech-spec">Win32 WS_EX_NOACTIVATE 60 FPS waveform pill + SendInput paste that restores your clipboard without cluttering Win+V history</span>
+                  <strong>Never steals your cursor or messes up copy-paste</strong>
+                  <span class="tech-spec">Tiny floating voice bar types right where you are working and keeps your clipboard clean</span>
                 </li>
               </ul>
             </div>
@@ -923,23 +963,23 @@
             <div class="lab-panel" id="hear-agent" hidden>
               <ul class="feature-list lab-features">
                 <li>
-                  <strong>&lt; 50ms deterministic fast-paths &amp; parallel tool runner</strong>
-                  <span class="tech-spec">0-token instant execution for custom multi-app routines, window snapping, browser hotkeys, brightness, media, and timers</span>
+                  <strong>Instant voice shortcuts &amp; multi-app routines</strong>
+                  <span class="tech-spec">Open apps, switch or snap windows, change brightness/volume, and set timers in a blink</span>
                 </li>
                 <li>
-                  <strong>Screen OCR, selection rewrite &amp; native PDF/file tools</strong>
-                  <span class="tech-spec">Reads active windows via local Windows OCR, rewrites highlighted text in place, extracts PDFs natively, and runs safe Python/PowerShell</span>
+                  <strong>Reads your screen, fixes text &amp; opens PDFs</strong>
+                  <span class="tech-spec">Ask about an error on your screen, rewrite selected text in place, or read Desktop PDFs</span>
                 </li>
                 <li>
-                  <strong>Anti-hallucination guardrails &amp; self-healing stability</strong>
-                  <span class="tech-spec">Programmatic tool-verification check, automatic rate-limit failover, persistent memory, spoken neural replies &amp; Esc-dismissible Task Briefing card</span>
+                  <strong>Double-checks its work &amp; speaks back</strong>
+                  <span class="tech-spec">Confirms every action actually ran, remembers your preferences, and shows a clean summary card</span>
                 </li>
               </ul>
             </div>
 
             <div class="lab-footer">
               <div class="lab-status-note">
-                <strong>Runtime:</strong> Win32 HUD · &lt; 50ms fast-paths
+                <strong>Speed:</strong> ~1s voice typing · steady PC actions
               </div>
               <a
                 href="#contact"
@@ -962,10 +1002,10 @@
     <section class="founders" id="founders">
       <div class="container">
         <div class="section-head reveal">
-          <div class="section-label">The people behind NovaForge</div>
-          <h2>Made, engineered, and supported by three founders</h2>
+          <div class="section-label">Who builds NovaForge</div>
+          <h2>Built and supported directly by three founders</h2>
           <p class="section-sub">
-            When your fleet chooses Float, you never get passed to an anonymous call center. You work directly with the three builders who wrote the software.
+            When you use Float, you never wait on a call center. You talk straight to the three people who built the software.
           </p>
         </div>
 
@@ -973,31 +1013,31 @@
           <article class="founder-card reveal">
             <div class="founder-top">
               <div class="founder-avatar">P</div>
-              <span class="founder-tag">Leadership &amp; strategy</span>
+              <span class="founder-tag">Business &amp; rollouts</span>
             </div>
             <h3>Prabhjot</h3>
             <div class="founder-role">Co-Founder &amp; CEO</div>
-            <p>Directs company vision, fleet partnerships, and counter rollout strategy—helping rental operators eliminate toll leakage and per-seat cloud costs.</p>
+            <p>Leads company direction, fleet partnerships, and counter setup—helping rental owners stop toll losses and cut monthly software bills.</p>
           </article>
 
           <article class="founder-card reveal">
             <div class="founder-top">
               <div class="founder-avatar">S</div>
-              <span class="founder-tag">Core systems &amp; AI</span>
+              <span class="founder-tag">Core engine &amp; AI</span>
             </div>
             <h3>Shiva</h3>
             <div class="founder-role">Co-Founder &amp; Lead Developer</div>
-            <p>Engineers Float's local-first runtime, SQLite WAL storage, AES-256-GCM encryption, exact Decimal GST billing, and Multi-Desk Hub LAN architecture.</p>
+            <p>Builds Float's fast offline engine, safe local data storage, exact GST billing math, office PC networking, and voice AI tools.</p>
           </article>
 
           <article class="founder-card reveal">
             <div class="founder-top">
               <div class="founder-avatar">Y</div>
-              <span class="founder-tag">Product &amp; craft</span>
+              <span class="founder-tag">Product &amp; design</span>
             </div>
             <h3>Yatharth</h3>
             <div class="founder-role">Co-Founder &amp; Head of Product &amp; Design</div>
-            <p>Shapes every counter screen, wash-bay queue, and GST workflow so front-desk teams and accountants work faster with zero clutter.</p>
+            <p>Designs every counter screen, car wash list, and billing flow so desk staff and accountants can use Float easily on day one.</p>
           </article>
         </div>
       </div>
@@ -1008,77 +1048,77 @@
       <div class="container narrow">
         <div class="section-head reveal">
           <div class="section-label">Common questions</div>
-          <h2>Straight answers before your pilot</h2>
-          <p class="section-sub">Clear details on our 14-day office pilot, one-time licensing, flat 15% Year-2+ AMC, Hub LAN scope, and tax documentation.</p>
+          <h2>Simple answers before you start</h2>
+          <p class="section-sub">Everything you need to know about our free trial, one-time payment, optional Year-2 updates, office PCs, and GST invoice paperwork.</p>
         </div>
 
         <div class="faq-list reveal">
           <div class="faq-item">
             <button type="button" class="astryx-button faq-q" data-astryx-component="button" data-variant="ghost" data-align="between" data-width="full" aria-expanded="false">
-              <span>How does the Free 48-Hour Leakage Audit &amp; 14-Day Office Pilot work?</span>
+              <span>How does the free 48-hour check and 14-day office trial work?</span>
               <span class="faq-plus" aria-hidden="true"></span>
             </button>
             <div class="faq-a">
-              <p>First, send us 30 days of past booking and FASTag/e-challan CSVs (or run it on screen-share) to see exact unrecovered rupees in 48 hours. Next, we install Float on your counter PC or Hub LAN in under 60 minutes for a live 14-day pilot. You only pay for your perpetual license once your counter team verifies the speed and GST accuracy.</p>
+              <p>First, show us 30 days of your old booking sheet and FASTag/fine list (even on screen-share) and we will show you every missed rupee within 48 hours. Next, we install Float on your counter PC in under 60 minutes for a free 14-day live trial. You pay only after your team is happy with the speed and GST bills.</p>
             </div>
           </div>
 
           <div class="faq-item">
             <button type="button" class="astryx-button faq-q" data-astryx-component="button" data-variant="ghost" data-align="between" data-width="full" aria-expanded="false">
-              <span>What does post-Year-1 AMC cost, and what happens if we don't renew?</span>
+              <span>What do updates cost after Year 1, and what if we skip them?</span>
               <span class="faq-plus" aria-hidden="true"></span>
             </button>
             <div class="faq-a">
-              <p>Year 1 includes 12 months of updates, GST/DPDP statutory rule updates, and founder support at ₹0 extra. From Year 2 onward, optional <strong>Annual Statutory &amp; Maintenance Coverage (AMC)</strong> is a flat <strong>15% per year</strong>. If you choose not to renew, your installed Float software keeps running locally forever with <strong>zero lockouts</strong>.</p>
+              <p>Year 1 includes 12 months of free updates, GST rule updates, and founder help. From Year 2 onward, optional yearly support and updates cost a flat <strong>15% per year</strong>. If you choose not to pay it, your Float software keeps running on your PC forever—we never lock you out.</p>
             </div>
           </div>
 
           <div class="faq-item">
             <button type="button" class="astryx-button faq-q" data-astryx-component="button" data-variant="ghost" data-align="between" data-width="full" aria-expanded="false">
-              <span>How does the Multi-Desk Hub LAN Server work for multi-hub agencies?</span>
+              <span>How do multiple counter computers work in one or more offices?</span>
               <span class="faq-plus" aria-hidden="true"></span>
             </button>
             <div class="faq-a">
-              <p>Float Enterprise and Enterprise Max run a <strong>Multi-Desk Hub LAN Server</strong> supporting unlimited counter PCs on your office network with fixed-desk IP session binding and &lt; 0.3s response times. Agencies operating multiple physical city hubs can license additional hubs or connect hubs into corporate Tally/ERP pipelines via Enterprise Max MCP connectors.</p>
+              <p>Float Enterprise and Enterprise Max let unlimited counter PCs in the same office share one fast local server over office Wi-Fi or cable. If you run separate offices in different cities, you can add a license per office or link them to Tally/ERP with Enterprise Max.</p>
             </div>
           </div>
 
           <div class="faq-item">
             <button type="button" class="astryx-button faq-q" data-astryx-component="button" data-variant="ghost" data-align="between" data-width="full" aria-expanded="false">
-              <span>What hardware is needed for 100% Offline Local AI on Enterprise Max?</span>
+              <span>What kind of computer do we need to run Float?</span>
               <span class="faq-plus" aria-hidden="true"></span>
             </button>
             <div class="faq-a">
-              <p>Float's core counter, billing, and FASTag operations run effortlessly on any standard Windows or macOS office PC. If you choose to run 100% air-gapped Offline Local AI (Ollama) on Enterprise Max, we recommend a <strong>16GB+ Apple Silicon Mac or dedicated GPU host</strong>.</p>
+              <p>Any normal Windows PC or Mac at your rental desk runs Float smoothly. Only if you want 100% offline AI (with zero internet) on Enterprise Max do we suggest a <strong>16GB+ Apple Silicon Mac or a PC with a graphics card</strong>.</p>
             </div>
           </div>
 
           <div class="faq-item">
             <button type="button" class="astryx-button faq-q" data-astryx-component="button" data-variant="ghost" data-align="between" data-width="full" aria-expanded="false">
-              <span>Do we receive commercial licensing &amp; tax documentation for procurement?</span>
+              <span>Do we get proper license and tax papers for our company accounts?</span>
               <span class="faq-plus" aria-hidden="true"></span>
             </button>
             <div class="faq-a">
-              <p>Yes. Every company purchase includes a <strong>Commercial Software License Certificate &amp; Tax Documentation</strong> upon licensing, along with Direct Founder Support from India (IST Shift Hours).</p>
+              <p>Yes. Every purchase comes with an official <strong>Company Software License Certificate and tax invoice paperwork</strong>, plus direct support from the founders during Indian shift hours.</p>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- B2B Procurement & Contact Flow -->
+    <!-- Contact Section (#contact) -->
     <section class="contact" id="contact">
       <div class="container">
         <div class="contact-box reveal">
           <div class="contact-info">
-            <div class="section-label">Start your pilot or request quote</div>
-            <h2>Book your free leakage audit directly with the founders</h2>
+            <div class="section-label">Talk to the founders</div>
+            <h2>Book your free trial or ask for a quote</h2>
             <p>
-              Fill in your hub details to generate a pre-filled email, share your pilot brief on WhatsApp, or copy it straight to your clipboard.
+              Enter your fleet details to open a ready-to-send email, send it on WhatsApp, or copy the message in 1 click.
             </p>
 
             <div class="email-card">
-              <span class="email-label">Direct founder desk · India (IST shift hours)</span>
+              <span class="email-label">Direct founder desk · India shift hours</span>
               <a href="mailto:info.novaforge.2026@gmail.com" class="email-link">info.novaforge.2026@gmail.com</a>
               <div class="email-actions">
                 <button
@@ -1100,7 +1140,7 @@
                   </span>
                 </button>
                 <a
-                  href="mailto:info.novaforge.2026@gmail.com?subject=Float%2014-Day%20Pilot%20%26%20Leakage%20Audit"
+                  href="mailto:info.novaforge.2026@gmail.com?subject=Float%2014-Day%20Free%20Trial"
                   class="astryx-button"
                   data-astryx-component="button"
                   data-variant="ghost"
@@ -1124,38 +1164,38 @@
             <div class="form-row">
               <label for="productSelect">What would you like to start with?</label>
               <select id="productSelect" name="productSelect">
-                <option value="Free 48-Hour Leakage Audit + 14-Day Office Pilot (₹0)" selected>Start with a Free 48-Hour Leakage Audit / 14-Day Office Pilot (₹0)</option>
+                <option value="Free 48-Hour Check + 14-Day Office Trial (₹0)" selected>Free 48-Hour Check + 14-Day Office Trial (₹0)</option>
                 <option value="Float Basic (₹6 Lakh)">Float Basic — ₹6 Lakh (Up to 25 cars)</option>
                 <option value="Float Plus (₹9 Lakh)">Float Plus — ₹9 Lakh (Up to 60 cars)</option>
-                <option value="Float Pro (₹13.5 Lakh)">Float Pro — ₹13.5 Lakh (Up to 150 cars · Recommended)</option>
-                <option value="Float Enterprise (₹16.5 Lakh)">Float Enterprise — ₹16.5 Lakh (Up to 500 cars · Hub LAN)</option>
-                <option value="Float Enterprise Max (₹21 Lakh)">Float Enterprise Max — ₹21 Lakh (Unlimited · MCP &amp; offline AI)</option>
+                <option value="Float Pro (₹13.5 Lakh)">Float Pro — ₹13.5 Lakh (Up to 150 cars · Most popular)</option>
+                <option value="Float Enterprise (₹16.5 Lakh)">Float Enterprise — ₹16.5 Lakh (Up to 500 cars · All office PCs)</option>
+                <option value="Float Enterprise Max (₹21 Lakh)">Float Enterprise Max — ₹21 Lakh (Unlimited cars · GPS &amp; offline AI)</option>
               </select>
             </div>
 
             <div class="form-grid-2">
               <div class="form-row">
-                <label for="companyName">Company / agency name</label>
-                <input type="text" id="companyName" name="companyName" placeholder="Apex Fleet Rentals Pvt Ltd" required />
+                <label for="companyName">Company name</label>
+                <input type="text" id="companyName" name="companyName" placeholder="Apex Car Rentals" required />
               </div>
               <div class="form-row">
-                <label for="cityHub">City / airport hub</label>
-                <input type="text" id="cityHub" name="cityHub" placeholder="Mumbai (BOM) / Delhi NCR" required />
+                <label for="cityHub">City / airport</label>
+                <input type="text" id="cityHub" name="cityHub" placeholder="Mumbai / Delhi NCR" required />
               </div>
             </div>
 
             <div class="form-grid-2">
               <div class="form-row">
-                <label for="fleetSize">Fleet size (cars)</label>
+                <label for="fleetSize">How many cars?</label>
                 <input type="number" id="fleetSize" name="fleetSize" min="1" placeholder="65" required />
               </div>
               <div class="form-row">
-                <label for="currentSetup">Current setup</label>
+                <label for="currentSetup">How do you work today?</label>
                 <select id="currentSetup" name="currentSetup">
                   <option value="Tally + Excel">Tally + Excel</option>
                   <option value="WhatsApp + Notebooks">WhatsApp + Notebooks</option>
-                  <option value="Other Cloud SaaS">Other Cloud SaaS</option>
-                  <option value="Custom / Mixed">Custom / Mixed</option>
+                  <option value="Other Cloud App">Other Monthly Cloud App</option>
+                  <option value="Custom / Mixed">Other / Mixed</option>
                 </select>
               </div>
             </div>
@@ -1166,8 +1206,8 @@
             </div>
 
             <div class="form-row">
-              <label for="messageInput">Notes (optional)</label>
-              <textarea id="messageInput" name="messageInput" rows="2" placeholder="Windows or macOS counter PCs, airport wave volume, or questions"></textarea>
+              <label for="messageInput">Anything else? (optional)</label>
+              <textarea id="messageInput" name="messageInput" rows="2" placeholder="Windows or Mac PCs, best time to call, or any question"></textarea>
             </div>
 
             <div class="form-actions-b2b">
@@ -1185,7 +1225,7 @@
                       <path d="m2.5 4.5 5.5 4 5.5-4"/>
                     </svg>
                   </span>
-                  <span class="astryx-button-label">Send pre-filled email</span>
+                  <span class="astryx-button-label">Send email</span>
                 </span>
               </button>
               <button
@@ -1202,7 +1242,7 @@
                       <path d="M3 4.25A1.75 1.75 0 0 1 4.75 2.5h6.5A1.75 1.75 0 0 1 13 4.25v5.25a1.75 1.75 0 0 1-1.75 1.75H6.5L3.25 13.5v-2.25A1.75 1.75 0 0 1 3 10Z"/>
                     </svg>
                   </span>
-                  <span class="astryx-button-label">Share via WhatsApp</span>
+                  <span class="astryx-button-label">Send on WhatsApp</span>
                 </span>
               </button>
               <button
@@ -1220,7 +1260,7 @@
                       <path d="M10.5 5.5V3.75A1.25 1.25 0 0 0 9.25 2.5h-5.5A1.25 1.25 0 0 0 2.5 3.75v5.5a1.25 1.25 0 0 0 1.25 1.25H5.5"/>
                     </svg>
                   </span>
-                  <span class="astryx-button-label">Copy pilot brief</span>
+                  <span class="astryx-button-label">Copy message</span>
                 </span>
               </button>
             </div>
@@ -1234,7 +1274,7 @@
     <div class="container footer-inner">
       <div class="footer-brand">
         <strong>Float by NovaForge</strong>
-        <span>Commercial Software License Certificate &amp; Tax Documentation provided upon licensing · Direct Founder Support from India (IST Shift Hours).</span>
+        <span>Official software license &amp; tax invoice included · Direct support from India.</span>
       </div>
       <div class="footer-links">
         <a href="mailto:info.novaforge.2026@gmail.com">info.novaforge.2026@gmail.com</a>

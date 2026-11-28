@@ -1,49 +1,83 @@
+/* NovaForge — Clean Unslopped UI · Cool Slate & Cobalt · Light & Dark Mode */
+
 :root {
-  /* Warm Archival Atelier Ramp */
-  --bg: #F7F4EE;
+  /* Light Mode: Cool Architectural Slate & Paper */
+  --bg: #F5F7FA;
   --surface: #FFFFFF;
-  --surface-raised: #EFECE5;
-  --surface-tint: #FBF9F5;
+  --surface-raised: #EBF0F6;
+  --surface-tint: #F8FAFC;
 
-  /* Three Text Roles */
-  --ink: #1A1714;
-  --secondary: #57514A;
-  --muted: #787168;
+  /* Text Hierarchy (3 clear levels) */
+  --ink: #0F172A;
+  --secondary: #475569;
+  --muted: #64748B;
 
-  /* Hairlines (ink at 10% and 18%) */
-  --line: rgba(26, 23, 20, 0.10);
-  --line-strong: rgba(26, 23, 20, 0.18);
+  /* Borders */
+  --line: rgba(15, 23, 42, 0.09);
+  --line-strong: rgba(15, 23, 42, 0.18);
 
-  /* One Primary Accent (Terracotta — > 4.8:1 contrast with white) */
-  --accent: #B34F2E;
-  --accent-hover: #943E21;
-  --accent-soft: rgba(179, 79, 46, 0.08);
-  --accent-border: rgba(179, 79, 46, 0.24);
+  /* Single Primary Accent: Crisp Cobalt Blue */
+  --accent: #1D4ED8;
+  --accent-hover: #1E40AF;
+  --accent-text: #1D4ED8;
+  --accent-soft: rgba(29, 78, 216, 0.08);
+  --accent-border: rgba(29, 78, 216, 0.22);
 
-  /* Semantic Positive (Muted Forest Sage — used for verified/recommended states only) */
-  --good: #1F5E48;
-  --good-hover: #174937;
-  --good-soft: rgba(31, 94, 72, 0.08);
-  --good-border: rgba(31, 94, 72, 0.24);
+  /* Semantic Positive: Clean Emerald */
+  --good: #15803D;
+  --good-text: #15803D;
+  --good-soft: rgba(21, 128, 61, 0.08);
+  --good-border: rgba(21, 128, 61, 0.22);
 
-  /* Typography */
-  --font-display: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
-  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI Variable Text", "Segoe UI", Inter, system-ui, sans-serif;
+  /* Typography — Clean modern sans + tabular mono */
+  --font-sans: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Text", "Segoe UI", system-ui, sans-serif;
   --font-mono: "SF Mono", "Cascadia Mono", Consolas, ui-monospace, monospace;
 
-  /* Radius Scale (nested math: panel 16, card 12, control 8, tag 6) */
+  /* Radius Scale (16 -> 12 -> 8 -> 6) */
   --r-sm: 6px;
   --r-md: 8px;
   --r-lg: 12px;
   --r-xl: 16px;
 
-  /* Light Mode Shadows (neutral, soft, restrained) */
-  --shadow-sm: 0 1px 2px rgba(26, 23, 20, 0.05);
-  --shadow-md: 0 8px 24px rgba(26, 23, 20, 0.07);
-  --shadow-window: 0 16px 40px rgba(26, 23, 20, 0.09);
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.07);
+  --shadow-window: 0 16px 36px rgba(15, 23, 42, 0.09);
 
   /* Motion */
-  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease: cubic-bezier(0.24, 1, 0.4, 1);
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  /* Dark Mode: Deep Carbon-Slate & Luminous Cobalt */
+  --bg: #0B0F17;
+  --surface: #131924;
+  --surface-raised: #1C2433;
+  --surface-tint: #0F141E;
+
+  --ink: #F1F5F9;
+  --secondary: #94A3B8;
+  --muted: #64748B;
+
+  --line: rgba(241, 245, 249, 0.08);
+  --line-strong: rgba(241, 245, 249, 0.16);
+
+  --accent: #2563EB;
+  --accent-hover: #3B82F6;
+  --accent-text: #60A5FA;
+  --accent-soft: rgba(59, 130, 246, 0.14);
+  --accent-border: rgba(96, 165, 250, 0.28);
+
+  --good: #15803D;
+  --good-text: #34D399;
+  --good-soft: rgba(52, 211, 153, 0.12);
+  --good-border: rgba(52, 211, 153, 0.26);
+
+  --shadow-sm: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  --shadow-md: 0 12px 28px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  --shadow-window: 0 20px 44px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  color-scheme: dark;
 }
 
 *,
@@ -68,6 +102,7 @@ body {
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
   font-variant-numeric: tabular-nums;
+  transition: background-color 0.18s var(--ease), color 0.18s var(--ease);
 }
 
 a:not(.astryx-button) {
@@ -84,40 +119,36 @@ textarea {
 }
 
 :focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--accent-text);
   outline-offset: 2px;
 }
 
 h1, h2, h3, h4 {
   margin: 0;
   color: var(--ink);
-  font-weight: 500;
-}
-
-h1 {
-  font-family: var(--font-display);
-  font-size: clamp(2.25rem, 3.8vw, 3.25rem);
-  line-height: 1.08;
+  font-weight: 600;
   letter-spacing: -0.025em;
 }
 
+h1 {
+  font-size: clamp(2rem, 3.6vw, 3rem);
+  line-height: 1.12;
+  letter-spacing: -0.03em;
+}
+
 h2 {
-  font-family: var(--font-display);
-  font-size: clamp(1.75rem, 2.8vw, 2.25rem);
-  line-height: 1.15;
-  letter-spacing: -0.02em;
+  font-size: clamp(1.65rem, 2.6vw, 2.15rem);
+  line-height: 1.18;
 }
 
 h3 {
   font-size: 18px;
   line-height: 1.3;
-  font-weight: 500;
 }
 
 h4 {
   font-size: 16px;
   line-height: 1.35;
-  font-weight: 500;
 }
 
 p {
@@ -146,24 +177,24 @@ strong {
 }
 
 .narrow {
-  width: min(800px, 92vw);
+  width: min(780px, 92vw);
 }
 
-/* Scroll Progress (GPU-composited scaleX, zero layout thrash) */
+/* Scroll Progress */
 .scroll-progress {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   height: 2px;
-  background: var(--accent);
+  background: var(--accent-text);
   transform-origin: left;
   transform: scaleX(0);
   z-index: 120;
   pointer-events: none;
 }
 
-/* Back to Top (Astryx IconButton FAB) */
+/* Back to Top */
 .back-to-top {
   position: fixed;
   right: 24px;
@@ -175,14 +206,14 @@ strong {
   display: none;
 }
 
-/* Header (fixed 64px height — no vertical scroll jump) */
+/* Header */
 .site-header {
   position: sticky;
   top: 0;
   z-index: 80;
   background: var(--bg);
   border-bottom: 1px solid var(--line);
-  transition: box-shadow 0.2s var(--ease);
+  transition: background-color 0.18s var(--ease), box-shadow 0.2s var(--ease);
 }
 
 .site-header.scrolled {
@@ -210,28 +241,23 @@ strong {
   width: 32px;
   height: 32px;
   border-radius: var(--r-md);
-  background: var(--ink);
-  color: var(--bg);
-  font-family: var(--font-display);
-  font-size: 14px;
-  font-weight: 600;
-  transition: background-color 0.16s var(--ease);
-}
-
-.brand:hover .brand-mark {
   background: var(--accent);
+  color: #FFFFFF;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 .brand-text {
   display: flex;
   flex-direction: column;
-  line-height: 1.1;
+  line-height: 1.15;
 }
 
 .brand-name {
-  font-family: var(--font-display);
-  font-size: 18px;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
   color: var(--ink);
 }
 
@@ -249,40 +275,41 @@ strong {
   color: var(--secondary);
 }
 
-.nav-links a:not(.nav-cta) {
+.nav-links a {
   padding: 6px 12px;
   border-radius: var(--r-md);
   transition: color 0.15s var(--ease), background-color 0.15s var(--ease);
 }
 
-.nav-links a:not(.nav-cta):hover {
+.nav-links a:hover,
+.nav-links a.active {
   color: var(--ink);
   background: var(--surface-raised);
 }
 
-.nav-links a.active:not(.nav-cta) {
-  color: var(--ink);
-  background: var(--surface-raised);
-}
-
-.nav-cta {
-  margin-left: 8px;
-}
-
-.nav-cta.active {
-  background-color: var(--accent);
-  color: #FFFFFF;
-}
-
-.header-actions {
-  display: none;
+.header-right {
+  display: flex;
   align-items: center;
   gap: 8px;
+  flex-shrink: 0;
 }
 
-.mobile-quick-cta {
-  padding-inline: 12px;
-  font-size: 13px;
+/* Theme Icon Swap */
+.theme-toggle .icon-sun {
+  display: none;
+}
+
+:root[data-theme="dark"] .theme-toggle .icon-moon {
+  display: none;
+}
+
+:root[data-theme="dark"] .theme-toggle .icon-sun {
+  display: block;
+}
+
+.mobile-quick-cta,
+.menu-toggle {
+  display: none;
 }
 
 .menu-bars {
@@ -361,18 +388,18 @@ strong {
 }
 
 .eyebrow {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--accent);
-  margin-bottom: 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--accent-text);
+  margin-bottom: 12px;
 }
 
 .hero-headline {
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .accent-ink {
-  color: var(--accent);
+  color: var(--accent-text);
 }
 
 .hero-desc {
@@ -400,10 +427,10 @@ strong {
 
 .metric strong {
   display: block;
-  font-family: var(--font-display);
   font-size: 24px;
-  font-weight: 500;
-  line-height: 1.1;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
   color: var(--ink);
   margin-bottom: 4px;
 }
@@ -415,7 +442,7 @@ strong {
   color: var(--muted);
 }
 
-/* Interactive Counter UI Showcase (Hero Bright Moment) */
+/* Interactive Counter Window */
 .counter-window {
   background: var(--surface);
   border: 1px solid var(--line-strong);
@@ -466,9 +493,9 @@ strong {
 }
 
 .counter-latency {
-  font-family: var(--font-mono);
-  font-size: 11.5px;
-  color: var(--good);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--good-text);
   background: var(--good-soft);
   padding: 2px 8px;
   border-radius: var(--r-sm);
@@ -500,7 +527,7 @@ strong {
 
 .counter-body {
   padding: 20px;
-  min-height: 320px;
+  min-height: 316px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -534,8 +561,8 @@ strong {
   color: var(--ink);
 }
 
-.cv-warn { color: var(--accent) !important; }
-.cv-good { color: var(--good) !important; }
+.cv-warn { color: var(--accent-text) !important; }
+.cv-good { color: var(--good-text) !important; }
 
 .cv-list {
   display: flex;
@@ -563,8 +590,8 @@ strong {
 }
 
 .cv-tag {
-  font-family: var(--font-mono);
-  font-size: 11.5px;
+  font-size: 12px;
+  font-weight: 500;
   padding: 2px 8px;
   border-radius: var(--r-sm);
   background: var(--surface-raised);
@@ -574,7 +601,7 @@ strong {
 
 .cv-tag-good {
   background: var(--good-soft);
-  color: var(--good);
+  color: var(--good-text);
 }
 
 .cv-input-bar {
@@ -584,8 +611,7 @@ strong {
 }
 
 .cv-chip {
-  font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 12.5px;
   padding: 6px 10px;
   background: var(--surface-tint);
   border: 1px solid var(--line-strong);
@@ -606,7 +632,7 @@ strong {
   align-items: center;
   gap: 8px;
   font-size: 13px;
-  color: var(--good);
+  color: var(--good-text);
 }
 
 .cv-match-sub {
@@ -636,7 +662,6 @@ strong {
 .cv-foot-note {
   font-size: 12px;
   color: var(--muted);
-  font-family: var(--font-mono);
 }
 
 .cv-action-btn {
@@ -650,10 +675,9 @@ strong {
   justify-content: space-between;
   gap: 8px;
   padding: 10px 16px;
-  background: var(--surface-raised);
+  background: var(--surface-tint);
   border-top: 1px solid var(--line);
-  font-family: var(--font-mono);
-  font-size: 11.5px;
+  font-size: 12px;
   color: var(--muted);
 }
 
@@ -668,11 +692,11 @@ strong {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: var(--good);
+  background: var(--good-text);
   flex-shrink: 0;
 }
 
-/* Quiet Centered Specification Strip (Zero clipping) */
+/* Summary Strip */
 .spec-strip {
   background: var(--surface);
   border-top: 1px solid var(--line);
@@ -697,14 +721,14 @@ strong {
 
 /* Shared Section Headers */
 .section-label {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--accent);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent-text);
   margin-bottom: 8px;
 }
 
 .section-head {
-  max-width: 680px;
+  max-width: 660px;
   margin-bottom: 40px;
 }
 
@@ -719,7 +743,7 @@ strong {
   margin: 0;
 }
 
-/* 4 Operational Leaks + ROI Calculator (#products) */
+/* 4 Problems + Savings Calculator (#products) */
 .products {
   padding: 80px 0;
 }
@@ -743,7 +767,8 @@ strong {
   display: inline-block;
   font-family: var(--font-mono);
   font-size: 12px;
-  color: var(--accent);
+  font-weight: 600;
+  color: var(--accent-text);
   margin-bottom: 8px;
 }
 
@@ -755,7 +780,7 @@ strong {
   margin-bottom: 8px;
 }
 
-/* ROI Calculator Panel */
+/* Savings Calculator Panel */
 .roi-panel {
   background: var(--surface);
   border: 1px solid var(--line-strong);
@@ -765,13 +790,12 @@ strong {
 }
 
 .roi-head {
-  max-width: 640px;
+  max-width: 620px;
   margin-bottom: 24px;
 }
 
 .roi-head h3 {
-  font-family: var(--font-display);
-  font-size: 24px;
+  font-size: 22px;
   margin: 4px 0 8px;
 }
 
@@ -799,9 +823,8 @@ strong {
 }
 
 .slider-label-row strong {
-  font-family: var(--font-mono);
   font-size: 15px;
-  color: var(--accent);
+  color: var(--accent-text);
 }
 
 .slider-group input[type="range"] {
@@ -859,10 +882,10 @@ strong {
 }
 
 .roi-stat-accent strong {
-  color: var(--good);
+  color: var(--good-text);
 }
 
-/* Zero-Risk Pilot Wedge (#pilot) */
+/* Free Trial Section (#pilot) */
 .pilot-section {
   padding: 80px 0;
   background: var(--surface-raised);
@@ -890,18 +913,18 @@ strong {
 
 .pilot-badge {
   display: inline-block;
-  font-family: var(--font-mono);
   font-size: 12px;
+  font-weight: 600;
   padding: 4px 10px;
   border-radius: var(--r-sm);
   background: var(--accent-soft);
-  color: var(--accent);
+  color: var(--accent-text);
   margin-bottom: 12px;
 }
 
 .pilot-badge-good {
   background: var(--good-soft);
-  color: var(--good);
+  color: var(--good-text);
 }
 
 .pilot-card h3 {
@@ -910,6 +933,7 @@ strong {
 }
 
 .pilot-list {
+  list-style: disc;
   margin: 16px 0 0;
   padding-left: 18px;
   color: var(--secondary);
@@ -945,7 +969,7 @@ strong {
   color: var(--secondary);
 }
 
-/* Editions & Pricing (#plans) */
+/* Plans & Pricing (#plans) */
 .plans {
   padding: 80px 0;
 }
@@ -979,7 +1003,7 @@ strong {
 }
 
 .plan-card.recommended {
-  border: 1.5px solid var(--good);
+  border: 1.5px solid var(--good-border);
   box-shadow: var(--shadow-md);
 }
 
@@ -1006,8 +1030,8 @@ strong {
 }
 
 .plan-tier {
-  font-family: var(--font-mono);
   font-size: 12px;
+  font-weight: 500;
   padding: 3px 8px;
   border-radius: var(--r-sm);
   background: var(--surface-raised);
@@ -1016,12 +1040,12 @@ strong {
 
 .plan-tier.tier-good {
   background: var(--good-soft);
-  color: var(--good);
+  color: var(--good-text);
 }
 
 .plan-tier.tier-accent {
   background: var(--accent-soft);
-  color: var(--accent);
+  color: var(--accent-text);
 }
 
 .plan-branch-pill {
@@ -1030,8 +1054,7 @@ strong {
 }
 
 .plan-card h3 {
-  font-family: var(--font-display);
-  font-size: 22px;
+  font-size: 20px;
   margin-bottom: 12px;
 }
 
@@ -1049,15 +1072,15 @@ strong {
 }
 
 .plan-price {
-  font-family: var(--font-display);
-  font-size: 32px;
-  font-weight: 500;
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
   line-height: 1;
   color: var(--ink);
 }
 
-.plan-card.recommended .plan-price { color: var(--good); }
-.plan-card.flagship .plan-price { color: var(--accent); }
+.plan-card.recommended .plan-price { color: var(--good-text); }
+.plan-card.flagship .plan-price { color: var(--accent-text); }
 
 .plan-price-note {
   font-size: 13px;
@@ -1122,7 +1145,7 @@ strong {
   position: absolute;
   left: 0;
   top: 0;
-  color: var(--good);
+  color: var(--good-text);
   font-weight: 600;
 }
 
@@ -1145,8 +1168,7 @@ strong {
 }
 
 .comparison-head h3 {
-  font-family: var(--font-display);
-  font-size: 22px;
+  font-size: 20px;
   margin-bottom: 4px;
 }
 
@@ -1186,15 +1208,15 @@ strong {
 
 .compare-table thead th {
   background: var(--surface-tint);
-  font-weight: 500;
+  font-weight: 600;
   color: var(--ink);
   border-bottom: 1px solid var(--line-strong);
 }
 
 .compare-table .th-price {
   display: block;
-  font-family: var(--font-mono);
   font-size: 12.5px;
+  font-weight: 400;
   color: var(--muted);
   margin-top: 2px;
 }
@@ -1205,7 +1227,7 @@ strong {
 }
 
 .compare-table thead th.col-rec .th-price {
-  color: var(--good);
+  color: var(--good-text);
 }
 
 .compare-table tbody tr:last-child td {
@@ -1213,7 +1235,7 @@ strong {
 }
 
 .tbl-yes {
-  color: var(--good);
+  color: var(--good-text);
   font-weight: 600;
 }
 
@@ -1221,7 +1243,7 @@ strong {
   color: var(--muted);
 }
 
-/* Transparent Post-Year-1 AMC Banner */
+/* Yearly Updates Banner */
 .amc-banner {
   margin-top: 24px;
   display: grid;
@@ -1240,18 +1262,18 @@ strong {
 
 .amc-tag {
   display: inline-block;
-  font-family: var(--font-mono);
   font-size: 12px;
+  font-weight: 600;
   padding: 3px 8px;
   border-radius: var(--r-sm);
   background: var(--accent-soft);
-  color: var(--accent);
+  color: var(--accent-text);
   margin-bottom: 8px;
 }
 
 .amc-tag-good {
   background: var(--good-soft);
-  color: var(--good);
+  color: var(--good-text);
 }
 
 .amc-banner h4 {
@@ -1263,7 +1285,7 @@ strong {
   font-size: 14px;
 }
 
-/* Workflow (#workflow) */
+/* Setup Steps (#workflow) */
 .workflow {
   padding: 80px 0;
   background: var(--surface);
@@ -1303,7 +1325,7 @@ strong {
 
 .wf-step.active {
   background-color: var(--surface);
-  border-color: var(--accent);
+  border-color: var(--accent-border);
   box-shadow: var(--shadow-sm);
 }
 
@@ -1315,7 +1337,7 @@ strong {
   color: var(--secondary);
   font-family: var(--font-mono);
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 600;
   display: grid;
   place-items: center;
   flex-shrink: 0;
@@ -1328,9 +1350,9 @@ strong {
 
 .wf-meta {
   display: block;
-  font-family: var(--font-mono);
   font-size: 12px;
-  color: var(--good);
+  font-weight: 500;
+  color: var(--accent-text);
   margin-bottom: 4px;
 }
 
@@ -1364,14 +1386,13 @@ strong {
 }
 
 .preview-address {
-  font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 12.5px;
   color: var(--muted);
 }
 
 .preview-content {
   padding: 20px;
-  transition: opacity 0.18s var(--ease);
+  transition: opacity 0.16s var(--ease);
 }
 
 .preview-content.switching {
@@ -1394,9 +1415,9 @@ strong {
 
 .pv-tag {
   display: inline-block;
-  font-family: var(--font-mono);
   font-size: 12px;
-  color: var(--good);
+  font-weight: 600;
+  color: var(--accent-text);
   margin-bottom: 4px;
 }
 
@@ -1437,7 +1458,7 @@ strong {
   color: var(--ink);
 }
 
-/* NovaForge Internal Labs: Float Personal (Beta · Not for sale) & Float Hear (#labs) */
+/* NovaForge Labs: Float Personal (Beta · Not for sale) & Float Hear (#labs) */
 .labs {
   padding: 80px 0;
   background: var(--bg);
@@ -1462,7 +1483,7 @@ strong {
 }
 
 .lab-card-hear {
-  border-color: var(--good-border);
+  border-color: var(--accent-border);
 }
 
 .lab-card-top {
@@ -1471,25 +1492,24 @@ strong {
   justify-content: space-between;
   gap: 12px;
   flex-wrap: wrap;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
 
 .lab-kicker {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  color: var(--accent);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--secondary);
 }
 
 .lab-kicker-good {
-  color: var(--good);
+  color: var(--accent-text);
 }
 
 .not-for-sale-pill,
 .lab-hotkey-pill {
   display: inline-flex;
   align-items: center;
-  font-family: var(--font-mono);
-  font-size: 11.5px;
+  font-size: 12px;
   font-weight: 600;
   padding: 3px 10px;
   border-radius: var(--r-sm);
@@ -1502,9 +1522,9 @@ strong {
 }
 
 .lab-hotkey-pill {
-  background: var(--good-soft);
-  color: var(--good);
-  border: 1px solid var(--good-border);
+  background: var(--accent-soft);
+  color: var(--accent-text);
+  border: 1px solid var(--accent-border);
 }
 
 .lab-title-row {
@@ -1516,27 +1536,25 @@ strong {
 }
 
 .lab-title-row h3 {
-  font-family: var(--font-display);
-  font-size: 26px;
-  line-height: 1.15;
+  font-size: 24px;
+  line-height: 1.2;
 }
 
 .beta-badge {
   display: inline-flex;
   align-items: center;
-  font-family: var(--font-mono);
-  font-size: 11.5px;
+  font-size: 12px;
   font-weight: 600;
   padding: 2px 8px;
   border-radius: var(--r-sm);
   background: var(--accent-soft);
-  color: var(--accent);
+  color: var(--accent-text);
   border: 1px solid var(--accent-border);
 }
 
 .beta-badge-good {
   background: var(--good-soft);
-  color: var(--good);
+  color: var(--good-text);
   border-color: var(--good-border);
 }
 
@@ -1605,7 +1623,7 @@ strong {
   color: var(--secondary);
 }
 
-/* Founders (Calm Warm Stone Palette — Consistent With Atelier World) */
+/* Founders */
 .founders {
   padding: 80px 0;
   background: var(--surface-raised);
@@ -1638,31 +1656,28 @@ strong {
   width: 40px;
   height: 40px;
   border-radius: var(--r-md);
-  background: var(--ink);
-  color: var(--bg);
+  background: var(--accent);
+  color: #FFFFFF;
   display: grid;
   place-items: center;
-  font-family: var(--font-display);
-  font-size: 18px;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .founder-tag {
-  font-family: var(--font-mono);
   font-size: 12px;
   color: var(--muted);
 }
 
 .founder-card h3 {
-  font-family: var(--font-display);
-  font-size: 22px;
+  font-size: 20px;
   margin-bottom: 4px;
 }
 
 .founder-role {
   font-size: 13.5px;
   font-weight: 500;
-  color: var(--accent);
+  color: var(--accent-text);
   margin-bottom: 12px;
 }
 
@@ -1701,7 +1716,7 @@ strong {
   padding: 16px 20px;
   border-radius: 0;
   gap: 16px;
-  font-size: 16px;
+  font-size: 15.5px;
   font-weight: 500;
   color: var(--ink);
   white-space: normal;
@@ -1773,15 +1788,14 @@ strong {
 }
 
 .email-label {
-  font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 12.5px;
   color: var(--muted);
 }
 
 .email-link {
-  font-family: var(--font-display);
-  font-size: 20px;
-  color: var(--accent);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--accent-text);
   word-break: break-all;
 }
 
@@ -1835,7 +1849,7 @@ strong {
 .form-row select:focus,
 .form-row textarea:focus {
   outline: none;
-  border-color: var(--accent);
+  border-color: var(--accent-text);
   background: var(--surface);
 }
 
@@ -1865,9 +1879,8 @@ strong {
 }
 
 .footer-brand strong {
-  font-family: var(--font-display);
-  font-size: 16px;
-  font-weight: 500;
+  font-size: 15px;
+  font-weight: 600;
   margin-right: 12px;
 }
 
@@ -1879,7 +1892,7 @@ strong {
 }
 
 .footer-links a:hover {
-  color: var(--accent);
+  color: var(--accent-text);
 }
 
 /* Toast */
@@ -1902,7 +1915,6 @@ strong {
   display: none;
 }
 
-/* Subtle Entrance Motion (zero hidden-section anchor flash) */
 .js .reveal {
   opacity: 1;
   transform: none;
@@ -1921,8 +1933,15 @@ main[id] {
 }
 
 @media (max-width: 960px) {
-  .nav-links { display: none; }
-  .header-actions { display: flex; }
+  .nav-links,
+  .desktop-only-cta {
+    display: none;
+  }
+
+  .mobile-quick-cta,
+  .menu-toggle {
+    display: inline-flex;
+  }
 
   .hero { padding: 48px 0 56px; }
   .hero-grid,
