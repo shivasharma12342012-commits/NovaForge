@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-astryx-theme="atelier">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,16 +10,32 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self';" />
   <link rel="icon" type="image/png" sizes="256x256" href="assets/float-logo.png" />
   <link rel="icon" href="favicon.ico" />
+  <link rel="stylesheet" href="astryx.css" />
   <link rel="stylesheet" href="styles.css" />
   <script>document.documentElement.classList.add("js");</script>
 </head>
 <body>
   <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 
-  <button class="back-to-top" id="backToTop" type="button" aria-label="Back to top" hidden>
-    <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <path d="M8 13V3M3.5 7.5 8 3l4.5 4.5"/>
-    </svg>
+  <button
+    class="astryx-button back-to-top"
+    id="backToTop"
+    type="button"
+    data-astryx-component="icon-button"
+    data-variant="secondary"
+    data-size="lg"
+    data-elevation="med"
+    data-icon-only="true"
+    aria-label="Back to top"
+    hidden
+  >
+    <span class="astryx-button-content">
+      <span class="astryx-button-icon" aria-hidden="true">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8 13V3M3.5 7.5 8 3l4.5 4.5"/>
+        </svg>
+      </span>
+    </span>
   </button>
 
   <header class="site-header" id="siteHeader">
@@ -38,12 +54,47 @@
         <a href="#workflow" data-section="workflow">How it works</a>
         <a href="#founders" data-section="founders">Founders</a>
         <a href="#faq" data-section="faq">FAQ</a>
-        <a href="#contact" class="nav-cta" data-section="contact" data-product="Free 48-Hour Leakage Audit + 14-Day Office Pilot (₹0)">Book free pilot</a>
+        <a
+          href="#contact"
+          class="astryx-button nav-cta"
+          data-astryx-component="button"
+          data-variant="dark"
+          data-size="md"
+          data-section="contact"
+          data-product="Free 48-Hour Leakage Audit + 14-Day Office Pilot (₹0)"
+        >
+          <span class="astryx-button-content">
+            <span class="astryx-button-label">Book free pilot</span>
+          </span>
+        </a>
       </nav>
       <div class="header-actions">
-        <a href="#pilot" class="mobile-quick-cta">Free pilot</a>
-        <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
-          <span></span><span></span><span></span>
+        <a
+          href="#pilot"
+          class="astryx-button mobile-quick-cta"
+          data-astryx-component="button"
+          data-variant="primary"
+          data-size="md"
+        >
+          <span class="astryx-button-content">
+            <span class="astryx-button-label">Free pilot</span>
+          </span>
+        </a>
+        <button
+          class="astryx-button menu-toggle"
+          id="menuToggle"
+          type="button"
+          data-astryx-component="icon-button"
+          data-variant="secondary"
+          data-size="md"
+          data-icon-only="true"
+          aria-label="Open menu"
+          aria-expanded="false"
+          aria-controls="mobileNav"
+        >
+          <span class="menu-bars" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </span>
         </button>
       </div>
     </div>
@@ -54,7 +105,20 @@
       <a href="#workflow" data-section="workflow">How it works</a>
       <a href="#founders" data-section="founders">Founders</a>
       <a href="#faq" data-section="faq">FAQ</a>
-      <a href="#contact" class="mobile-nav-cta" data-section="contact" data-product="Free 48-Hour Leakage Audit + 14-Day Office Pilot (₹0)">Book free pilot</a>
+      <a
+        href="#contact"
+        class="astryx-button mobile-nav-cta"
+        data-astryx-component="button"
+        data-variant="dark"
+        data-size="lg"
+        data-width="full"
+        data-section="contact"
+        data-product="Free 48-Hour Leakage Audit + 14-Day Office Pilot (₹0)"
+      >
+        <span class="astryx-button-content">
+          <span class="astryx-button-label">Book free pilot</span>
+        </span>
+      </a>
     </nav>
   </header>
 
@@ -74,13 +138,34 @@
           </p>
 
           <div class="hero-actions">
-            <a href="#contact" class="btn btn-primary" data-product="Free 48-Hour Leakage Audit + 14-Day Office Pilot (₹0)">
-              <span>Book free 14-day office pilot</span>
-              <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M3 8h10M9 4l4 4-4 4"/>
-              </svg>
+            <a
+              href="#contact"
+              class="astryx-button"
+              data-astryx-component="button"
+              data-variant="primary"
+              data-size="lg"
+              data-product="Free 48-Hour Leakage Audit + 14-Day Office Pilot (₹0)"
+            >
+              <span class="astryx-button-content">
+                <span class="astryx-button-label">Book free 14-day office pilot</span>
+                <span class="astryx-button-end" aria-hidden="true">
+                  <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 8h10M9 4l4 4-4 4"/>
+                  </svg>
+                </span>
+              </span>
             </a>
-            <a href="#plans" class="btn btn-secondary">Compare 5 editions (₹6L–₹21L)</a>
+            <a
+              href="#plans"
+              class="astryx-button"
+              data-astryx-component="button"
+              data-variant="secondary"
+              data-size="lg"
+            >
+              <span class="astryx-button-content">
+                <span class="astryx-button-label">Compare 5 editions (₹6L–₹21L)</span>
+              </span>
+            </a>
           </div>
 
           <div class="hero-metrics">
@@ -116,10 +201,18 @@
             </div>
 
             <div class="counter-tabs" role="tablist" aria-label="Counter views">
-              <button class="counter-tab active" data-view="wave" type="button" role="tab" aria-selected="true">Morning wave</button>
-              <button class="counter-tab" data-view="fastag" type="button" role="tab" aria-selected="false">FASTag match</button>
-              <button class="counter-tab" data-view="gst" type="button" role="tab" aria-selected="false">Locked GST</button>
-              <button class="counter-tab" data-view="lan" type="button" role="tab" aria-selected="false">LAN &amp; 5-role</button>
+              <button class="astryx-button astryx-toggle-button counter-tab active" data-astryx-component="toggle-button" data-variant="ghost" data-size="sm" data-is-pressed="true" data-view="wave" type="button" role="tab" aria-selected="true">
+                <span class="astryx-button-content"><span class="astryx-button-label">Morning wave</span></span>
+              </button>
+              <button class="astryx-button astryx-toggle-button counter-tab" data-astryx-component="toggle-button" data-variant="ghost" data-size="sm" data-is-pressed="false" data-view="fastag" type="button" role="tab" aria-selected="false">
+                <span class="astryx-button-content"><span class="astryx-button-label">FASTag match</span></span>
+              </button>
+              <button class="astryx-button astryx-toggle-button counter-tab" data-astryx-component="toggle-button" data-variant="ghost" data-size="sm" data-is-pressed="false" data-view="gst" type="button" role="tab" aria-selected="false">
+                <span class="astryx-button-content"><span class="astryx-button-label">Locked GST</span></span>
+              </button>
+              <button class="astryx-button astryx-toggle-button counter-tab" data-astryx-component="toggle-button" data-variant="ghost" data-size="sm" data-is-pressed="false" data-view="lan" type="button" role="tab" aria-selected="false">
+                <span class="astryx-button-content"><span class="astryx-button-label">LAN &amp; 5-role</span></span>
+              </button>
             </div>
 
             <div class="counter-body" id="counterBody" aria-live="polite"></div>
@@ -239,8 +332,19 @@
                 <span>Recommended edition &amp; est. payback</span>
                 <strong id="roiRec">Float Plus (₹9L) · ~10 months</strong>
               </div>
-              <a href="#contact" class="btn btn-primary btn-full" id="roiCtaBtn" data-product="Free 48-Hour Leakage Audit + 14-Day Office Pilot (₹0)">
-                Verify with a free 48-hour leakage audit
+              <a
+                href="#contact"
+                class="astryx-button"
+                id="roiCtaBtn"
+                data-astryx-component="button"
+                data-variant="primary"
+                data-size="lg"
+                data-width="full"
+                data-product="Free 48-Hour Leakage Audit + 14-Day Office Pilot (₹0)"
+              >
+                <span class="astryx-button-content">
+                  <span class="astryx-button-label">Verify with a free 48-hour leakage audit</span>
+                </span>
               </a>
             </div>
           </div>
@@ -290,11 +394,22 @@
             <strong>Direct founder onboarding · Maximum 3 new fleets per month</strong>
             <span>To guarantee sub-hour setup and live shift support, Prabhjot, Shiva, and Yatharth onboard a maximum of 3 new rental fleets per month.</span>
           </div>
-          <a href="#contact" class="btn btn-primary" data-product="Free 48-Hour Leakage Audit + 14-Day Office Pilot (₹0)">
-            <span>Reserve a pilot slot</span>
-            <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M3 8h10M9 4l4 4-4 4"/>
-            </svg>
+          <a
+            href="#contact"
+            class="astryx-button"
+            data-astryx-component="button"
+            data-variant="primary"
+            data-size="lg"
+            data-product="Free 48-Hour Leakage Audit + 14-Day Office Pilot (₹0)"
+          >
+            <span class="astryx-button-content">
+              <span class="astryx-button-label">Reserve a pilot slot</span>
+              <span class="astryx-button-end" aria-hidden="true">
+                <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 8h10M9 4l4 4-4 4"/>
+                </svg>
+              </span>
+            </span>
           </a>
         </div>
       </div>
@@ -335,7 +450,9 @@
               <li><strong>AI operations assistant &amp; daily backups</strong><span class="tech-spec">Bring your own AI key · Automated daily SQLite backups</span></li>
             </ul>
             <div class="plan-footer">
-              <a href="#contact" class="btn btn-outline btn-full" data-product="Float Basic (₹6 Lakh)">Choose Float Basic</a>
+              <a href="#contact" class="astryx-button" data-astryx-component="button" data-variant="outline" data-size="lg" data-width="full" data-product="Float Basic (₹6 Lakh)">
+                <span class="astryx-button-content"><span class="astryx-button-label">Choose Float Basic</span></span>
+              </a>
             </div>
           </article>
 
@@ -361,7 +478,9 @@
               <li><strong>360° handover checklists &amp; KYC blocker</strong><span class="tech-spec">Insurance/PUC expiry alerts, 13 Indian languages &amp; Google Drive backup</span></li>
             </ul>
             <div class="plan-footer">
-              <a href="#contact" class="btn btn-outline btn-full" data-product="Float Plus (₹9 Lakh)">Choose Float Plus</a>
+              <a href="#contact" class="astryx-button" data-astryx-component="button" data-variant="outline" data-size="lg" data-width="full" data-product="Float Plus (₹9 Lakh)">
+                <span class="astryx-button-content"><span class="astryx-button-label">Choose Float Plus</span></span>
+              </a>
             </div>
           </article>
 
@@ -388,7 +507,9 @@
               <li><strong>All 19 AI workflows &amp; hardened security</strong><span class="tech-spec">AES-256-GCM vault, CSRF/Host defenses &amp; SQLite-locked credit notes</span></li>
             </ul>
             <div class="plan-footer">
-              <a href="#contact" class="btn btn-good btn-full" data-product="Float Pro (₹13.5 Lakh)">Choose Float Pro</a>
+              <a href="#contact" class="astryx-button" data-astryx-component="button" data-variant="success" data-size="lg" data-width="full" data-product="Float Pro (₹13.5 Lakh)">
+                <span class="astryx-button-content"><span class="astryx-button-label">Choose Float Pro</span></span>
+              </a>
             </div>
           </article>
         </div>
@@ -417,7 +538,9 @@
               <li><strong>India DPDP Act 2023 compliance &amp; bulk importer</strong><span class="tech-spec">Consent tracking, JSON export, safe erasure, GPS/EXIF scrubbing &amp; CSV/XLSX import</span></li>
             </ul>
             <div class="plan-footer">
-              <a href="#contact" class="btn btn-outline btn-full" data-product="Float Enterprise (₹16.5 Lakh)">Choose Float Enterprise</a>
+              <a href="#contact" class="astryx-button" data-astryx-component="button" data-variant="outline" data-size="lg" data-width="full" data-product="Float Enterprise (₹16.5 Lakh)">
+                <span class="astryx-button-content"><span class="astryx-button-label">Choose Float Enterprise</span></span>
+              </a>
             </div>
           </article>
 
@@ -443,7 +566,9 @@
               <li><strong>100% offline local AI &amp; desktop automation</strong><span class="tech-spec">Runs air-gapped with Ollama (16GB+ Apple Silicon / GPU Host recommended)</span></li>
             </ul>
             <div class="plan-footer">
-              <a href="#contact" class="btn btn-primary btn-full" data-product="Float Enterprise Max (₹21 Lakh)">Choose Enterprise Max</a>
+              <a href="#contact" class="astryx-button" data-astryx-component="button" data-variant="primary" data-size="lg" data-width="full" data-product="Float Enterprise Max (₹21 Lakh)">
+                <span class="astryx-button-content"><span class="astryx-button-label">Choose Enterprise Max</span></span>
+              </a>
             </div>
           </article>
         </div>
@@ -571,7 +696,7 @@
 
         <div class="workflow-grid reveal">
           <div class="workflow-steps" role="tablist" aria-label="Deployment steps">
-            <button type="button" class="wf-step active" data-step="0" role="tab" aria-selected="true">
+            <button type="button" class="astryx-button wf-step active" data-astryx-component="button" data-variant="secondary" data-align="start" data-width="full" data-step="0" role="tab" aria-selected="true">
               <span class="wf-node">01</span>
               <span class="wf-text">
                 <span class="wf-meta">Step 1 · 15–30 minutes</span>
@@ -580,7 +705,7 @@
               </span>
             </button>
 
-            <button type="button" class="wf-step" data-step="1" role="tab" aria-selected="false">
+            <button type="button" class="astryx-button wf-step" data-astryx-component="button" data-variant="secondary" data-align="start" data-width="full" data-step="1" role="tab" aria-selected="false">
               <span class="wf-node">02</span>
               <span class="wf-text">
                 <span class="wf-meta">Step 2 · ~5 minutes</span>
@@ -589,7 +714,7 @@
               </span>
             </button>
 
-            <button type="button" class="wf-step" data-step="2" role="tab" aria-selected="false">
+            <button type="button" class="astryx-button wf-step" data-astryx-component="button" data-variant="secondary" data-align="start" data-width="full" data-step="2" role="tab" aria-selected="false">
               <span class="wf-node">03</span>
               <span class="wf-text">
                 <span class="wf-meta">Step 3 · Ready on day 1</span>
@@ -672,7 +797,7 @@
 
         <div class="faq-list reveal">
           <div class="faq-item">
-            <button type="button" class="faq-q" aria-expanded="false">
+            <button type="button" class="astryx-button faq-q" data-astryx-component="button" data-variant="ghost" data-align="between" data-width="full" aria-expanded="false">
               <span>How does the Free 48-Hour Leakage Audit &amp; 14-Day Office Pilot work?</span>
               <span class="faq-plus" aria-hidden="true"></span>
             </button>
@@ -682,7 +807,7 @@
           </div>
 
           <div class="faq-item">
-            <button type="button" class="faq-q" aria-expanded="false">
+            <button type="button" class="astryx-button faq-q" data-astryx-component="button" data-variant="ghost" data-align="between" data-width="full" aria-expanded="false">
               <span>What does post-Year-1 AMC cost, and what happens if we don't renew?</span>
               <span class="faq-plus" aria-hidden="true"></span>
             </button>
@@ -692,7 +817,7 @@
           </div>
 
           <div class="faq-item">
-            <button type="button" class="faq-q" aria-expanded="false">
+            <button type="button" class="astryx-button faq-q" data-astryx-component="button" data-variant="ghost" data-align="between" data-width="full" aria-expanded="false">
               <span>How does the Multi-Desk Hub LAN Server work for multi-hub agencies?</span>
               <span class="faq-plus" aria-hidden="true"></span>
             </button>
@@ -702,7 +827,7 @@
           </div>
 
           <div class="faq-item">
-            <button type="button" class="faq-q" aria-expanded="false">
+            <button type="button" class="astryx-button faq-q" data-astryx-component="button" data-variant="ghost" data-align="between" data-width="full" aria-expanded="false">
               <span>What hardware is needed for 100% Offline Local AI on Enterprise Max?</span>
               <span class="faq-plus" aria-hidden="true"></span>
             </button>
@@ -712,7 +837,7 @@
           </div>
 
           <div class="faq-item">
-            <button type="button" class="faq-q" aria-expanded="false">
+            <button type="button" class="astryx-button faq-q" data-astryx-component="button" data-variant="ghost" data-align="between" data-width="full" aria-expanded="false">
               <span>Do we receive commercial licensing &amp; tax documentation for procurement?</span>
               <span class="faq-plus" aria-hidden="true"></span>
             </button>
@@ -739,8 +864,41 @@
               <span class="email-label">Direct founder desk · India (IST shift hours)</span>
               <a href="mailto:info.novaforge.2026@gmail.com" class="email-link">info.novaforge.2026@gmail.com</a>
               <div class="email-actions">
-                <button type="button" class="btn btn-secondary btn-sm" id="copyEmailBtn">Copy email</button>
-                <a href="mailto:info.novaforge.2026@gmail.com?subject=Float%2014-Day%20Pilot%20%26%20Leakage%20Audit" class="btn btn-ghost">Open mail app</a>
+                <button
+                  type="button"
+                  class="astryx-button"
+                  id="copyEmailBtn"
+                  data-astryx-component="button"
+                  data-variant="secondary"
+                  data-size="sm"
+                >
+                  <span class="astryx-button-content">
+                    <span class="astryx-button-icon" aria-hidden="true">
+                      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="5.5" y="5.5" width="8" height="8" rx="1.5"/>
+                        <path d="M10.5 5.5V3.75A1.25 1.25 0 0 0 9.25 2.5h-5.5A1.25 1.25 0 0 0 2.5 3.75v5.5a1.25 1.25 0 0 0 1.25 1.25H5.5"/>
+                      </svg>
+                    </span>
+                    <span class="astryx-button-label">Copy email</span>
+                  </span>
+                </button>
+                <a
+                  href="mailto:info.novaforge.2026@gmail.com?subject=Float%2014-Day%20Pilot%20%26%20Leakage%20Audit"
+                  class="astryx-button"
+                  data-astryx-component="button"
+                  data-variant="ghost"
+                  data-size="sm"
+                >
+                  <span class="astryx-button-content">
+                    <span class="astryx-button-icon" aria-hidden="true">
+                      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="3.5" width="12" height="9" rx="1.5"/>
+                        <path d="m2.5 4.5 5.5 4 5.5-4"/>
+                      </svg>
+                    </span>
+                    <span class="astryx-button-label">Open mail app</span>
+                  </span>
+                </a>
               </div>
             </div>
           </div>
@@ -796,9 +954,58 @@
             </div>
 
             <div class="form-actions-b2b">
-              <button type="submit" class="btn btn-primary">Send pre-filled email</button>
-              <button type="button" class="btn btn-secondary" id="whatsappBtn">Share via WhatsApp</button>
-              <button type="button" class="btn btn-ghost" id="copyDraftBtn">Copy pilot brief</button>
+              <button
+                type="submit"
+                class="astryx-button"
+                data-astryx-component="button"
+                data-variant="primary"
+                data-size="lg"
+              >
+                <span class="astryx-button-content">
+                  <span class="astryx-button-icon" aria-hidden="true">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="2" y="3.5" width="12" height="9" rx="1.5"/>
+                      <path d="m2.5 4.5 5.5 4 5.5-4"/>
+                    </svg>
+                  </span>
+                  <span class="astryx-button-label">Send pre-filled email</span>
+                </span>
+              </button>
+              <button
+                type="button"
+                class="astryx-button"
+                id="whatsappBtn"
+                data-astryx-component="button"
+                data-variant="secondary"
+                data-size="lg"
+              >
+                <span class="astryx-button-content">
+                  <span class="astryx-button-icon" aria-hidden="true">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M3 4.25A1.75 1.75 0 0 1 4.75 2.5h6.5A1.75 1.75 0 0 1 13 4.25v5.25a1.75 1.75 0 0 1-1.75 1.75H6.5L3.25 13.5v-2.25A1.75 1.75 0 0 1 3 10Z"/>
+                    </svg>
+                  </span>
+                  <span class="astryx-button-label">Share via WhatsApp</span>
+                </span>
+              </button>
+              <button
+                type="button"
+                class="astryx-button"
+                id="copyDraftBtn"
+                data-astryx-component="button"
+                data-variant="ghost"
+                data-size="lg"
+              >
+                <span class="astryx-button-content">
+                  <span class="astryx-button-icon" aria-hidden="true">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="5.5" y="5.5" width="8" height="8" rx="1.5"/>
+                      <path d="M10.5 5.5V3.75A1.25 1.25 0 0 0 9.25 2.5h-5.5A1.25 1.25 0 0 0 2.5 3.75v5.5a1.25 1.25 0 0 0 1.25 1.25H5.5"/>
+                    </svg>
+                  </span>
+                  <span class="astryx-button-label">Copy pilot brief</span>
+                </span>
+              </button>
             </div>
           </form>
         </div>

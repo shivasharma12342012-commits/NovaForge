@@ -1,0 +1,12 @@
+{
+  "name": "novaforge-website",
+  "private": true,
+  "scripts": {
+    "sync-astryx": "node scripts/sync-astryx.mjs",
+    "check": "node --check script.js"
+  },
+  "dependencies": {
+    "@astryxdesign/cli": "^0.7.17",
+    "@astryxdesign/core": "^0.7.17"
+  }
+}

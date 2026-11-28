@@ -130,8 +130,18 @@
           <div class="cv-row"><span><strong>DL-01-CD-8821</strong> · Dzire AT</span><span class="cv-tag ${waveDispatched ? "cv-tag-good" : ""}">${waveDispatched ? "Dispatched" : "Ready · Bay 4"}</span></div>
           <div class="cv-row"><span><strong>MH-01-EF-1904</strong> · Ertiga ZXi</span><span class="cv-tag">Wash 14m · Mark Ready</span></div>
         </div>
-        <button type="button" class="cv-action-btn ${waveDispatched ? "done" : ""}" id="cvDispatchBtn">
-          ${waveDispatched ? "✓ 14 conflict-free cars dispatched (0.21s)" : "1-click dispatch 14 conflict-free cars"}
+        <button
+          type="button"
+          class="astryx-button cv-action-btn"
+          id="cvDispatchBtn"
+          data-astryx-component="button"
+          data-variant="${waveDispatched ? "success" : "primary"}"
+          data-size="lg"
+          data-width="full"
+        >
+          <span class="astryx-button-content">
+            <span class="astryx-button-label">${waveDispatched ? "✓ 14 conflict-free cars dispatched (0.21s)" : "1-click dispatch 14 conflict-free cars"}</span>
+          </span>
         </button>`;
       const btn = $("cvDispatchBtn");
       if (btn) btn.addEventListener("click", () => { waveDispatched = !waveDispatched; renderCounterView("wave"); });
@@ -145,8 +155,18 @@
           <div class="cv-match-head"><span>Instant match · 0.04s</span><strong>Booking #FLT-2841 (Rohan K.)</strong></div>
           <p class="cv-match-sub">Trip window: 14 Oct 09:00 → 16 Oct 18:00 · Deposit held: ₹5,000</p>
         </div>
-        <button type="button" class="cv-action-btn ${challanPosted ? "done" : ""}" id="cvPostChallanBtn">
-          ${challanPosted ? "✓ ₹1,200 challan posted to Booking #FLT-2841 ledger" : "Post ₹1,200 challan to ledger"}
+        <button
+          type="button"
+          class="astryx-button cv-action-btn"
+          id="cvPostChallanBtn"
+          data-astryx-component="button"
+          data-variant="${challanPosted ? "success" : "primary"}"
+          data-size="lg"
+          data-width="full"
+        >
+          <span class="astryx-button-content">
+            <span class="astryx-button-label">${challanPosted ? "✓ ₹1,200 challan posted to Booking #FLT-2841 ledger" : "Post ₹1,200 challan to ledger"}</span>
+          </span>
         </button>`;
       const btn = $("cvPostChallanBtn");
       if (btn) btn.addEventListener("click", () => { challanPosted = !challanPosted; renderCounterView("fastag"); });
@@ -181,6 +201,7 @@
         const on = t === tab;
         t.classList.toggle("active", on);
         t.setAttribute("aria-selected", String(on));
+        t.dataset.isPressed = String(on);
       });
       renderCounterView(tab.dataset.view || "wave");
     });
