@@ -332,6 +332,23 @@
     });
   });
 
+  /* ── NovaForge Labs Tabs (Float Personal & Float Hear) ───────────────── */
+  document.querySelectorAll(".lab-tab").forEach((tab) => {
+    tab.addEventListener("click", () => {
+      const group = tab.dataset.labGroup;
+      const targetId = tab.dataset.labPanel;
+      if (!group || !targetId) return;
+      document.querySelectorAll(`.lab-tab[data-lab-group="${group}"]`).forEach(( sibling ) => {
+        const on = sibling === tab;
+        sibling.classList.toggle("active", on);
+        sibling.setAttribute("aria-selected", String(on));
+        sibling.dataset.isPressed = String(on);
+        const panel = $(sibling.dataset.labPanel || "");
+        if (panel) panel.hidden = !on;
+      });
+    });
+  });
+
   /* ── FAQ accordion ───────────────────────────────────────────────────── */
   document.querySelectorAll(".faq-item").forEach((item) => {
     const btn = item.querySelector(".faq-q");
